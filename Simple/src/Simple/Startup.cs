@@ -49,7 +49,7 @@ namespace Simple
 
             app.UseIdentity();
 
-            app.UseMvc(x => x.MapRoute("dafault", "{controller=Account}/{action=Login}/{id?}"));
+            app.UseMvc(x => x.MapRoute("dafault", "{controller=Home}/{action=Index}/{id?}"));
 
             await SampleData.InitDB(app.ApplicationServices);
         }

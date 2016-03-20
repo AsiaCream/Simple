@@ -15,6 +15,7 @@ namespace Simple.Controllers
     {
         [FromServices]
         public SignInManager<User> signInManager { get; set; }
+        public UserManager<User> userManager { get; set; }
 
         [HttpGet]
         public IActionResult Login()
@@ -37,6 +38,22 @@ namespace Simple.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
+        }
+        [HttpGet]
+        public IActionResult Modify()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Modify(string password,string newpwd,string confirmpwd)
+        {
+            if (confirmpwd != newpwd)
+            {
+                return Content("pwderror");
+            }
+            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(User.Current.Id), pwd, newpwd);
             await signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
