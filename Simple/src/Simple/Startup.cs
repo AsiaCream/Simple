@@ -33,6 +33,11 @@ namespace Simple
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddCaching();
+
+            services.AddSession();
+
         }
 
         public async void Configure(IApplicationBuilder app,ILoggerFactory logger)
@@ -49,7 +54,9 @@ namespace Simple
 
             app.UseIdentity();
 
-            app.UseMvc(x => x.MapRoute("dafault", "{controller=Home}/{action=Index}/{id?}"));
+            app.UseSession();
+
+            app.UseMvc(x => x.MapRoute("dafault", "{controller=Account}/{action=Login}/{id?}"));
 
             await SampleData.InitDB(app.ApplicationServices);
         }

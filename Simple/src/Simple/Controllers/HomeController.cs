@@ -8,7 +8,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Simple.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // GET: /<controller>/
         public IActionResult Index()

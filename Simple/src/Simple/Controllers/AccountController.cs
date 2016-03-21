@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Identity;
+using System.Security;
 using Simple.Models;
 
 
@@ -15,7 +16,10 @@ namespace Simple.Controllers
     {
         [FromServices]
         public SignInManager<User> signInManager { get; set; }
+        [FromServices]
         public UserManager<User> userManager { get; set; }
+        [FromServices]
+        public SimpleContext DB { get; set; }
 
         [HttpGet]
         public IActionResult Login()
@@ -29,10 +33,13 @@ namespace Simple.Controllers
             if (result.Succeeded)
             {
                 return RedirectToAction("Index","Home");
+                //var u= DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+                //return Content("用户名为：" + username + ",ID为"+u.Id);
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return Content("Error");
+                //return RedirectToAction("Login", "Account");
             }
         }
         [HttpPost]
@@ -44,7 +51,8 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult Modify()
         {
-            return View();
+            var CurrentUser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            return View(CurrentUser);
         }
         [HttpPost]
         public async Task<IActionResult> Modify(string password,string newpwd,string confirmpwd)
