@@ -60,5 +60,40 @@ namespace Simple.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult ErrorOrder()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult CollectOrder()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult WaitPayForOrder()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult PassNotFinish()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult TodayPlaceOrder()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult RestCost()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult CostRecord()
+        {
+            return View();
+        }
     }
 }

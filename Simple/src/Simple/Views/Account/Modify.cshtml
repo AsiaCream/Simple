@@ -12,10 +12,16 @@
         margin-top:15px;
     }
 </style>
-<div class="container offset2 mt15">
+<div class="container mt15">
     <div class="col-md-12">
         <div class="col-md-2">
-
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <p style="color:red;">
+                        请认真填写
+                    </p>
+                </div>
+            </div>
         </div>
         <div class="com-md-10">
             <form asp-action="Modify" asp-controller="Account" method="post">
@@ -25,7 +31,7 @@
                             旧密码：
                         </th>
                         <th class="form-th">
-                            <input type="password" name="password" />
+                            <input type="password" name="password" class="input-lg" />
                         </th>
                     </tr>
                     <tr class="form-tr">
@@ -33,7 +39,7 @@
                             新密码：
                         </th>
                         <th class="form-th">
-                            <input type="password" name="newpwd" />
+                            <input type="password" name="newpwd" class="input-lg"/>
                         </th>
                     </tr>
                     <tr class="form-tr">
@@ -41,12 +47,12 @@
                             确认密码：
                         </th>
                         <th class="form-th">
-                            <input type="password" name="confirmpwd" />
+                            <input type="password" name="confirmpwd" class="input-lg"/>
                         </th>
                     </tr>
                     <tr class="form-tr">
                         <th class="form-th">
-                            <input type="submit" class="btn btn-primary" value="提交" />
+                            <input type="submit" class="btn btn-primary btn-lg" value="提交" />
                         </th>
                     </tr>
                 </table>

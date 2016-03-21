@@ -19,19 +19,19 @@ namespace Simple.Models
             base.OnModelCreating(builder);
             builder.Entity<PreOrder>(e =>
             {
-                e.HasIndex();
+                e.HasIndex(x=>x.Id);
             });
             builder.Entity<PassOrder>(e =>
             {
-                e.HasIndex();
+                e.HasIndex(x => x.Id);
             });
             builder.Entity<FailureOrder>(e =>
             {
-                e.HasIndex();
+                e.HasIndex(x => x.Id);
             });
             builder.Entity<MyWallet>(e =>
             {
-                e.HasIndex();
+                e.HasIndex(x => x.Id);
             });
         }
     }
