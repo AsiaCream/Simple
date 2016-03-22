@@ -29,7 +29,7 @@ namespace Simple.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username,string password,bool remember)
         {
-            var result = await signInManager.PasswordSignInAsync(username, password, remember, false);
+            var result = await signInManager.PasswordSignInAsync(username, password, false, remember);
             if (result.Succeeded)
             {
                 return RedirectToAction("Index","Home");
@@ -38,8 +38,7 @@ namespace Simple.Controllers
             }
             else
             {
-                return Content("Error");
-                //return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account");
             }
         }
         [HttpPost]

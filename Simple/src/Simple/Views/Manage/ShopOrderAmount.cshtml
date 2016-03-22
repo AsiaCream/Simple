@@ -1,18 +1,19 @@
-﻿<div style="height:20px;"></div>
+﻿@model IEnumerable<ShopOrder>
+<div style="height:20px;"></div>
     <div class="container">
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="container-fluid">
                     <div class="col-md-12">
                         <p style="color:red;">
-                            注意： 店铺名请勿随意修改，修改后系统会认为和之前的是不同店铺，
+                            注意： 店铺名请勿随意修改，修改后系统会认为和之前的是不同店铺，如果修改后相同名字的店铺会被视为同一个
                             由此可能引起系统分配买家账号重复的情况 责任自负！
                         </p>
                     </div>                 
                         </div>
             </div>
             <div class="col-md-10">
-                <a href="#" class="btn btn-primary">添加店铺信息</a>
+                <a asp-action="CreateShopOrderAmount" asp-controller="Manage" class="btn btn-primary">添加店铺信息</a>
                 <div style="height:20px;"></div>
                 <table class="table table-responsive table-stripted table-hover" style="background-color:white;">
                     <thead>
@@ -26,12 +27,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>STG</td>
-                            <td>3</td>
-                            <td>3</td>
+                            <td>测试1</td>
+                            <td>测试STG</td>
+                            <td>测试3</td>
+                            <td>测试3</td>
                             <td><a href="#">编辑</a></td>
                         </tr>
+                        @foreach (ShopOrder x in Model)
+                        {
+                            <tr>
+                                <td>@x.Id</td>
+                                <td>@x.Title</td>
+                                <td>@x.MaxOneDay</td>
+                                <td>@x.MaxOneEvaluation</td>
+                                <td><a asp-action="EditShopOrderAmount" asp-controller="Manage" asp-route-id="@x.Id">编辑</a></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

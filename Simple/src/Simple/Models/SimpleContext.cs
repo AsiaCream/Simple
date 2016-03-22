@@ -10,6 +10,7 @@ namespace Simple.Models
 {
     public class SimpleContext : IdentityDbContext<User>
     {
+        public DbSet<ShopOrder> ShopOrders { get; set; }
         public DbSet<PreOrder> PreOrders { get; set; }
         public DbSet<PassOrder> PassOrders { get; set; }
         public DbSet<FailureOrder> FailureOrders { get; set; }
@@ -17,6 +18,10 @@ namespace Simple.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<ShopOrder>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
             builder.Entity<PreOrder>(e =>
             {
                 e.HasIndex(x=>x.Id);

@@ -1,0 +1,54 @@
+﻿<style>
+    .must2 {
+        color: red;
+    }
+    .infolb{
+        color:white;
+    }
+</style>
+<div style="height:20px;"></div>
+<div class="container">
+    <div class="col-md-12">
+        <div class="col-md-2">
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <p style="color:red;">
+                        请认真填写！
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <p style="color:white;">添加店铺订单量设置</p>
+            <form asp-action="CreateShopOrderAmount" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" method="post">
+                <table class="table table-responsive table-stripted" style="background-color:white;">
+                    <tbody>
+                        <tr>
+                            <th class="must2">*店铺名</th>
+                            <td><input type="text" class="form-control" name="title" /></td>
+                        </tr>
+                        <tr>
+                            <th class="must2">*日最大刷单量</th>
+                            <td><input type="text" class="form-control" name="maxoneday" /> </td>
+                        </tr>
+                        <tr>
+                            <th class="must2">*日最大评价量</th>
+                            <td><input type="text" class="form-control" name="maxoneevaluation" /></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th><input type="submit" class="form-control btn btn-primary" value="添加店铺"></th>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </form>
+            <label class="infolb" style="color:gold;">特别说明</label><br />
+            <label class="infolb">店铺名指：您在亚马逊或ebay上面的店铺名称，sell by 后面的名字，用于区分卖家的。如果填错会导致下单错误的哦，请认真对待哦。ebay店铺建议 在店铺名后加 [ebay] 例如 My min shop[ebay]</label>     <br />
+            <label class="infolb">每天最大的刷单量，请设置一个安全的值，建议3-5个。</label><br />
+            <label class="infolb">每天最大的评价量，请设置一个安全的值，建议3-5个。如果当天有高于设置量的评价订单 则评价顺序后延。</label>
+            <div style="height:10px;"></div>
+        </div>
+    </div>
+</div>
+
