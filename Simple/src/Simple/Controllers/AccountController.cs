@@ -14,10 +14,7 @@ namespace Simple.Controllers
 {
     public class AccountController : BaseController
     {
-        [FromServices]
-        public SignInManager<User> signInManager { get; set; }
-        [FromServices]
-        public UserManager<User> userManager { get; set; }
+        
 
         #region 登录页面实现
         [HttpGet]
@@ -26,9 +23,9 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password, bool remember)
+        public async Task<IActionResult> Login(string username, string password)
         {
-            var result = await signInManager.PasswordSignInAsync(username, password, false, remember);
+            var result = await signInManager.PasswordSignInAsync(username, password, false, false);
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
@@ -62,7 +59,8 @@ namespace Simple.Controllers
             {
                 return Content("两次输入密码不一致");
             }
-            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(),password, newpwd);
+            //var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
+            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(user.Id),password, newpwd);
             await signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }

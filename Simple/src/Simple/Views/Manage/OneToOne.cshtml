@@ -89,7 +89,7 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*收件人地址</th>
-                                        <td><textarea class="form-control" name="Address" style="height:200px;" placeholder="选填项（加收五元服务费）适用于修改收货信息，保证自己安排签到的客户"></textarea></td>
+                                        <td><textarea class="form-control" name="Address" style="height:200px;resize:none;" placeholder="选填项（加收五元服务费）适用于修改收货信息，保证自己安排签到的客户"></textarea></td>
                                         <td>
                                             Full Name: MekeEva
                                             Address Line 1: 307 VININGS VINTAGE CIR
@@ -121,11 +121,24 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*FeedBack内容</th>
-                                        <td><textarea class="form-control" name="FeedBackContent"></textarea></td>
+                                        <td><textarea class="form-control " style="height:100px;resize:none;" name="FeedBackContent"></textarea></td>
                                     </tr>
                                     <tr>
-                                        <th>备注</th>
-                                        <td><input type="text" class="form-control" name="Note" /></td>
+                                        <th class="must2">*Review星级</th>
+                                        <td><input type="radio" value="四星" name="ReviewStar"/>四星</td>
+                                        <td><input type="radio" value="五星" name="ReviewStar"/>五星</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Review内容</th>
+                                        <td><textarea class="form-control" style="height:100px;resize:none;" name="ReviewContent"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Review标题</th>
+                                        <td><input class="form-control" name="ReviewTitle" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">备注</th>
+                                        <td><textarea class="form-control" style="height:100px;resize:none;" name="Note" ></textarea> </td>
                                     </tr>
                                     <tr>
                                         <th>图片评价1</th>
@@ -147,10 +160,6 @@
                             </table>
                         </form>
                     </div>
-
-
-
-
                 </div>
             </section>
         </div>

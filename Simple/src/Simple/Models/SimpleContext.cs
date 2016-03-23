@@ -11,6 +11,7 @@ namespace Simple.Models
     public class SimpleContext : IdentityDbContext<User>
     {
         public DbSet<ShopOrder> ShopOrders { get; set; }
+        public DbSet<Poundage> Poundages { get; set; }
         public DbSet<PreOrder> PreOrders { get; set; }
         public DbSet<PassOrder> PassOrders { get; set; }
         public DbSet<FailureOrder> FailureOrders { get; set; }
@@ -20,6 +21,7 @@ namespace Simple.Models
         public DbSet<FindType> FindTypes { get; set; }
         public DbSet<OrderType> OrderTypes { get; set; }
         public DbSet<IncreasingNumber> IncreasingNumbers { get; set; }
+        public DbSet<PlatType> PlatTypes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -60,6 +62,14 @@ namespace Simple.Models
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<IncreasingNumber>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<PlatType>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<Poundage>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

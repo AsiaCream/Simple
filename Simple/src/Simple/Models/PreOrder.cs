@@ -24,23 +24,30 @@ namespace Simple.Models
         public double Rate { get; set; }
         public string FindType { get; set; }
         public string GoodsUrl { get; set; }
-        public string ShopName { get; set; }
-        public double GoodsCost { get; set; }
+        public string PlatType { get; set; }//所在平台
+        public string ShopName { get; set; }//店铺名
+        public double GoodsCost { get; set; }//产品价格
         public double Freight { get; set; } //运费
-        public string OrderType { get; set; } 
+        public string OrderType { get; set; } //订单类型
         public string NextOrToday { get; set; }//隔天下单或者首天下单
         public bool AvoidWeekend { get; set; }//是否避开周末
         public bool Extension { get; set; }//是否免费推广
         public int CommentTime { get; set; }//评价时间
         public string Address { get; set; }
-        public int FeedBackStar { get; set; }
+        public string FeedBackStar { get; set; }
         public string FeedBackModel { get; set; }
         public string FeedBackContent { get; set; }
+        public string ReviewStar { get; set; }
+        public string ReviewContent { get; set; }
+        public string ReviewTitle { get; set; }
         public string Note { get; set; }
         public string ImageUrl1 { get; set; }
         public string ImageUrl2 { get; set; }
         public string ImageUrl3 { get; set; }
-        public double Total { get; set; } //总价
+        public double Total { get; set; } //总计
+        public double RMB { get; set; }//人民币总计
+        public double Poundage { get; set; }//手续费
+        public double PayTotal { get; set; }//支付金额
         public int Times { get; set; }//刷单次数
 
         public State State { get; set; } //锁定状态

@@ -34,7 +34,7 @@ namespace Simple.Models
                 await userManager.AddToRoleAsync(guest, "普通用户");
 
                 //初始化用户的店铺订单量设置
-                db.ShopOrders.Add (new ShopOrder {  MaxOneDay = 2, MaxOneEvaluation = 3, Title = "ABC", UserId = guest.Id });
+                db.ShopOrders.Add (new ShopOrder {  MaxOneDay = 2, MaxOneEvaluation = 3, Title = "ABC", UserId = guest.Id,Type="Ebay" });
 
                 //初始化隔天下单/首天
                 db.NextOrTodays.Add(new NextOrToday { Type = "查看" });
@@ -47,6 +47,7 @@ namespace Simple.Models
 
                 //初始化IncreasingNumber
                 db.IncreasingNumbers.Add(new IncreasingNumber { Number = 0 });
+
 
             }
             db.SaveChanges();

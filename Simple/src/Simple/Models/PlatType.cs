@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Simple.Models
 {
-    public class System
+    public class PlatType
     {
         public int Id { get; set; }
-        public string OrderType { get; set; }
-        public double SetCost { get; set; }
-        public bool Extension { get; set; }
+        public string Title { get; set; }
     }
 }

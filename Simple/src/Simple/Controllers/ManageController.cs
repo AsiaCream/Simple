@@ -93,11 +93,35 @@ namespace Simple.Controllers
             var number = DB.IncreasingNumbers.Max(x => x.Number);
             number = number + 1;
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
+            var plattype = DB.ShopOrders.Where(x => x.Title == preorder.ShopName).SingleOrDefault();
             DB.PreOrders.Add(preorder);
+            var poundage = new Poundage { PreOrderId = preorder.Id, OrderCost = 30.00, AddressCost = 0.00, SearchCost = 0.00, ImageCost = 0.00, NextOrToday = 0.00 };
+            DB.Poundages.Add(poundage);
+            if (preorder.FindType == "搜索进入")
+            {
+                poundage.SearchCost = 10.00;
+            }
+            if (preorder.NextOrToday != null)
+            {
+                poundage.NextOrToday = 10.00;
+            }
+            if (preorder.ImageUrl1 != null || preorder.ImageUrl2 != null || preorder.ImageUrl3 != null)
+            {
+                poundage.ImageCost = 20.00;
+            }
+            if (preorder.Address != null)
+            {
+                poundage.AddressCost = 5.00;
+            }
+            poundage.TotalCost = poundage.OrderCost + poundage.SearchCost + poundage.ImageCost + poundage.AddressCost+poundage.NextOrToday;
+            preorder.Poundage = poundage.TotalCost;
             preorder.UserId = user.Id;
             preorder.State = State.未锁定;
             preorder.Draw = Draw.待审核;
+            preorder.PlatType = plattype.Type;
             preorder.Total = preorder.GoodsCost + preorder.Freight;
+            preorder.RMB = preorder.Total * preorder.Rate;
+            preorder.PayTotal = preorder.RMB + preorder.Poundage;
             preorder.Times = 1;
             preorder.PreOrderNumber = DateTime.Now.ToString("yyyyMMddhhmmss") + number.ToString() ;
             DB.SaveChanges();
@@ -108,13 +132,18 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult OneToMore()
         {
+            //现将用户找到
+            var user = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            //然后将和用户相关联的店铺信息找到，并用ViewBag返回到前台
+            var shop = DB.ShopOrders.Where(x => x.UserId == user.Id).ToList();
+            ViewBag.Shop = shop;
             return View();
         }
         [HttpGet]
         public IActionResult WaitPayFor()
         {
             var u = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
-            var order = DB.PreOrders.Where(x => x.UserId == u.Id).ToList();
+            var order = DB.PreOrders.Where(x => x.UserId == u.Id).OrderBy(x=>x.Id).ToList();        
             return View(order);
         }
         [HttpGet]

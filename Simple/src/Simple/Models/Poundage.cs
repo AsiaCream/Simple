@@ -12,8 +12,10 @@ namespace Simple.Models
         public double OrderCost { get; set; }//下单手续费 30
         public double AddressCost { get; set; }//改地址手续费5
         public double SearchCost { get; set; }//搜索手续费10
+        public double NextOrToday { get; set; }//隔天下单，首天10
         public double ImageCost { get; set; }//图片评价手续费20
-        public double TotalCost { get; set; }
+        public double TotalCost { get; set; }//总共手续费
+
 
         [ForeignKey("PreOrder")]
         public int PreOrderId { get; set; }

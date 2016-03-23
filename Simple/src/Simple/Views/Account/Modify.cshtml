@@ -1,66 +1,53 @@
-﻿<style type="text/css">
-    .form-tr{
-        height:100px;
-        padding:10px;
-    }
-    .form-th{
-        height:100px;
-        padding:10px;     
-    }
-    .mt15{
-        margin-top:15px;
-    }
-    .infolb{
-        color:white;
-    }
-</style>
-<div class="container mt15">
-    <div class="col-md-12">
-        <div class="col-md-2">
-            <div class="container-fluid">
-                <div class="col-md-12">
-                    <p style="color:red;">
-                        请认真填写
-                    </p>
+﻿<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">密码修改页面</p>
+                        <form asp-action="Modify" asp-controller="Account" method="post">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <label>旧密码：</label>
+                                    </th>
+                                    <th>
+                                        <input type="password" name="password" class="input-lg" />
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label>新密码：</label>
+                                    </th>
+                                    <th>
+                                        <input type="password" name="newpwd" class="input-lg" />
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label>确认密码：</label>
+                                    </th>
+                                    <th>
+                                        <input type="password" name="confirmpwd" class="input-lg" />
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <input type="submit" class="btn btn-primary" value="提交" />
+                                    </th>
+                                </tr>
+                            </table>
+
+                        </form>
+
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
-        <div class="com-md-10">
-            <form asp-action="Modify" asp-controller="Account" method="post">
-                <table>
-                    <tr class="form-tr">
-                        <th class="form-th">
-                            <label class="infolb">旧密码：</label> 
-                        </th>
-                        <th class="form-th">
-                            <input type="password" name="password" class="input-lg" />
-                        </th>
-                    </tr>
-                    <tr class="form-tr">
-                        <th class="form-th">
-                            <label class="infolb">新密码：</label> 
-                        </th>
-                        <th class="form-th">
-                            <input type="password" name="newpwd" class="input-lg"/>
-                        </th>
-                    </tr>
-                    <tr class="form-tr">
-                        <th class="form-th">
-                            <label class="infolb">确认密码：</label> 
-                        </th>
-                        <th class="form-th">
-                            <input type="password" name="confirmpwd" class="input-lg"/>
-                        </th>
-                    </tr>
-                    <tr class="form-tr">
-                        <th class="form-th">
-                            <input type="submit" class="btn btn-primary btn-lg" value="提交" />
-                        </th>
-                    </tr>
-                </table>
+    </section>
 
-            </form>
-
-        </div>
-    </div>
 </div>
+
+        
+        
+

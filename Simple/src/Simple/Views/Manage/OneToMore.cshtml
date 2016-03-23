@@ -2,6 +2,10 @@
     .must2 {
         color: red;
     }
+    .must3{
+        color:red;
+        font-size:8px;
+    }
 </style>
 <div>
     <section>
@@ -14,38 +18,45 @@
                             <tbody>
                                 <tr>
                                     <th class="must2">*国家（汇率）</th>
-                                    <td>英国</td>
-                                    <td>美国</td>
-                                    <td>日本</td>
-                                    <td>加拿大</td>
+                                    <td><input type="radio" name="Rate" value="9.98" />英国</td>
+                                    <td><input type="radio" name="Rate" value="6.6" />美国</td>
+                                    <td><input type="radio" name="Rate" value="0.063" />日本</td>
+                                    <td><input type="radio" name="Rate" value="5.38" />加拿大</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*进入店铺方式</th>
-                                    <td>链接进入</td>
-                                    <td>搜索进入</td>
+                                    <td><input type="radio" name="FindType" value="链接进入" />链接进入</td>
+                                    <td><input type="radio" name="FindType" value="搜索进入" />搜索进入</td>
+                                    <td class="must3">搜索方式进入，加收10.00服务费</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*产品连接</th>
-                                    <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" /></td>
+                                    <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" name="GoodsUrl" /></td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*请选择您的店铺</th>
-                                    <td><select class="form-control"><option>STG</option> </select> </td>
+                                    <td>
+                                        <select class="form-control" name="ShopName">
+                                            @foreach (ShopOrder x in ViewBag.Shop)
+                                            {
+                                                <option>@x.Title</option>
+                                            }
+                                        </select>
+                                    </td>
+
                                 </tr>
                                 <tr>
                                     <th class="must2">*产品价格</th>
-                                    <td><input type="text" class="form-control" placeholder="请输入不小于1的价格" /></td>
-                                </tr>
+                                    <td><input type="text" class="form-control" placeholder="请输入不小于1的价格" name="GoodsCost" /></td>                                </tr>
                                 <tr>
                                     <th class="must2">*运费</th>
-                                    <td><input class="form-control" type="text" placeholder="0.00" /></td>
-                                </tr>
+                                    <td><input class="form-control" type="text" placeholder="0.00" name="Freight" /></td>                                </tr>
                                 <tr>
                                     <th class="must2">*订单类型</th>
-                                    <td>下单 + feedback + review</td>
-                                    <td>下单 + feedback</td>
-                                    <td>下单 +  review</td>
-                                    <td>只下单不评价</td>
+                                    <td><input type="radio" name="OrderType" value="下单 + feedback + review" />下单 + feedback + review</td>
+                                    <td><input type="radio" name="OrderType" value="下单 + feedback" />下单 + feedback</td>
+                                    <td><input type="radio" name="OrderType" value="下单 +  review" />下单 +  review</td>
+                                    <td><input type="radio" name="OrderType" value="只下单不评价" />只下单不评价</td>
                                 </tr>
                                 <tr class="must2">
                                     <th>*特别说明</th>
@@ -54,50 +65,85 @@
                                 </tr>
                                 <tr>
                                     <th class="must2">*隔天下单/首天</th>
-                                    <td>查看</td>
-                                    <td>加购物车</td>
-                                    <td>加wishlist</td>
-                                    <td>选择本项目加收10元，三项不重复计费</td>
+                                    <td><input type="checkbox" name="NextOrToday" value="查看" />查看</td>
+                                    <td><input type="checkbox" name="NextOrToday" value="加购物车" />加购物车</td>
+                                    <td><input type="checkbox" name="NextOrToday" value="加wishlist" />加wishlist</td>
+                                    <td class="must3">选择本项目加收10元，三项不重复计费</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*是否避开周末</th>
-                                    <td>不需避开周末</td>
-                                    <td>避开周末</td>
+                                    <td><input type="radio" name="AvoidWeekend" value="0" />不需避开周末</td>
+                                    <td><input type="radio" name="AvoidWeekend" value="1" />避开周末</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*是否免费推广</th>
-                                    <td>推广</td>
-                                    <td>不推广</td>
+                                    <td><input type="radio" name="Extension" value="1" />推广</td>
+                                    <td><input type="radio" name="Extension" value="0" />不推广</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*评价时间</th>
-                                    <td><input type="text" class="form-control" /></td>
+                                    <td><input type="text" class="form-control" value="15" name="CommentTime" /></td>
                                     <td>默认亚马逊订单生成时开始计时</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*收件人地址</th>
-                                    <td><textarea class="form-control"></textarea></td>
+                                    <td><textarea class="form-control" name="Address" style="height:200px; resize:none;" placeholder="选填项（加收五元服务费）适用于修改收货信息，保证自己安排签到的客户"></textarea></td>
+                                    <td>
+                                        Full Name: MekeEva
+                                        Address Line 1: 307 VININGS VINTAGE CIR
+                                        Address Line 2:
+                                        City：MABLETON,
+                                        State/Province/Region: GEORGIA
+                                        Country:US
+                                        ZIP: 30126-7238
+                                        Phone Number: 000-000-0000
+                                    </td>
+                                    <td class="must3">
+                                        本项目为：选填项(加收五元服务费)适用于需修改收货信息，
+                                        保证自己安排签收的客户
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="must2">FeedBack星级</th>
-                                    <td>四星</td>
-                                    <td>五星</td>
+                                    <td><input type="radio" name="FeedBackStar" value="四星" />四星</td>
+                                    <td><input type="radio" name="FeedBackStar" value="五星" />五星</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*FeedBack模版</th>
-                                    <td><select><option>请选择FeedBack模版</option></select></td>
+                                    <td>
+                                        <select name="FeedBackModel">
+                                            <option>请选择FeedBack模版</option>
+                                            <option>Great</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*FeedBack内容</th>
-                                    <td><textarea class="form-control"></textarea></td>
+                                    <td><textarea class="form-control " style="height:100px;resize:none;" name="FeedBackContent"></textarea></td>
                                 </tr>
                                 <tr>
-                                    <th>刷单数量</th>
-                                    <td><input type="text" class="form-control" placeholder="请输入本产品要刷的单数" /></td>
+                                    <th class="must2">*Review星级</th>
+                                    <td><input type="radio" value="四星" name="ReviewStar" />四星</td>
+                                    <td><input type="radio" value="五星" name="ReviewStar" />五星</td>
                                 </tr>
                                 <tr>
-                                    <th>备注</th>
-                                    <td><textarea class="form-control"></textarea></td>
+                                    <th class="must2">*Review内容</th>
+                                    <td><textarea class="form-control" style="height:100px;resize:none;" name="ReviewContent"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review标题</th>
+                                    <td><input class="form-control" name="ReviewTitle" /></td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">刷单数量</th>
+                                    <td><input type="text" class="form-control" placeholder="请输入本产品要刷的单数"  name="Times"/></td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">备注</th>
+                                    <td><textarea class="form-control" style="height:100px;resize:none;" name="Note"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="submit" class="form-control btn btn-primary" value="提交并添加下一单" /></td>
                                 </tr>
                             </tbody>
                         </table>

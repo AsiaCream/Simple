@@ -21,6 +21,10 @@ namespace Simple.Controllers
     {
         [FromServices]
         public SimpleContext DB { get; set; }
+        [FromServices]
+        public SignInManager<User> signInManager { get; set; }
+        [FromServices]
+        public UserManager<User> userManager { get; set; }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
