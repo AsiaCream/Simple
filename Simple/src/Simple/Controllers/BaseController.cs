@@ -30,6 +30,21 @@ namespace Simple.Controllers
                 ViewBag.UserCurrent = UserCurrent;
             }
         }
+        /*public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            UserCurrent();
+            return base.OnActionExecutionAsync(context, next);
+        }*/
+        /*public virtual User UserCurrent()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                User UserCurrent = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+                ViewBag.UserCurrent = UserCurrent;       
+            return UserCurrent;
+            }
+            return UserCurrent;
+        }*/
     }
    
 }

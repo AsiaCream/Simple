@@ -76,6 +76,7 @@ namespace Simple.Controllers
             }
         }
         #endregion
+        #region 发布一产品一单
         [HttpGet]
         public IActionResult OneToOne()
         {
@@ -87,18 +88,23 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult OneToOne(string id,PreOrder preorder)
+        public IActionResult OneToOne(string id, PreOrder preorder)
         {
+            var number = DB.IncreasingNumbers.Max(x => x.Number);
+            number = number + 1;
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
-            
-                DB.PreOrders.Add(preorder);
-                preorder.UserId = user.Id;
-                preorder.State = State.未锁定;
-                preorder.Draw = Draw.待审核;
-                DB.SaveChanges();
+            DB.PreOrders.Add(preorder);
+            preorder.UserId = user.Id;
+            preorder.State = State.未锁定;
+            preorder.Draw = Draw.待审核;
+            preorder.Total = preorder.GoodsCost + preorder.Freight;
+            preorder.Times = 1;
+            preorder.PreOrderNumber = DateTime.Now.ToString("yyyyMMddhhmmss") + number.ToString() ;
+            DB.SaveChanges();
 
-            return Content("Success");
-        }
+            return RedirectToAction("OneToOne", "Manage");
+        } 
+        #endregion
         [HttpGet]
         public IActionResult OneToMore()
         {
@@ -107,7 +113,9 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult WaitPayFor()
         {
-            return View();
+            var u = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            var order = DB.PreOrders.Where(x => x.UserId == u.Id).ToList();
+            return View(order);
         }
         [HttpGet]
         public IActionResult TodayOrder()

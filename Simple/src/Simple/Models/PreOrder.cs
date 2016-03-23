@@ -20,17 +20,18 @@ namespace Simple.Models
     public class PreOrder
     {   
         public int Id { get; set; }
+        public string PreOrderNumber { get; set; }
         public double Rate { get; set; }
         public string FindType { get; set; }
         public string GoodsUrl { get; set; }
-        public string GoodsCost { get; set; }
         public string ShopName { get; set; }
+        public double GoodsCost { get; set; }
         public double Freight { get; set; } //运费
         public string OrderType { get; set; } 
         public string NextOrToday { get; set; }//隔天下单或者首天下单
         public bool AvoidWeekend { get; set; }//是否避开周末
         public bool Extension { get; set; }//是否免费推广
-        public int CommentTime { get; set; }
+        public int CommentTime { get; set; }//评价时间
         public string Address { get; set; }
         public int FeedBackStar { get; set; }
         public string FeedBackModel { get; set; }
@@ -39,7 +40,8 @@ namespace Simple.Models
         public string ImageUrl1 { get; set; }
         public string ImageUrl2 { get; set; }
         public string ImageUrl3 { get; set; }
-        public string Total { get; set; } //总价
+        public double Total { get; set; } //总价
+        public int Times { get; set; }//刷单次数
 
         public State State { get; set; } //锁定状态
 

@@ -11,7 +11,7 @@ namespace Simple.Models
         public int Id { get; set; }
 
         [ForeignKey("PreOrder")]
-        public string PreOrderId { get; set; }
+        public int PreOrderId { get; set; }
         public virtual PreOrder PreOrder { get; set; }
     }
 }

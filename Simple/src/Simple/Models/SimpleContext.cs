@@ -15,6 +15,11 @@ namespace Simple.Models
         public DbSet<PassOrder> PassOrders { get; set; }
         public DbSet<FailureOrder> FailureOrders { get; set; }
         public DbSet<MyWallet> MyWallet { get; set; }
+        public DbSet<System> Systems { get; set; }
+        public DbSet<NextOrToday> NextOrTodays { get; set; }
+        public DbSet<FindType> FindTypes { get; set; }
+        public DbSet<OrderType> OrderTypes { get; set; }
+        public DbSet<IncreasingNumber> IncreasingNumbers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -35,6 +40,26 @@ namespace Simple.Models
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<MyWallet>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<System>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<NextOrToday>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<FindType>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<OrderType>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<IncreasingNumber>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

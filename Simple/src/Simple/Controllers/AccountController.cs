@@ -12,55 +12,57 @@ using Simple.Models;
 
 namespace Simple.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         [FromServices]
         public SignInManager<User> signInManager { get; set; }
         [FromServices]
         public UserManager<User> userManager { get; set; }
-        [FromServices]
-        public SimpleContext DB { get; set; }
 
+        #region 登录页面实现
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(string username,string password,bool remember)
+        public async Task<IActionResult> Login(string username, string password, bool remember)
         {
             var result = await signInManager.PasswordSignInAsync(username, password, false, remember);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
                 //var u= DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
                 //return Content("用户名为：" + username + ",ID为"+u.Id);
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return Content("用户名或者密码错误");
             }
         }
+        #endregion
+        #region 登出页面
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
-        }
+        } 
+        #endregion
         [HttpGet]
         public IActionResult Modify()
         {
             var CurrentUser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
-            return View(CurrentUser);
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> Modify(string password,string newpwd,string confirmpwd)
         {
             if (confirmpwd != newpwd)
             {
-                return Content("pwderror");
+                return Content("两次输入密码不一致");
             }
-            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(User.Current.Id), pwd, newpwd);
+            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(),password, newpwd);
             await signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
