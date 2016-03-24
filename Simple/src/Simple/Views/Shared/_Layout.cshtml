@@ -238,143 +238,146 @@
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li class="header" style="color:white;">用户平台</li>
-                    <li class="active treeview">
-                        <a href="#">
-                            <i class="fa fa-files-o"></i> <span>订单管理</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a asp-action="ShopOrderAmount" asp-controller="Manage"><i class="fa fa-circle-o"></i>店铺订单量设置</a></li>
-                            <li><a asp-action="OneToOne" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布一产品一单</a></li>
-                            <li><a asp-action="OneToMore" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布一产品多单</a></li>
-                            <li><a asp-action="WaitPayFor" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付列表</a></li>
-                            <li><a asp-action="TodayOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今天订单</a></li>
-                            <li><a asp-action="OrderIng" asp-controller="Manage"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 已审核未下单</a></li>
-                            <li><a asp-action="FinishOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
-                            <li><a asp-action="EditAddress" asp-controller="Manage"><i class="fa fa-circle-o"></i> 修改地址订单</a></li>
-                            <li><a asp-action="TrackingOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单跟踪</a></li>
-                            <li><a asp-action="ErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 错单撤销列表</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-star-o"></i>
-                            <span>Helpful和收藏订单</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a asp-action="CollectOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布Helpful和收藏</a></li>
-                            <li><a asp-action="WaitPayForOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
-                            <li><a asp-action="PassNotFinish" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已支付未完成订单</a></li>
-                            <li><a asp-action="TodayPlaceOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今日排单</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-money"></i> <span>我的钱包</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a asp-action="RestCost" asp-controller="Manage"><i class="fa fa-circle-o"></i> 帐户充值和余额查询</a></li>
-                            <li><a asp-action="CostRecord" asp-controller="Manage"><i class="fa fa-circle-o"></i> 消费记录</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cog"></i> <span>帐号设置</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a asp-action="Modify" asp-controller="Account"><i class="fa fa-circle-o"></i> 修改密码</a></li>
-                            <li><a href="javascript:$('.Logout').submit()"><i class="fa fa-circle-o"></i> 退出登陆</a></li>
-                        </ul>
-                    </li>
-                    <li class="header" style="color:white;">系统管理平台</li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cogs"></i>
-                            <span>系统设置管理</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 会员等级</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 平台管理员管理</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 汇率更新配置</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 进入店铺方式</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 订单类型及其属性管理</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 隔天下单/首天属性管理</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 费用设置管理</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 推广设置</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-files-o"></i>
-                            <span>Ebay订单管理</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 所有下单列表</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 待操作订单</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 撤销失败订单</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 已撤销订单</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
+                    @if (User.IsInRole("普通用户"))
+                    {
+                        <li class="header" style="color:white;">用户平台</li>
+                                            <li class="active treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-files-o"></i> <span>订单管理</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a asp-action="ShopOrderAmount" asp-controller="Manage"><i class="fa fa-circle-o"></i>店铺订单量设置</a></li>
+                                                    <li><a asp-action="OneToOne" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布一产品一单</a></li>
+                                                    <li><a asp-action="OneToMore" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布一产品多单</a></li>
+                                                    <li><a asp-action="WaitPayFor" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付列表</a></li>
+                                                    <li><a asp-action="TodayOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今天订单</a></li>
+                                                    <li><a asp-action="OrderIng" asp-controller="Manage"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已审核未下单</a></li>
+                                                    <li><a asp-action="FinishOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
+                                                    <li><a asp-action="EditAddress" asp-controller="Manage"><i class="fa fa-circle-o"></i> 修改地址订单</a></li>
+                                                    <li><a asp-action="TrackingOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单跟踪</a></li>
+                                                    <li><a asp-action="ErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 错单撤销列表</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <span>Helpful和收藏订单</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a asp-action="CollectOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布Helpful和收藏</a></li>
+                                                    <li><a asp-action="WaitPayForOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
+                                                    <li><a asp-action="PassNotFinish" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已支付未完成订单</a></li>
+                                                    <li><a asp-action="TodayPlaceOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今日排单</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-money"></i> <span>我的钱包</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a asp-action="RestCost" asp-controller="Manage"><i class="fa fa-circle-o"></i> 帐户充值和余额查询</a></li>
+                                                    <li><a asp-action="CostRecord" asp-controller="Manage"><i class="fa fa-circle-o"></i> 消费记录</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-cog"></i> <span>帐号设置</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a asp-action="Modify" asp-controller="Account"><i class="fa fa-circle-o"></i> 修改密码</a></li>
+                                                    <li><a href="javascript:$('.Logout').submit()"><i class="fa fa-circle-o"></i> 退出登陆</a></li>
+                                                </ul>
+                                            </li>
+                    }
 
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-users"></i>
-                            <span>会员管理</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 会员信息</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 会员店铺管理</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 会员商品管理</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-money"></i>
-                            <span>充值信息管理</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 充值信息列表</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 消费信息列表</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 待审核充值</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 已到帐充值</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 需提示充值</a></li>
+                    @if (User.IsInRole("系统管理员"))
+                    {
+                        <li class="header" style="color:white;">系统管理平台</li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-cogs"></i>
+                                                    <span>系统设置管理</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 会员等级</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 平台管理员管理</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 汇率更新配置</a></li>
+                                                    <li><a asp-action="JoinShopType" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进入店铺方式</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 订单类型及其属性管理</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 隔天下单/首天属性管理</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 费用设置管理</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 推广设置</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-files-o"></i>
+                                                    <span>Ebay订单管理</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 所有下单列表</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 待操作订单</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 撤销失败订单</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已撤销订单</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-user"></i>
-                            <span>人员信息管理</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 人员基本信息</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 人员刷单列表</a></li>
-                        </ul>
-                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-users"></i>
+                                                    <span>会员管理</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 会员信息</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 会员店铺管理</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 会员商品管理</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-money"></i>
+                                                    <span>充值信息管理</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 充值信息列表</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 消费信息列表</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 待审核充值</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已到帐充值</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 需提示充值</a></li>
+
+                                                </ul>
+                                            </li>
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-user"></i>
+                                                    <span>人员信息管理</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 人员基本信息</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 人员刷单列表</a></li>
+                                                </ul>
+                                            </li>
+
+                    }
                 </ul>
             </section>
             <!-- /.sidebar -->
         </aside>
-
-
-
-
-
     <div>
         @RenderBody()
     </div>

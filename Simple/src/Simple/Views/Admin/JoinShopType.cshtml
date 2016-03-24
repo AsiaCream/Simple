@@ -1,0 +1,40 @@
+﻿@model IEnumerable<FindType>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a asp-action="CreateJoinShopType" asp-controller="Admin" class="btn btn-primary">添加进入店铺方式</a>
+                        <div style="height:20px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-responsive table-stripted table-hover">
+                            <thead>
+                                <tr style="background-color:rgb(60,141,188);">
+                                    <th>序号</th>
+                                    <th>进入店铺方式</th>
+                                    <th>可操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (FindType x in Model)
+                                {
+                                    <tr>
+                                        <td>@x.Id</td>
+                                        <td>@x.Type</td>
+                                        <td><a asp-action="EditJoinShopType" asp-controller="Admin" asp-route-id="@x.Id">编辑</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </section>
+</div>

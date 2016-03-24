@@ -8,55 +8,54 @@
         color: white;
     }
 </style>
-<div style="height:20px;"></div>
-<div class="container">
-    <div class="col-md-12">
-        <div class="col-md-2">
-            <div class="container-fluid">
-                <div class="col-md-12">
-                    <p style="color:red;">
-                        请认真填写！
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-10">
-            <p style="color:white;">店铺订单修改</p>
-            <form asp-action="EditShopOrderAmount" asp-controller="Manage"  method="post">
-                <input type="hidden" name="id" value="@Model.Id" />
-                <table class="table table-responsive table-stripted" style="background-color:white;">
-                    <tbody>
-                        <tr>
-                            <th class="must2">*所在平台</th>
-                            <td><input type="text" class="form-control" name="type" value="@Model.Type" /></td>
-                        </tr>
-                        <tr>
-                            <th class="must2">*店铺名</th>
-                            <td><input type="text" class="form-control" name="title" value="@Model.Title"/></td>
-                        </tr>
-                        <tr>
-                            <th class="must2">*日最大刷单量</th>
-                            <td><input type="text" class="form-control" name="maxoneday" value="@Model.MaxOneDay"/> </td>
-                        </tr>
-                        <tr>
-                            <th class="must2">*日最大评价量</th>
-                            <td><input type="text" class="form-control" name="maxoneevaluation" value="@Model.MaxOneEvaluation"/></td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
-                        </tr>
-                    </tbody>
-                </table>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">店铺订单修改</p>
+                        <form asp-action="EditShopOrderAmount" asp-controller="Manage" method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*所在平台</th>
+                                        <td><input type="text" class="form-control" name="type" value="@Model.Type" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*店铺名</th>
+                                        <td><input type="text" class="form-control" name="title" value="@Model.Title" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*日最大刷单量</th>
+                                        <td><input type="text" class="form-control" name="maxoneday" value="@Model.MaxOneDay" /> </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*日最大评价量</th>
+                                        <td><input type="text" class="form-control" name="maxoneevaluation" value="@Model.MaxOneEvaluation" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-            </form>
-            <label class="infolb" style="color:gold;">特别说明</label><br />
-            <label class="infolb">店铺名请勿随意修改，修改后系统会认为和之前的是不同店铺，由此可能引起系统分配买家账号重复的情况 责任自负！</label>     <br />
-            <label class="infolb">每天最大的刷单量，请设置一个安全的值，建议3-5个。</label><br />
-            <label class="infolb">每天最大的评价量，请设置一个安全的值，建议3-5个。如果当天有高于设置量的评价订单 则评价顺序后延。</label>
-            <div style="height:10px;"></div>
+                        </form>
+                        <label class="must2" >特别说明</label><br />
+                        <label class="must2">店铺名请勿随意修改，修改后系统会认为和之前的是不同店铺，由此可能引起系统分配买家账号重复的情况 责任自负！</label>     <br />
+                        <label class="must2">每天最大的刷单量，请设置一个安全的值，建议3-5个。</label><br />
+                        <label class="must2">每天最大的评价量，请设置一个安全的值，建议3-5个。如果当天有高于设置量的评价订单 则评价顺序后延。</label>
+                        <div style="height:10px;"></div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
+    </section>
+
 </div>
+
+
 
 
