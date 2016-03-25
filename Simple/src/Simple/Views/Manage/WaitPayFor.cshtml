@@ -47,6 +47,7 @@
                                     <th>Review</th>
                                     <th>审核</th>
                                     <th>类型</th>
+                                    <th>单数</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -73,6 +74,7 @@
                                         <td><a href="#" title="@x.ReviewContent">复制</a></td>
                                         <td>@x.Draw</td>
                                         <td>@x.PlatType</td>
+                                        <td>@x.Times</td>
                                         <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
                                     </tr>
                                     }

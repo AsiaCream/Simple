@@ -131,7 +131,6 @@ namespace Simple.Controllers
             preorder.Total = preorder.GoodsCost + preorder.Freight;
             preorder.RMB = preorder.Total * preorder.Rate;
             preorder.PayTotal = preorder.RMB + preorder.Poundage;
-            preorder.Times = 1;
             preorder.PreOrderNumber = DateTime.Now.ToString("yyyyMMddhhmmss") + number.ToString() ;
             DB.SaveChanges();
 
@@ -145,7 +144,16 @@ namespace Simple.Controllers
             var user = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
             //然后将和用户相关联的店铺信息找到，并用ViewBag返回到前台
             var shop = DB.ShopOrders.Where(x => x.UserId == user.Id).ToList();
+            var c = DB.Rates.OrderBy(x => x.Exchange).ToList();
+            var f = DB.FindTypes.OrderBy(x => x.Id).ToList();
+            ViewBag.Country = c;
+            ViewBag.FindType = f;
             ViewBag.Shop = shop;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult OneToMore(string id, PreOrder preorder)
+        {
             return View();
         }
         [HttpGet]
@@ -191,8 +199,10 @@ namespace Simple.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult CollectOrder()
+        public IActionResult HelpfulOrder()
         {
+            var c = DB.Rates.OrderBy(x => x.Exchange).ToList();
+            ViewBag.Country = c;
             return View();
         }
         [HttpGet]

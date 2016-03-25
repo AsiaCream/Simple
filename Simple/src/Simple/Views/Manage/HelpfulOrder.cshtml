@@ -1,0 +1,127 @@
+﻿<style>
+    .must2 {
+        color: red;
+    }
+
+    .must3 {
+        color: red;
+        font-size: 8px;
+    }
+</style>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">发布Helpful和收藏</p><label class="must2">请认真填写以下信息 ，本操作价格为 2 元 1 单</label>
+                        <form asp-action="HelfulOrder" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" id="orderForm" method="post">
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*国家（汇率）</th>
+                                        @foreach (Rate x in ViewBag.Country)
+                                        {
+                                            <td><input type="radio" name="Rate" id="Rate" value="@x.Exchange" />@x.Country &nbsp;(@x.Exchange)</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*连接</th>
+                                        <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" name="GoodsUrl" id="GoodsUrl" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">操作数量</th>
+                                        <td><input type="text" class="form-control" placeholder="请输入本产品要刷的单数" name="Times" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Helpful类型</th>
+                                        <td><input type="radio" name="AvoidWeekend" value="0" checked="checked" />不需避开周末</td>
+                                        <td><input type="radio" name="AvoidWeekend" value="1" />避开周末</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*是否收藏产品</th>
+                                        <td><input type="radio" name="Collection" value="YES" checked="checked" />YES</td>
+                                        <td><input type="radio" name="Collection" value="NO" />NO</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Review1标题</th>
+                                        <td><input class="form-control" name="ReviewTitle" /></td>
+                                        <td><input type="radio" />一星</td>
+                                        <td><input type="radio" />二星</td>
+                                        <td><input type="radio" />三星</td>
+                                        <td><input type="radio" />四星</td>
+                                        <td><input type="radio" />五星</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Review2标题</th>
+                                        <td><input class="form-control" name="ReviewTitle" /></td>
+                                        <td><input type="radio" />一星</td>
+                                        <td><input type="radio" />二星</td>
+                                        <td><input type="radio" />三星</td>
+                                        <td><input type="radio" />四星</td>
+                                        <td><input type="radio" />五星</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="submit" id="send" class="form-control btn btn-primary" value="提交并添加下一单"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#set_feedback_review").click(function () {
+            $(".feedback").fadeIn();
+            $(".review").fadeIn();
+        });
+        $("#set_feedback").click(function () {
+            $(".feedback").fadeIn();
+            $(".review").fadeOut();
+        });
+        $("#set_review").click(function () {
+            $(".feedback").fadeOut();
+            $(".review").fadeIn();
+        });
+        $("#set_order").click(function () {
+            $(".feedback").fadeOut();
+            $(".review").fadeOut();
+        });
+        $("#send").click(function () {
+            var url = "Manage/OneToOne";
+            var params = {
+                "Rate": $("#Rate").val(),
+                "FindType": $("#FindType").val(),
+                "GoodsUrl": $("#GoodsUrl").val(),
+                "ShopName": $("#ShopName").val(),
+                "GoodsCost": $("#GoodCost").val(),
+                "Freight": $("#Freight").val(),
+                "OrderType": $("input[type='radio' name='OrderType']").val(),
+                "NextOrToday": $("input[type='checkbox' name='NextOrToday']").val(),
+                "AvoidWeekend": $("input[type='radio' name='AvoidWeekend']").val(),
+                "Extension": $("input[type='radio' name='Extension']").val(),
+
+
+
+            }
+            $.post(url, params, function (data) {
+                if (data == "success") {
+                    alert("提交成功");
+                    window.location.href = "/Manage/OneToOne";
+                }
+                else {
+                    alert("提交失败");
+                }
+
+            });
+        });
+    });
+</script>
+
+
