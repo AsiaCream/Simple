@@ -10,7 +10,7 @@ using Simple.Models;
 
 namespace Simple.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="普通用户")]
     public class ManageController : BaseController
     {
         #region 店铺订单量设置
@@ -24,6 +24,8 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult CreateShopOrderAmount()
         {
+            var p = DB.PlatTypes.OrderBy(x => x.Id).ToList();
+            ViewBag.PlatType = p;
             return View();
         }
         [HttpPost]
@@ -133,7 +135,7 @@ namespace Simple.Controllers
             preorder.PreOrderNumber = DateTime.Now.ToString("yyyyMMddhhmmss") + number.ToString() ;
             DB.SaveChanges();
 
-            return RedirectToAction("OneToOne", "Manage");
+            return RedirectToAction("OneToOne","Manage");
         } 
         #endregion
         [HttpGet]

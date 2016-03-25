@@ -20,32 +20,32 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">发布订单:本页面发布的订单为一个产品一单，如想批量发布，请点击“<a asp-action="OneToMore" asp-controller="Manage">发布订单一产品多单</a>”</p>
-                        <form asp-action="OneToOne" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" method="post">
+                        <form asp-action="OneToOne" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" id="orderForm" method="post">
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*国家（汇率）</th>
                                         @foreach (Rate x in ViewBag.Country)
                                         {
-                                            <td><input type="radio" name="Rate" value="@x.Exchange" />@x.Country &nbsp;(@x.Exchange)</td>
+                                            <td><input type="radio" name="Rate" id="Rate" value="@x.Exchange" />@x.Country &nbsp;(@x.Exchange)</td>
                                         }
                                     </tr>
                                     <tr>
                                         <th class="must2">*进入店铺方式</th>
                                         @foreach (FindType x in ViewBag.FindType)
                                         {
-                                            <td><input type="radio" name="FindType" value="@x.Type" />@x.Type</td>
+                                            <td><input type="radio" name="FindType" id="FindType" value="@x.Type" />@x.Type</td>
                                         }
                                         <td class="must3">搜索方式进入，加收10.00服务费</td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*产品连接</th>
-                                        <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" name="GoodsUrl" /></td>
+                                        <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" name="GoodsUrl" id="GoodsUrl"/></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*请选择您的店铺</th>
                                         <td>
-                                            <select class="form-control" name="ShopName">
+                                            <select class="form-control" name="ShopName" id="ShopName">
                                                 @foreach (ShopOrder x in ViewBag.Shop)
                                                 {
                                                     <option>@x.Title</option>
@@ -55,15 +55,15 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*产品价格</th>
-                                        <td><input type="text" class="form-control" placeholder="请输入不小于1的价格" name="GoodsCost" /></td>
+                                        <td><input type="text" class="form-control" placeholder="请输入不小于1的价格" name="GoodsCost" id="GoodsCost"/></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*运费</th>
-                                        <td><input class="form-control" type="text" placeholder="0.00" name="Freight" /></td>
+                                        <td><input class="form-control" type="text" placeholder="0.00" name="Freight" id="Freight"/></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*订单类型</th>
-                                        <td><input type="radio" id="set_feedback_review" name="OrderType" value="下单 + feedback + review" />下单 + feedback + review</td>
+                                        <td><input type="radio" id="set_feedback_review" name="OrderType"  value="下单 + feedback + review" />下单 + feedback + review</td>
                                         <td><input type="radio" id="set_feedback" name="OrderType" value="下单 + feedback" />下单 + feedback</td>
                                         <td><input type="radio" id="set_review" name="OrderType" value="下单 +  review" />下单 +  review</td>
                                         <td><input type="radio" id="set_order" checked="checked" name="OrderType" value="只下单不评价" />只下单不评价</td>
@@ -116,7 +116,7 @@
                                     <tr class="feedback">
                                         <th class="must2">*FeedBack星级</th>
                                         <td><input type="radio" name="FeedBackStar" value="四星"/>四星</td>
-                                        <td><input type="radio" name="FeedBackStar" checked="checked" value="五星"/>五星</td>
+                                        <td><input type="radio" name="FeedBackStar" value="五星"/>五星</td>
                                     </tr>
                                     <tr class="feedback">
                                         <th class="must2">*FeedBack模版</th>
@@ -134,7 +134,7 @@
                                     <tr class="review">
                                         <th class="must2">*Review星级</th>
                                         <td><input type="radio" value="四星" name="ReviewStar"/>四星</td>
-                                        <td><input type="radio" value="五星" checked="checked" name="ReviewStar"/>五星</td>
+                                        <td><input type="radio" value="五星" name="ReviewStar"/>五星</td>
                                     </tr>
                                     <tr class="review">
                                         <th class="must2">*Review内容</th>
@@ -162,7 +162,7 @@
                                         <td><input type="file" name="ImageUrl3" /></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="submit" class="form-control btn btn-primary" value="提交并添加下一单" /></td>
+                                        <td><input type="submit" id="send" class="form-control btn btn-primary" value="提交并添加下一单"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -193,5 +193,34 @@
             $(".feedback").fadeOut();
             $(".review").fadeOut();
         });
+        $("#send").click(function () {
+            var url = "Manage/OneToOne";
+            var params = {
+                "Rate": $("#Rate").val(),
+                "FindType": $("#FindType").val(),
+                "GoodsUrl": $("#GoodsUrl").val(),
+                "ShopName": $("#ShopName").val(),
+                "GoodsCost": $("#GoodCost").val(),
+                "Freight": $("#Freight").val(),
+                "OrderType": $("input[type='radio' name='OrderType']").val(),
+                "NextOrToday": $("input[type='checkbox' name='NextOrToday']").val(),
+                "AvoidWeekend": $("input[type='radio' name='AvoidWeekend']").val(),
+                "Extension": $("input[type='radio' name='Extension']").val(),
+
+
+
+            }
+            $.post(url, params, function (data) {
+                if (data == "success") {
+                    alert("提交成功");
+                    window.location.href = "/Manage/OneToOne";
+                }
+                else {
+                    alert("提交失败");
+                }
+
+            });
+        });
     });
 </script>
+

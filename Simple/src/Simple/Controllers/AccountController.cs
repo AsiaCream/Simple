@@ -28,13 +28,13 @@ namespace Simple.Controllers
             var result = await signInManager.PasswordSignInAsync(username, password, false, false);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
                 //var u= DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
-                //return Content("用户名为：" + username + ",ID为"+u.Id);
+                return Content("success");
             }
             else
             {
-                return Content("用户名或者密码错误");
+                return RedirectToAction("Login","Account");
             }
         }
         #endregion

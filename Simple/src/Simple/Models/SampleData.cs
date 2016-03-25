@@ -52,6 +52,10 @@ namespace Simple.Models
                 db.Rates.Add(new Rate { Country = "加", Exchange = 5.38 });
                 db.Rates.Add(new Rate { Country = "欧", Exchange = 7.59 });
 
+                //初始化平台类型
+                db.PlatTypes.Add(new PlatType { Title = "Amazon" });
+                db.PlatTypes.Add(new PlatType { Title = "Ebay" });
+
                 //初始化IncreasingNumber
                 db.IncreasingNumbers.Add(new IncreasingNumber { Number = 0 });
 

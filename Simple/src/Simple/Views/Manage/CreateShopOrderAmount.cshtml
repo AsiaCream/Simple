@@ -16,9 +16,11 @@
                                     <tr>
                                         <th class="must2">*所在平台</th>
                                         <td><select class="form-control" name="type">
-                                            <option>Amazon</option>
-                                            <option>Ebay</option>
-                                            </select> </td>
+                                            @foreach(PlatType x in ViewBag.PlatType)
+                                            {
+                                                <option>@x.Title</option>
+                                            }
+                                            </select>
                                     </tr>
                                     <tr>
                                         <th class="must2">*店铺名</th>
