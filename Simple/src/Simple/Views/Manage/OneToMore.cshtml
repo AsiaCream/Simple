@@ -6,6 +6,12 @@
         color:red;
         font-size:8px;
     }
+    .feedback{
+        display:none;
+    }
+    .review{
+        display:none;
+    }
 </style>
 <div>
     <section>
@@ -25,7 +31,7 @@
                                 </tr>
                                 <tr>
                                     <th class="must2">*进入店铺方式</th>
-                                    <td><input type="radio" name="FindType" value="链接进入" />链接进入</td>
+                                    <td><input type="radio" checked="checked" name="FindType" value="链接进入" />链接进入</td>
                                     <td><input type="radio" name="FindType" value="搜索进入" />搜索进入</td>
                                     <td class="must3">搜索方式进入，加收10.00服务费</td>
                                 </tr>
@@ -53,10 +59,10 @@
                                     <td><input class="form-control" type="text" placeholder="0.00" name="Freight" /></td>                                </tr>
                                 <tr>
                                     <th class="must2">*订单类型</th>
-                                    <td><input type="radio" name="OrderType" value="下单 + feedback + review" />下单 + feedback + review</td>
-                                    <td><input type="radio" name="OrderType" value="下单 + feedback" />下单 + feedback</td>
-                                    <td><input type="radio" name="OrderType" value="下单 +  review" />下单 +  review</td>
-                                    <td><input type="radio" name="OrderType" value="只下单不评价" />只下单不评价</td>
+                                    <td><input type="radio" id="set_feedback_review" name="OrderType" value="下单 + feedback + review" />下单 + feedback + review</td>
+                                    <td><input type="radio" id="set_feedback" name="OrderType" value="下单 + feedback" />下单 + feedback</td>
+                                    <td><input type="radio" id="set_review" name="OrderType" value="下单 +  review" />下单 +  review</td>
+                                    <td><input type="radio" id="set_order" name="OrderType" checked="checked" value="只下单不评价" />只下单不评价</td>
                                 </tr>
                                 <tr class="must2">
                                     <th>*特别说明</th>
@@ -72,12 +78,12 @@
                                 </tr>
                                 <tr>
                                     <th class="must2">*是否避开周末</th>
-                                    <td><input type="radio" name="AvoidWeekend" value="0" />不需避开周末</td>
+                                    <td><input type="radio" name="AvoidWeekend" value="0" checked="checked"/>不需避开周末</td>
                                     <td><input type="radio" name="AvoidWeekend" value="1" />避开周末</td>
                                 </tr>
                                 <tr>
                                     <th class="must2">*是否免费推广</th>
-                                    <td><input type="radio" name="Extension" value="1" />推广</td>
+                                    <td><input type="radio" name="Extension" value="1" checked="checked" />推广</td>
                                     <td><input type="radio" name="Extension" value="0" />不推广</td>
                                 </tr>
                                 <tr>
@@ -85,30 +91,12 @@
                                     <td><input type="text" class="form-control" value="15" name="CommentTime" /></td>
                                     <td>默认亚马逊订单生成时开始计时</td>
                                 </tr>
-                                <tr>
-                                    <th class="must2">*收件人地址</th>
-                                    <td><textarea class="form-control" name="Address" style="height:200px; resize:none;" placeholder="选填项（加收五元服务费）适用于修改收货信息，保证自己安排签到的客户"></textarea></td>
-                                    <td>
-                                        Full Name: MekeEva
-                                        Address Line 1: 307 VININGS VINTAGE CIR
-                                        Address Line 2:
-                                        City：MABLETON,
-                                        State/Province/Region: GEORGIA
-                                        Country:US
-                                        ZIP: 30126-7238
-                                        Phone Number: 000-000-0000
-                                    </td>
-                                    <td class="must3">
-                                        本项目为：选填项(加收五元服务费)适用于需修改收货信息，
-                                        保证自己安排签收的客户
-                                    </td>
-                                </tr>
-                                <tr>
+                                <tr class="feedback">
                                     <th class="must2">FeedBack星级</th>
                                     <td><input type="radio" name="FeedBackStar" value="四星" />四星</td>
-                                    <td><input type="radio" name="FeedBackStar" value="五星" />五星</td>
+                                    <td><input type="radio" name="FeedBackStar" checked="checked" value="五星" />五星</td>
                                 </tr>
-                                <tr>
+                                <tr class="feedback">
                                     <th class="must2">*FeedBack模版</th>
                                     <td>
                                         <select name="FeedBackModel">
@@ -117,20 +105,20 @@
                                         </select>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="feedback">
                                     <th class="must2">*FeedBack内容</th>
                                     <td><textarea class="form-control " style="height:100px;resize:none;" name="FeedBackContent"></textarea></td>
                                 </tr>
-                                <tr>
+                                <tr class="review">
                                     <th class="must2">*Review星级</th>
                                     <td><input type="radio" value="四星" name="ReviewStar" />四星</td>
-                                    <td><input type="radio" value="五星" name="ReviewStar" />五星</td>
+                                    <td><input type="radio" value="五星" checked="checked" name="ReviewStar" />五星</td>
                                 </tr>
-                                <tr>
+                                <tr class="review">
                                     <th class="must2">*Review内容</th>
                                     <td><textarea class="form-control" style="height:100px;resize:none;" name="ReviewContent"></textarea></td>
                                 </tr>
-                                <tr>
+                                <tr class="review">
                                     <th class="must2">*Review标题</th>
                                     <td><input class="form-control" name="ReviewTitle" /></td>
                                 </tr>
@@ -148,15 +136,32 @@
                             </tbody>
                         </table>
                     </div>
-
-
-
                 </div>
             </section>
         </div>
     </section>
-
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#set_feedback_review").click(function () {
+            $(".feedback").fadeIn();
+            $(".review").fadeIn();
+        });
+        $("#set_feedback").click(function () {
+            $(".feedback").fadeIn();
+            $(".review").fadeOut();
+        });
+        $("#set_review").click(function () {
+            $(".feedback").fadeOut();
+            $(".review").fadeIn();
+        });
+        $("#set_order").click(function () {
+            $(".feedback").fadeOut();
+            $(".review").fadeOut();
+        });
+    });
+</script>
 
 
 

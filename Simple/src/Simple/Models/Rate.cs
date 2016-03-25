@@ -10,5 +10,6 @@ namespace Simple.Models
         public int Id { get; set; }
         public string Country { get; set; }
         public double Exchange { get; set; }
+
     }
 }

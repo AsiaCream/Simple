@@ -22,6 +22,7 @@ namespace Simple.Models
         public DbSet<OrderType> OrderTypes { get; set; }
         public DbSet<IncreasingNumber> IncreasingNumbers { get; set; }
         public DbSet<PlatType> PlatTypes { get; set; }
+        public DbSet<Rate> Rates { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -70,6 +71,10 @@ namespace Simple.Models
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<Poundage>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<Rate>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

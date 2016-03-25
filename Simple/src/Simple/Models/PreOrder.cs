@@ -21,6 +21,7 @@ namespace Simple.Models
     {   
         public int Id { get; set; }
         public string PreOrderNumber { get; set; }
+        public string Country { get; set; }
         public double Rate { get; set; }
         public string FindType { get; set; }
         public string GoodsUrl { get; set; }

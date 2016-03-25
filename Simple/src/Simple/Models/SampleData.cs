@@ -45,6 +45,13 @@ namespace Simple.Models
                 db.FindTypes.Add(new FindType { Type = "链接进入" });
                 db.FindTypes.Add(new FindType { Type = "搜索进入" });
 
+                //初始化汇率以及对应国家
+                db.Rates.Add(new Rate { Country = "美", Exchange = 6.6 });
+                db.Rates.Add(new Rate { Country = "英", Exchange = 9.98 });
+                db.Rates.Add(new Rate { Country = "日", Exchange = 0.063 });
+                db.Rates.Add(new Rate { Country = "加", Exchange = 5.38 });
+                db.Rates.Add(new Rate { Country = "欧", Exchange = 7.59 });
+
                 //初始化IncreasingNumber
                 db.IncreasingNumbers.Add(new IncreasingNumber { Number = 0 });
 
