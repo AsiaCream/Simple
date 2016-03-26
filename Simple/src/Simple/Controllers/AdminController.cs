@@ -83,5 +83,20 @@ namespace Simple.Controllers
             
         }
         #endregion 
+
+
+        [HttpGet]
+        public IActionResult PreOrder()
+        {
+            var ret = DB.PreOrders.Where(x=>x.Draw==Draw.待审核).OrderBy(x => x.Id).ToList();
+            return View(ret);
+        }
+
+        [HttpGet]
+        public IActionResult HelpfulWaitDraw()
+        {
+            var ret = DB.HelpfulPreOrders.Where(x => x.Draw == Draw.待审核).OrderBy(x => x.Id).ToList();
+            return View(ret);
+        }
     }
 }
