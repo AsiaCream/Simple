@@ -198,12 +198,32 @@ namespace Simple.Controllers
         public IActionResult HelpfulOrder()
         {
             var c = DB.Rates.OrderBy(x => x.Exchange).ToList();
+            var p = DB.HelpfulPrices.SingleOrDefault();
+            ViewBag.Price = p.Price;
+            ViewBag.WishListCost = p.WishListCost;
             ViewBag.Country = c;
             return View();
+        }
+        [HttpPost]
+        public IActionResult HelpfulOrder(string id,HelpfulPreOrder helpfulpreorder)
+        {
+            var number = DB.IncreasingNumbers.Max(x => x.Number);
+            number = number + 1;
+            var helpfulprice = DB.HelpfulPrices.Where(x=>x.Id==1).SingleOrDefault();//找出当前Helpful价格
+            var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();//找出当前提交订单的用户
+            DB.HelpfulPreOrders.Add(helpfulpreorder);
+            helpfulpreorder.OrderNumber = number;
+            helpfulpreorder.UserId = user.Id;
+            helpfulpreorder.PayFor = helpfulprice.Price * helpfulpreorder.Times+helpfulprice.WishListCost;
+            helpfulpreorder.Draw = Draw.待审核;
+            helpfulpreorder.State = State.未锁定;
+            DB.SaveChanges();
+            return RedirectToAction("HelpfulOrder","Manage");
         }
         [HttpGet]
         public IActionResult HelpfulWaitPayFor()
         {
+            
             return View();
         }
         [HttpGet]

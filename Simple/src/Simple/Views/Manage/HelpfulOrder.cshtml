@@ -14,15 +14,15 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">发布Helpful和收藏</p><label class="must2">请认真填写以下信息 ，本操作价格为 2 元 1 单</label>
-                        <form asp-action="HelfulOrder" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" id="orderForm" method="post">
+                        <p class="infotitle">发布Helpful和收藏 </p><label class="must2">请认真填写以下信息 ，本操作价格为 @ViewBag.Price 元 1 单</label>
+                        <form asp-action="HelpfulOrder" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" id="orderForm" method="post">
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
-                                        <th class="must2">*国家（汇率）</th>
+                                        <th class="must2">*国家</th>
                                         @foreach (Rate x in ViewBag.Country)
                                         {
-                                            <td><input type="radio" name="Rate" id="Rate" value="@x.Exchange" />@x.Country &nbsp;(@x.Exchange)</td>
+                                            <td><input type="radio" name="Country" id="Country" value="@x.Country" />@x.Country</td>
                                         }
                                     </tr>
                                     <tr>
@@ -57,13 +57,14 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*Helpful类型</th>
-                                        <td><input type="radio" name="AvoidWeekend" value="0" checked="checked" />不需避开周末</td>
-                                        <td><input type="radio" name="AvoidWeekend" value="1" />避开周末</td>
+                                        <td><input type="radio" name="AvoidWeekend" value="1" checked="checked" />YES</td>
+                                        <td><input type="radio" name="AvoidWeekend" value="0" />No</td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*是否收藏产品</th>
-                                        <td><input type="radio" name="Collection" value="YES" checked="checked" />YES</td>
-                                        <td><input type="radio" name="Collection" value="NO" />NO</td>
+                                        <td><input type="radio" name="Collection" value="1" />YES</td>
+                                        <td><input type="radio" name="Collection" value="0" checked="checked" />NO</td>
+                                        <td class="infotitle">（Add to Wish List）功能单独收费 @ViewBag.WishListCost 元 </td>
                                     </tr>
                                     <tr>
                                         <td><input type="submit" id="send" class="form-control btn btn-primary" value="提交并添加下一单"></td>

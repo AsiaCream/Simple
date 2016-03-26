@@ -23,6 +23,8 @@ namespace Simple.Models
         public DbSet<IncreasingNumber> IncreasingNumbers { get; set; }
         public DbSet<PlatType> PlatTypes { get; set; }
         public DbSet<Rate> Rates { get; set; }
+        public DbSet<HelpfulPreOrder> HelpfulPreOrders { get; set; }
+        public DbSet<HelpfulPrice> HelpfulPrices { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -75,6 +77,14 @@ namespace Simple.Models
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<Rate>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<HelpfulPreOrder>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<HelpfulPrice>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

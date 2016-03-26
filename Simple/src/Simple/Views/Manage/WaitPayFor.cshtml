@@ -5,6 +5,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">待支付列表</p>
+                        <p class="must2">如想快速发布一对一订单，可以点击<a asp-action="OneToOne" asp-controller="Manage">此处</a>跳转</p>
                         <input type="text" placeholder="系统订单号" class="input-lg" />
                         &nbsp;&nbsp;
                         <input type="text" placeholder="真实订单号" class="input-lg" />
@@ -27,7 +28,7 @@
                     <div class="col-md-12">
                         <table class="table table-responsive table-stripted table-hover" style="background-color:white;">
                             <thead>
-                                <tr style="background-color:rgb(60,141,188);">
+                                <tr class="table-title">
                                     <th>序号</th>
                                     <th>订单编号</th>
                                     <th>国家</th>

@@ -11,6 +11,7 @@ namespace Simple.Controllers
     [Authorize(Roles = "系统管理员")]
     public class AdminController : BaseController
     {
+        #region 进入店铺方式显示，修改
         [HttpGet]
         public IActionResult JoinShopType()
         {
@@ -36,9 +37,9 @@ namespace Simple.Controllers
             return View(ret);
         }
         [HttpPost]
-        public IActionResult EditJoinShopType(int id,FindType findtype)
+        public IActionResult EditJoinShopType(int id, FindType findtype)
         {
-            var old= DB.FindTypes.Where(x => x.Id == id).SingleOrDefault();
+            var old = DB.FindTypes.Where(x => x.Id == id).SingleOrDefault();
             if (old == null)
             {
                 return Content("该进入店铺方式不存在");
@@ -50,5 +51,37 @@ namespace Simple.Controllers
                 return RedirectToAction("JoinShopType", "Admin");
             }
         }
+        #endregion
+        #region Helpful费用管理
+        [HttpGet]
+        public IActionResult HelpfulPrice()
+        {
+            var ret = DB.HelpfulPrices.ToList();
+            return View(ret);
+        }
+        [HttpGet]
+        public IActionResult EditHelpfulPrice(int id)
+        {
+            var ret = DB.HelpfulPrices.Where(x => x.Id == id).SingleOrDefault();
+            return View(ret);
+        }
+        [HttpPost]
+        public IActionResult EditHelpfulPrice(int id,HelpfulPrice helpfulprice)
+        {
+            var old = DB.HelpfulPrices.Where(x => x.Id == id).SingleOrDefault();
+            if (old == null)
+            {
+                return Content("找不到选项");
+            }
+            else
+            {
+                old.Price = helpfulprice.Price;
+                old.WishListCost = helpfulprice.WishListCost;
+                DB.SaveChanges();
+                return RedirectToAction("HelpfulPrice", "Admin");
+            }
+            
+        }
+        #endregion 
     }
 }

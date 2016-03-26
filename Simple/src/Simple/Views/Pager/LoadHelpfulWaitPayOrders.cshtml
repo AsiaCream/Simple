@@ -1,0 +1,30 @@
+﻿@model IEnumerable<HelpfulPreOrder>
+@{
+    Layout = null;
+}
+<tr>
+    @foreach (var x in Model)
+    {
+    <tr>
+        <td>@x.Id</td>
+        <td>@x.OrderNumber</td>
+        <td>@x.Country</td>
+        <td><a href="#" title="@x.Review1">查看</a></td>
+        <td><a href="#" title="@x.Review2">查看</a></td>
+        <td><a href="#" title="@x.Review3">查看</a></td>
+        <td><a href="#" title="@x.Review4">查看</a></td>
+        <td><a href="#" title="@x.Review5">查看</a></td>
+        <td><a href="#" title="@x.Review6">查看</a></td>
+        <td><a href="#" title="@x.Review7">查看</a></td>
+        <td><a href="#" title="@x.Review8">查看</a></td>
+        <td><a href="#" title="@x.Review9">查看</a></td>
+        <td><a href="#" title="@x.Review10">查看</a></td>
+        <td><a href="@x.Url" title="@x.Url" target="_blank">查看</a></td>
+        <td>@x.HelpfulType</td>
+        <td>@x.IsCollection</td>
+        <td>@x.Draw</td>
+        <td>@x.Times</td>
+        <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
+    </tr>
+    }
+

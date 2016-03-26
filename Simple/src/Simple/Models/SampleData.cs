@@ -56,6 +56,10 @@ namespace Simple.Models
                 db.PlatTypes.Add(new PlatType { Title = "Amazon" });
                 db.PlatTypes.Add(new PlatType { Title = "Ebay" });
 
+                //初始化Helpful价格
+
+                db.HelpfulPrices.Add(new HelpfulPrice { Price = 2.00,WishListCost=2.00 });
+
                 //初始化IncreasingNumber
                 db.IncreasingNumbers.Add(new IncreasingNumber { Number = 0 });
 

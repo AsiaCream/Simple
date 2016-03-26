@@ -1,0 +1,38 @@
+﻿@model IEnumerable<HelpfulPrice>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">Helpful费用管理</p>
+                        <table class="table table-responsive table-stripted table-hover">
+                            <thead>
+                                <tr class="table-title">
+                                    <th>序号</th>
+                                    <th>当前Helpful一单费用（单位：元）</th>
+                                    <th>当前Add To WishList费用（单位：元）</th>
+                                    <th>可操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (HelpfulPrice x in Model)
+                                {
+                                    <tr>
+                                        <td>@x.Id</td>
+                                        <td>@x.Price </td>
+                                        <td>@x.WishListCost </td>
+                                        <td><a asp-action="EditHelpfulPrice" asp-controller="Admin" asp-route-id="@x.Id">编辑</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
