@@ -9,6 +9,7 @@ namespace Simple.Models
     public class PassOrder
     {
         public int Id { get; set; }
+        public DateTime PassTime { get; set; }
 
         [ForeignKey("PreOrder")]
         public int PreOrderId { get; set; }

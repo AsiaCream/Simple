@@ -6,8 +6,6 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using Simple.Models;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Simple.Controllers
 {
     [Authorize(Roles ="普通用户")]
@@ -228,11 +226,6 @@ namespace Simple.Controllers
         {
             return View();
         }
-        public IActionResult LoadWaitPayOrders(int page)
-        {
-            var u = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
-            var order = DB.PreOrders.Where(x => x.UserId == u.Id).OrderBy(x => x.Id).Skip(page * 3).Take(3).ToList();
-            return View(order);
-        }
+        
     }
 }

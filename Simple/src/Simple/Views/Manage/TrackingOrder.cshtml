@@ -1,4 +1,5 @@
-﻿<div>
+﻿@model IEnumerable<PreOrder>
+<div>
     <section>
         <div class="content-wrapper">
             <section class="content">
@@ -19,7 +20,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="button" class="btn btn-primary" value="查询" />
                         <div style="height:20px;"></div>
-                        <select class="btn-lg">
+                        <select>
                             <option>请选择排序条件</option>
                             <option>下单时间降序</option>
                             <option>发布时间降序</option>
@@ -47,75 +48,17 @@
                                     <th>Review</th>
                                     <th>是否审核</th>
                                     <th>操作</th>
-                                    <th>下单时间</th>
+                                    <th>单数</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1008688</td>
-                                    <td>美国</td>
-                                    <td>STG</td>
-                                    <td>www.STG.com</td>
-                                    <td>美国某地</td>
-                                    <td>衣服</td>
-                                    <td>50.00</td>
-                                    <td>50.00</td>
-                                    <td>100.00</td>
-                                    <td>800.00</td>
-                                    <td>200.00</td>
-                                    <td>1500.22</td>
-                                    <td>8669854</td>
-                                    <td>四星</td>
-                                    <td>需要Review</td>
-                                    <td>是</td>
-                                    <td>删除</td>
-                                    <td>2016/03/22</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>88456456</td>
-                                    <td>美国</td>
-                                    <td>STG</td>
-                                    <td>www.STG.com</td>
-                                    <td>美国某地</td>
-                                    <td>衣服</td>
-                                    <td>50.00</td>
-                                    <td>50.00</td>
-                                    <td>100.00</td>
-                                    <td>800.00</td>
-                                    <td>200.00</td>
-                                    <td>1500.22</td>
-                                    <td>8669854</td>
-                                    <td>四星</td>
-                                    <td>需要Review</td>
-                                    <td>是</td>
-                                    <td>删除</td>
-                                    <td>2016/03/22</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>687874</td>
-                                    <td>德国</td>
-                                    <td>STG</td>
-                                    <td>www.STG.com</td>
-                                    <td>美国某地</td>
-                                    <td>衣服</td>
-                                    <td>50.00</td>
-                                    <td>50.00</td>
-                                    <td>100.00</td>
-                                    <td>800.00</td>
-                                    <td>200.00</td>
-                                    <td>1500.22</td>
-                                    <td>8669854</td>
-                                    <td>四星</td>
-                                    <td>需要Review</td>
-                                    <td>是</td>
-                                    <td>删除</td>
-                                    <td>2016/03/22</td>
-                                </tr>
+                            <tbody id="order-list">
+                                
                             </tbody>
                         </table>
+                        <p>
+                            <button id="btn-prev" class="btn btn-primary">上一页</button>
+                            <button id="btn-next" class="btn btn-primary">下一页</button>
+                        </p>
                     </div>
                 </div>
             </section>
@@ -123,6 +66,34 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    var p = 0;
+    function load() {
+        $.get("/Pager/LoadTrackingOrders", {
+            page:p
+        }, function (html) {
+            $("#order-list").html(html);
+
+        });
+
+    }
+    $("#btn-prev").click(function () {
+        p--;
+        if (p < 0)
+            p = 0;
+        load();
+    });
+    $("#btn-next").click(function () {
+        p++;
+        if (p >1)
+            p = 0;
+            load();
+    });
+    $(document).ready(function () {
+        load();
+    });
+</script>
 
 
 
