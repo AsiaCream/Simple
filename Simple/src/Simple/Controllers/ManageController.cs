@@ -202,17 +202,27 @@ namespace Simple.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult WaitPayForOrder()
+        public IActionResult HelpfulWaitPayFor()
         {
             return View();
         }
         [HttpGet]
-        public IActionResult PassNotFinish()
+        public IActionResult HelpfulPassNotFinish()
         {
             return View();
         }
         [HttpGet]
-        public IActionResult TodayPlaceOrder()
+        public IActionResult HelpfulTodayOrder()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult HelpfulAllOrder()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult HelpfulErrorOrder()
         {
             return View();
         }

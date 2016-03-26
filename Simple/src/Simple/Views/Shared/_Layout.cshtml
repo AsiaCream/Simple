@@ -257,7 +257,7 @@
                                                     <li><a asp-action="FinishOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
                                                     <li><a asp-action="EditAddress" asp-controller="Manage"><i class="fa fa-circle-o"></i> 修改地址订单</a></li>
                                                     <li><a asp-action="TrackingOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单跟踪</a></li>
-                                                    <li><a asp-action="ErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 错单撤销列表</a></li>
+                                                    <li><a asp-action="ErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 错单列表</a></li>
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -268,9 +268,12 @@
                                                 </a>
                                                 <ul class="treeview-menu">
                                                     <li><a asp-action="HelpfulOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布Helpful和收藏</a></li>
-                                                    <li><a asp-action="WaitPayForOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
-                                                    <li><a asp-action="PassNotFinish" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已支付未完成订单</a></li>
-                                                    <li><a asp-action="TodayPlaceOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今日排单</a></li>
+                                                    <li><a asp-action="HelpfulWaitPayFor" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
+                                                    <li><a asp-action="HelpfulPassNotFinish" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已支付未完成订单</a></li>
+                                                    <li><a asp-action="HelpfulTodayOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今日排单</a></li>
+                                                    <li><a asp-action="HelpfulAllOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单</a></li>
+                                                    <li><a asp-action="HelpfulErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 错单列表</a></li>
+                                                    
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -316,6 +319,7 @@
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 费用设置管理</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 推广设置</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> FeedBack模板</a></li>
                                                 </ul>
                                             </li>
                                             <li class="treeview">
