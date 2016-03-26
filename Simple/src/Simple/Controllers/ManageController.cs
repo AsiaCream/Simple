@@ -159,9 +159,7 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult WaitPayFor()
         {
-            var u = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
-            var order = DB.PreOrders.Where(x => x.UserId == u.Id).OrderBy(x=>x.Id).ToList();        
-            return View(order);
+            return View();
         }
         [HttpGet]
         public IActionResult TodayOrder()
@@ -229,6 +227,12 @@ namespace Simple.Controllers
         public IActionResult CostRecord()
         {
             return View();
+        }
+        public IActionResult LoadWaitPayOrders(int page)
+        {
+            var u = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            var order = DB.PreOrders.Where(x => x.UserId == u.Id).OrderBy(x => x.Id).Skip(page * 3).Take(3).ToList();
+            return View(order);
         }
     }
 }

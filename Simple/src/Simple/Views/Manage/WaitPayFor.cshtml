@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PreOrder>
+﻿
 <div>
     <section>
         <div class="content-wrapper">
@@ -51,40 +51,46 @@
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    @foreach (var x in Model)
-                                    {
-                                    <tr>
-                                        <td>@x.Id</td>
-                                        <td>@x.PreOrderNumber</td>
-                                        <td>@x.Country</td>
-                                        <td>@x.ShopName</td>
-                                        <td><a href="@x.GoodsUrl" title="@x.GoodsUrl" target="_blank">查看</a></td>
-                                        <td>@x.FindType</td>
-                                        <td>@x.NextOrToday</td>
-                                        <td>@x.GoodsCost</td>
-                                        <td>@x.Freight</td>
-                                        <td>@x.Rate</td>
-                                        <td>@x.Total</td>
-                                        <td>@x.RMB</td>
-                                        <td>@x.Poundage</td>
-                                        <td>@x.PayTotal</td>
-                                        <td><a href="#" title="@x.FeedBackContent">复制</a></td>
-                                        <td><a href="#" title="@x.ReviewContent">复制</a></td>
-                                        <td>@x.Draw</td>
-                                        <td>@x.PlatType</td>
-                                        <td>@x.Times</td>
-                                        <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
-                                    </tr>
-                                    }
+                            <tbody id="order-list">
+                                
                                 </tbody>
                             </table>
-
+                        <p>
+                            <button id="btn-prev" class="btn btn-primary">上一页</button>
+                            <button id="btn-next" class="btn btn-primary">下一页</button>
+                        </p>
                         </div>
-
                 </div>
             </section>
         </div>
     </section>
 </div>
+
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    var p = 0;
+    function load() {
+        $.get("/Manage/LoadWaitPayOrders", {
+            page:p
+        }, function (html) {
+            $("#order-list").html(html);
+
+        });
+
+    }
+    $("#btn-prev").click(function () {
+        p--;
+        if (p < 0)
+            p = 0;
+        load();
+    });
+    $("#btn-next").click(function () {
+        p++;
+        if (p >3)
+            p = 0;
+            load();
+    });
+    $(document).ready(function () {
+        load();
+    });
+</script>
