@@ -16,6 +16,8 @@
                                 <tr style="background-color:rgb(60,141,188);">
                                     <th>序号</th>
                                     <th>进入店铺方式</th>
+                                    <th>该方式对应的价格</th>
+                                    <th>说明</th>
                                     <th>可操作</th>
                                 </tr>
                             </thead>
@@ -25,6 +27,8 @@
                                     <tr>
                                         <td>@x.Id</td>
                                         <td>@x.Type</td>
+                                        <td>@x.Price</td>
+                                        <td>@x.Note</td>
                                         <td><a asp-action="EditJoinShopType" asp-controller="Admin" asp-route-id="@x.Id">编辑</a></td>
                                     </tr>
                                 }

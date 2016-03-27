@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Simple.Models
 {
-    public class NextOrToday
+    public class CommentTime //评价时间
     {
         public int Id { get; set; }
-        public string Type { get; set; }//隔天下单，当天下单属性
-        public string Price { get; set; }//对应价格
+        public int Date { get; set; }
+        public string Note { get; set; }
     }
 }

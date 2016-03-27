@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Models
 {
-    public class OrderType
+    public class OrderType //下单 + feedback + review
     {
         public int Id { get; set; }
         public string Type { get; set; }

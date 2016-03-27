@@ -47,11 +47,41 @@ namespace Simple.Controllers
             else
             {
                 old.Type = findtype.Type;
+                old.Price = findtype.Price;
+                old.Note = findtype.Note;
                 DB.SaveChanges();
                 return RedirectToAction("JoinShopType", "Admin");
             }
         }
         #endregion
+        [HttpGet]
+        public IActionResult CommentTime()
+        {
+            var ret = DB.CommentTimes.OrderBy(x => x.Id).ToList();
+            return View(ret);
+        }
+        [HttpGet]
+        public IActionResult EditCommentTime(int id)
+        {
+            var commenttime = DB.CommentTimes.Where(x => x.Id == id).SingleOrDefault();
+            return View(commenttime);
+        }
+        [HttpPost]
+        public IActionResult EditCommentTime(int id,CommentTime Commentime)
+        {
+            var old = DB.CommentTimes.Where(x => x.Id == id).SingleOrDefault();
+            if (old == null)
+            {
+                return Content("找不到选项");
+            }
+            else
+            {
+                old.Date = Commentime.Date;
+                old.Note = Commentime.Note;
+                DB.SaveChanges();
+                return RedirectToAction("CommentTime", "Admin");
+            }
+        }
         #region Helpful费用管理
         [HttpGet]
         public IActionResult HelpfulPrice()
@@ -83,6 +113,7 @@ namespace Simple.Controllers
             
         }
         #endregion 
+
 
 
         [HttpGet]

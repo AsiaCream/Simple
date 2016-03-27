@@ -35,8 +35,8 @@
                                         @foreach (FindType x in ViewBag.FindType)
                                         {
                                             <td><input type="radio" name="FindType" id="FindType" value="@x.Type" />@x.Type</td>
+                                            <td class="must2">@x.Note</td>
                                         }
-                                        <td class="must3">搜索方式进入，加收10.00服务费</td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*产品连接</th>
@@ -92,8 +92,11 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*评价时间</th>
-                                        <td><input type="text" class="form-control" value="15" name="CommentTime" /></td>
-                                        <td>亚马逊订单生成时开始计时</td>
+                                        @foreach (CommentTime x in ViewBag.CommentTime)
+                                        {
+                                            <td><input type="text" class="form-control" value="@x.Date" name="CommentTime" /></td>
+                                            <td class="must2">@x.Note</td>
+                                        }
                                     </tr>
                                     <tr>
                                         <th class="must2">*收件人地址</th>

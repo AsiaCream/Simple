@@ -25,6 +25,7 @@ namespace Simple.Models
         public DbSet<Rate> Rates { get; set; }
         public DbSet<HelpfulPreOrder> HelpfulPreOrders { get; set; }
         public DbSet<HelpfulPrice> HelpfulPrices { get; set; }
+        public DbSet<CommentTime> CommentTimes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -85,6 +86,10 @@ namespace Simple.Models
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<HelpfulPrice>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<CommentTime>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

@@ -86,6 +86,8 @@ namespace Simple.Controllers
             var shop = DB.ShopOrders.Where(x => x.UserId == user.Id).ToList();
             var c = DB.Rates.OrderBy(x => x.Exchange).ToList();
             var f = DB.FindTypes.OrderBy(x => x.Id).ToList();
+            var commentTime = DB.CommentTimes.OrderBy(x => x.Id).ToList();
+            ViewBag.CommentTime = commentTime;
             ViewBag.Country = c;
             ViewBag.FindType = f;
             ViewBag.Shop = shop;
@@ -94,19 +96,16 @@ namespace Simple.Controllers
         [HttpPost]
         public IActionResult OneToOne(string id, PreOrder preorder)
         {
+            //找到用户提交订单中进入店铺方式，进而找出进入店铺方式所需要的价格
+            var findtype = DB.FindTypes.Where(x => x.Type == preorder.FindType).SingleOrDefault();
             var number = DB.IncreasingNumbers.Max(x => x.Number);
             number  = number + 1;
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
             var plattype = DB.ShopOrders.Where(x => x.Title == preorder.ShopName).SingleOrDefault();
             var rate = DB.Rates.Where(x => x.Exchange == preorder.Rate).SingleOrDefault();
             DB.PreOrders.Add(preorder);
-            var poundage = new Poundage { PreOrderId = preorder.Id, OrderCost = 30.00, AddressCost = 0.00, SearchCost = 0.00, ImageCost = 0.00, NextOrToday = 0.00 };
+            var poundage = new Poundage { PreOrderId = preorder.Id, OrderCost = 30.00, AddressCost = 0.00, SearchCost = findtype.Price, ImageCost = 0.00, NextOrToday = 0.00 };
             DB.Poundages.Add(poundage);
-
-            if (preorder.FindType == "搜索进入")
-            {
-                poundage.SearchCost = 10.00;
-            }
             if (preorder.NextOrToday != null)
             {
                 poundage.NextOrToday = 10.00;
