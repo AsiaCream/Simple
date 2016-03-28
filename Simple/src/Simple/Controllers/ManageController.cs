@@ -222,6 +222,11 @@ namespace Simple.Controllers
             return RedirectToAction("HelpfulOrder","Manage");
         }
         [HttpGet]
+        public IActionResult HelpfulWaitDraw()
+        {
+            return View();
+        }
+        [HttpGet]
         public IActionResult HelpfulWaitPayFor()
         {
             

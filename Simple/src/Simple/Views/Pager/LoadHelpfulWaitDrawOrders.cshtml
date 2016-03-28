@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<HelpfulPreOrder>
 @{
     Layout = null;
+    //用户Helpful待审核页面
 }
-<tr>
     @foreach (var x in Model)
     {
     <tr>
@@ -24,7 +24,9 @@
         <td>@x.IsCollection</td>
         <td>@x.Draw</td>
         <td>@x.Times</td>
-        <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
-    </tr>
+        <td><a asp-action="EditHelpfulWaitDrawOrders" asp-controller="Manage">编辑</a>&nbsp;&nbsp;<a href="#">删除</a></td>
+</tr>
     }
+
+
 

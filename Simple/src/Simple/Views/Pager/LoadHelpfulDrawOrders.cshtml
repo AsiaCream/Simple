@@ -1,0 +1,74 @@
+﻿@model IEnumerable<HelpfulPreOrder>
+@{ 
+    Layout = null;
+}
+@if (User.IsInRole("系统管理员"))
+{
+
+    @foreach (var x in Model)
+    {
+    <tr id="table-tr">
+        <td>@x.Id</td>
+        <td>@x.OrderNumber</td>
+        <td>@x.Country</td>
+        <td><a href="#" title="@x.Review1">查看</a></td>
+        <td><a href="#" title="@x.Review2">查看</a></td>
+        <td><a href="#" title="@x.Review3">查看</a></td>
+        <td><a href="#" title="@x.Review4">查看</a></td>
+        <td><a href="#" title="@x.Review5">查看</a></td>
+        <td><a href="#" title="@x.Review6">查看</a></td>
+        <td><a href="#" title="@x.Review7">查看</a></td>
+        <td><a href="#" title="@x.Review8">查看</a></td>
+        <td><a href="#" title="@x.Review9">查看</a></td>
+        <td><a href="#" title="@x.Review10">查看</a></td>
+        <td><a href="@x.Url" title="@x.Url" target="_blank">查看</a></td>
+        <td>@x.HelpfulType</td>
+        <td>@x.IsCollection</td>
+        <td>@x.Draw</td>
+        <td>@x.Times</td>
+        <td><a href="javascript:pass(@x.Id)">审核通过</a>&nbsp;&nbsp;<a href="javascript:failure(@x.Id)">审核不通过</a></td>
+    </tr>
+    }
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    function pass(id) {
+        var jug = confirm("确定审核通过么？");
+        if (jug==true) {
+            $(function () {
+                var url = "/Admin/HelpfulPass";
+                var params = { "id": id };
+                $.post(url, params, function (data) {
+                    if (data == "success") {
+                        $("#table-tr").remove();
+                        alert("操作成功");
+                    }
+                    else {
+                        alert("操作失败");
+                    }
+                })
+            });
+
+        }
+            }
+    function failure(id) {
+        var jug = confirm("确定审核不通过吗？");
+            if(jug==true)
+            {
+                $(function () {
+                    var url = "/Admin/HelpfulFailure";
+                    var params = { "id": id };
+                    $.post(url, params, function (data) {
+                        if (data == "success") {
+                            $("#table-tr").remove();
+                            alert("操作成功");
+                        }
+                        else {
+                            alert("操作失败");
+                        }
+                    })
+                });
+            }
+        }
+</script>
+}
+

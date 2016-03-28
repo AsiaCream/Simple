@@ -122,12 +122,44 @@ namespace Simple.Controllers
             var ret = DB.PreOrders.Where(x=>x.Draw==Draw.待审核).OrderBy(x => x.Id).ToList();
             return View(ret);
         }
-
         [HttpGet]
-        public IActionResult HelpfulWaitDraw()
+        public IActionResult HelpfulOrders()
         {
-            var ret = DB.HelpfulPreOrders.Where(x => x.Draw == Draw.待审核).OrderBy(x => x.Id).ToList();
+            var ret = DB.HelpfulPreOrders.OrderBy(x => x.Id).ToList();
             return View(ret);
         }
+        [HttpGet]
+        public IActionResult HelpfulDrawOrders()
+        {
+            return View();
+        }
+        #region Helpful审核方法
+        /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="id">通过传进来的helpulf的id</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult HelpfulPass(int id)
+        {
+            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            order.Draw = Draw.通过;
+            DB.SaveChanges();
+            return Content("success");
+        }
+        /// <summary>
+        /// 审核不通过的
+        /// </summary>
+        /// <param name="id">通过传进来的helpulf的id</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult HelpfulFailure(int id)
+        {
+            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            order.Draw = Draw.未通过;
+            DB.SaveChanges();
+            return Content("success");
+        } 
+        #endregion
     }
 }
