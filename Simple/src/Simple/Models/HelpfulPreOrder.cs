@@ -9,7 +9,7 @@ namespace Simple.Models
     public class HelpfulPreOrder
     {
         public int Id { get; set; }
-        public int OrderNumber { get; set; }
+        public string OrderNumber { get; set; }
         public string Country { get; set; }
         public string Url { get; set; }
         public int Times { get; set; }

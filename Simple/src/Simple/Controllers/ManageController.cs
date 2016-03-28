@@ -98,12 +98,13 @@ namespace Simple.Controllers
         {
             //找到用户提交订单中进入店铺方式，进而找出进入店铺方式所需要的价格
             var findtype = DB.FindTypes.Where(x => x.Type == preorder.FindType).SingleOrDefault();
-            var number = DB.IncreasingNumbers.Max(x => x.Number);
-            number  = number + 1;
+            var oldnum = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
+            var num = new IncreasingNumber { Number = oldnum.Number + 1 };
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
             var plattype = DB.ShopOrders.Where(x => x.Title == preorder.ShopName).SingleOrDefault();
             var rate = DB.Rates.Where(x => x.Exchange == preorder.Rate).SingleOrDefault();
             DB.PreOrders.Add(preorder);
+            DB.IncreasingNumbers.Add(num);
             var poundage = new Poundage { PreOrderId = preorder.Id, OrderCost = 30.00, AddressCost = 0.00, SearchCost = findtype.Price, ImageCost = 0.00, NextOrToday = 0.00 };
             DB.Poundages.Add(poundage);
             if (preorder.NextOrToday != null)
@@ -128,7 +129,7 @@ namespace Simple.Controllers
             preorder.Total = preorder.GoodsCost + preorder.Freight;
             preorder.RMB = preorder.Total * preorder.Rate;
             preorder.PayTotal = preorder.RMB + preorder.Poundage;
-            preorder.PreOrderNumber = DateTime.Now.ToString("yyyyMMddhhmmss") + number.ToString() ;
+            preorder.PreOrderNumber = DateTime.Now.ToString("yyyyMMddhhmmss") + preorder.Id.ToString()+num.Number.ToString() ;
             DB.SaveChanges();
 
             return RedirectToAction("OneToOne","Manage");
@@ -204,16 +205,17 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult HelpfulOrder(string id,HelpfulPreOrder helpfulpreorder)
+        public IActionResult HelpfulOrder(string id, HelpfulPreOrder helpfulpreorder)
         {
-            var number = DB.IncreasingNumbers.Max(x => x.Number);
-            number = number + 1;
+            var oldnum = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
+            var num = new IncreasingNumber{ Number = oldnum.Number + 1 };
             var helpfulprice = DB.HelpfulPrices.Where(x=>x.Id==1).SingleOrDefault();//找出当前Helpful价格
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();//找出当前提交订单的用户
             DB.HelpfulPreOrders.Add(helpfulpreorder);
-            helpfulpreorder.OrderNumber = number;
+            DB.IncreasingNumbers.Add(num);
             helpfulpreorder.UserId = user.Id;
             helpfulpreorder.PayFor = helpfulprice.Price * helpfulpreorder.Times+helpfulprice.WishListCost;
+            helpfulpreorder.OrderNumber = DateTime.Now.ToString("yyMMddhhmmss") + helpfulpreorder.Id.ToString() + num.Number.ToString(); 
             helpfulpreorder.Draw = Draw.待审核;
             helpfulpreorder.State = State.未锁定;
             DB.SaveChanges();
