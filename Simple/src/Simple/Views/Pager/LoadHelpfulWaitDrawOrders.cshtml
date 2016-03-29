@@ -5,7 +5,7 @@
 }
     @foreach (var x in Model)
     {
-    <tr>
+    <tr class="table-tr">
         <td>@x.Id</td>
         <td>@x.OrderNumber</td>
         <td>@x.Country</td>
@@ -24,9 +24,32 @@
         <td>@x.IsCollection</td>
         <td>@x.Draw</td>
         <td>@x.Times</td>
-        <td><a asp-action="EditHelpfulWaitDrawOrders" asp-controller="Manage">编辑</a>&nbsp;&nbsp;<a href="#">删除</a></td>
+        <td><a asp-action="HelpfulEditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="javascript:remove(@x.Id)">删除</a></td>
 </tr>
     }
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    function remove(id) {
+        var jug = confirm("确认删除吗？");
+        if (jug == true) {
+            $(function () {
+                var url = "/Manage/DeleteHelpfulOrder";
+                var params = { "id": id };
+                $.post(url, params, function (data) {
+                    if (data == "success") {
+                        $("#table-tr").remove();
+                        alert("删除成功");
+                    }
+                    else {
+                        alert("删除失败");
+                    }
+                });
 
+            });
+
+        }
+
+    }
+</script>
 
 

@@ -1,51 +1,44 @@
-﻿<style>
-    .must2 {
-        color: red;
-    }
-
-    .must3 {
-        color: red;
-        font-size: 8px;
-    }
-</style>
+﻿@model HelpfulPreOrder
 <div>
     <section>
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">发布Helpful和收藏 </p><label class="must2">请认真填写以下信息 ，本操作价格为 @ViewBag.Price 元 1 单</label>
-                        <form asp-action="HelpfulOrder" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" id="orderForm" method="post">
+                        <p class="infotitle">修改Helpful和收藏 </p><label class="must2">请认真填写以下信息 ，本操作价格为 @ViewBag.Price 元 1 单</label>
+                        <form asp-action="EditHelpfulOrder" asp-controller="Manage" id="orderForm" method="post">
+                            <input type="hidden" value="@Model.Id" name="id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*国家</th>
                                         @foreach (Rate x in ViewBag.Country)
                                         {
-                                            <td><input type="radio" name="Country" id="Country" value="@x.Country" />@x.Country</td>
+                                            <td><input type="radio" name="Country" value="@x.Country" />@x.Country</td>
                                         }
+                                        <td><input type="radio" name="Country" value="@Model.Country" checked="checked"/>@Model.Country</td>
                                     </tr>
                                     <tr>
-                                        <th class="must2">*连接</th>
-                                        <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" name="Url" id="Url" /></td>
+                                        <th class="must2">*链接</th>
+                                        <td><input class="form-control" type="text"  name="Url" value="@Model.Url" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">操作数量</th>
-                                        <td><input type="text" class="form-control" value="1" name="Times" /></td>
+                                        <td><input type="text" class="form-control" name="Times" value="@Model.Times" /></td>
                                         <td class="must2">请输入本产品要刷的单数</td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*Review1标题</th>
-                                        <td><input class="form-control" name="Review1" /></td>
+                                        <td><input class="form-control" name="ReviewTitle1" value="@Model.Review1"/></td>
                                         <td><input type="radio" />一星</td>
                                         <td><input type="radio" />二星</td>
                                         <td><input type="radio" />三星</td>
                                         <td><input type="radio" />四星</td>
-                                        <td><input type="radio" checked="checked"/>五星</td>
+                                        <td><input type="radio" checked="checked" />五星</td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*Review2标题</th>
-                                        <td><input class="form-control" name="Review2" /></td>
+                                        <td><input class="form-control" name="ReviewTitle2" /></td>
                                         <td><input type="radio" />一星</td>
                                         <td><input type="radio" />二星</td>
                                         <td><input type="radio" />三星</td>
@@ -133,5 +126,6 @@
         });
     });
 </script>
+
 
 

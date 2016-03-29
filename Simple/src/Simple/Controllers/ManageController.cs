@@ -214,12 +214,73 @@ namespace Simple.Controllers
             DB.HelpfulPreOrders.Add(helpfulpreorder);
             DB.IncreasingNumbers.Add(num);
             helpfulpreorder.UserId = user.Id;
-            helpfulpreorder.PayFor = helpfulprice.Price * helpfulpreorder.Times+helpfulprice.WishListCost;
-            helpfulpreorder.OrderNumber = DateTime.Now.ToString("yyMMddhhmmss") + helpfulpreorder.Id.ToString() + num.Number.ToString(); 
+            helpfulpreorder.PayFor = helpfulprice.Price * helpfulpreorder.Times+helpfulprice.WishListCost;//需要支付的价格
+            helpfulpreorder.OrderNumber = DateTime.Now.ToString("yyMMddhhmmss") + helpfulpreorder.Id.ToString() + num.Number.ToString(); //订单号=时间+单号id+数据库中自增的数
             helpfulpreorder.Draw = Draw.待审核;
             helpfulpreorder.State = State.未锁定;
+            helpfulpreorder.PostTime = DateTime.Now;//下单时间
             DB.SaveChanges();
             return RedirectToAction("HelpfulOrder","Manage");
+        }
+        [HttpGet]
+        public IActionResult HelpfulEditOrder(int id)
+        {
+            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            var c = DB.Rates.Where(x => x.Country!=order.Country).ToList();//找到和用户选择以外的国家
+            var p = DB.HelpfulPrices.SingleOrDefault();//找到当前helpful价格
+            ViewBag.Price = p.Price;
+            ViewBag.WishListCost = p.WishListCost;
+            ViewBag.Country = c;
+            return View(order);
+        }
+        [HttpPost]
+        public IActionResult HelpfulEditOrder(int id,HelpfulPreOrder helpfulpreorder)
+        {
+            var currentuser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            var oldorder = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            var orderuser = DB.Users.Where(x => x.Id == oldorder.UserId).SingleOrDefault();
+            if (orderuser == currentuser)
+            {
+                oldorder.Url = helpfulpreorder.Url;
+                oldorder.Times = helpfulpreorder.Times;
+                oldorder.PayFor = helpfulpreorder.PayFor;
+                oldorder.Country = helpfulpreorder.Country;
+                oldorder.HelpfulType = helpfulpreorder.HelpfulType;
+                oldorder.IsCollection = helpfulpreorder.IsCollection;
+                oldorder.Review1 = helpfulpreorder.Review1;
+                oldorder.Review2 = helpfulpreorder.Review2;
+                oldorder.Review3 = helpfulpreorder.Review3;
+                oldorder.Review4 = helpfulpreorder.Review4;
+                oldorder.Review5 = helpfulpreorder.Review5;
+                oldorder.Review6 = helpfulpreorder.Review6;
+                oldorder.Review7 = helpfulpreorder.Review7;
+                oldorder.Review8 = helpfulpreorder.Review8;
+                oldorder.Review9 = helpfulpreorder.Review9;
+                oldorder.Review10 = helpfulpreorder.Review10;
+                return RedirectToAction("HelpfulOrder", "Manage");
+            }
+            else
+            {
+                return Content("error");
+            }
+            
+        }
+        [HttpPost]
+        public IActionResult DeleteHelpfulOrder(int id)
+        {
+            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            var orderuser = DB.Users.Where(x => x.Id == order.UserId).SingleOrDefault();
+            var currentuser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            if (orderuser == currentuser)
+            {
+                DB.HelpfulPreOrders.Remove(order);
+                DB.SaveChanges();
+                return Content("success");
+            }
+            else
+            {
+                return Content("error");
+            }
         }
         [HttpGet]
         public IActionResult HelpfulWaitDraw()
