@@ -13,7 +13,7 @@ namespace Simple.Models
         public string Country { get; set; }
         public string Url { get; set; }
         public int Times { get; set; }//单子次数
-        public string Review1 { get; set; } //Review标题1-10
+        public string Review1 { get; set; } //Review标题以及星号1-10
         public string Review2 { get; set; }
         public string Review3 { get; set; }
         public string Review4 { get; set; }
@@ -23,6 +23,16 @@ namespace Simple.Models
         public string Review8 { get; set; }
         public string Review9 { get; set; }
         public string Review10 { get; set; }
+        public int? ReviewStar1 { get; set; }
+        public int? ReviewStar2 { get; set; }
+        public int? ReviewStar3 { get; set; }
+        public int? ReviewStar4 { get; set; }
+        public int? ReviewStar5 { get; set; }
+        public int? ReviewStar6 { get; set; }
+        public int? ReviewStar7 { get; set; }
+        public int? ReviewStar8 { get; set; }
+        public int? ReviewStar9 { get; set; }
+        public int? ReviewStar10 { get; set; }
         public bool HelpfulType { get; set; } //Helpful类型
         public bool IsCollection { get; set; }//是否收藏产品
         public double PayFor { get; set; }//需要支付金额

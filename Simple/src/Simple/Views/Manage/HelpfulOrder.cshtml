@@ -34,37 +34,37 @@
                                         <td><input type="text" class="form-control" value="1" name="Times" /></td>
                                         <td class="must2">请输入本产品要刷的单数</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="Review1">
                                         <th class="must2">*Review1标题</th>
                                         <td><input class="form-control" name="Review1" /></td>
-                                        <td><input type="radio" />一星</td>
-                                        <td><input type="radio" />二星</td>
-                                        <td><input type="radio" />三星</td>
-                                        <td><input type="radio" />四星</td>
-                                        <td><input type="radio" checked="checked"/>五星</td>
+                                        <td><input type="radio" name="ReviewStar1" value="1" />一星</td>
+                                        <td><input type="radio" name="ReviewStar1" value="2" />二星</td>
+                                        <td><input type="radio" name="ReviewStar1" value="3" />三星</td>
+                                        <td><input type="radio" name="ReviewStar1" value="4" />四星</td>
+                                        <td><input type="radio" name="ReviewStar1" value="5" checked="checked"/>五星</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="Review1">
                                         <th class="must2">*Review2标题</th>
                                         <td><input class="form-control" name="Review2" /></td>
-                                        <td><input type="radio" />一星</td>
-                                        <td><input type="radio" />二星</td>
-                                        <td><input type="radio" />三星</td>
-                                        <td><input type="radio" />四星</td>
-                                        <td><input type="radio" checked="checked" />五星</td>
+                                        <td><input type="radio" name="ReviewStar2" value="1"/>一星</td>
+                                        <td><input type="radio" name="ReviewStar2" value="2"/>二星</td>
+                                        <td><input type="radio" name="ReviewStar2" value="3"/>三星</td>
+                                        <td><input type="radio" name="ReviewStar2" value="4"/>四星</td>
+                                        <td><input type="radio" name="ReviewStar2" value="5" checked="checked" />五星</td>
                                     </tr>
-                                    <tr>
+                                    <tr id="add-new-title">
                                         <th></th>
                                         <th><a href="#" class="must2">新增加一个标题（一次最多提交十个标题）</a></th>
                                     </tr>
                                     <tr>
                                         <th class="must2">*Helpful类型</th>
-                                        <td><input type="radio" name="AvoidWeekend" value="1" checked="checked" />YES</td>
-                                        <td><input type="radio" name="AvoidWeekend" value="0" />No</td>
+                                        <td><input type="radio" name="HelpfulType" value="true" checked="checked" />YES</td>
+                                        <td><input type="radio" name="HelpfulType" value="false" />No</td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*是否收藏产品</th>
-                                        <td><input type="radio" name="Collection" value="1" />YES</td>
-                                        <td><input type="radio" name="Collection" value="0" checked="checked" />NO</td>
+                                        <td><input type="radio" name="IsCollection" value="true" />YES</td>
+                                        <td><input type="radio" name="IsCollection" value="false" checked="checked" />NO</td>
                                         <td class="infotitle">（Add to Wish List）功能单独收费 @ViewBag.WishListCost 元 </td>
                                     </tr>
                                     <tr>
@@ -108,7 +108,7 @@
             var params = {
                 "Rate": $("#Rate").val(),
                 "FindType": $("#FindType").val(),
-                "GoodsUrl": $("#GoodsUrl").val(),
+                "Url": $("#Url").val(),
                 "ShopName": $("#ShopName").val(),
                 "GoodsCost": $("#GoodCost").val(),
                 "Freight": $("#Freight").val(),
@@ -130,6 +130,16 @@
                 }
 
             });
+        });
+        $("#add-new-title a").click(function () {
+            var len = $("tr[class='Review1']").length + 1;
+            if (len <= 10) {
+                var R = '<tr class="Review1"><th class="must2">*Review' + len + '标题</th><td><input class="form-control" name="Review' + len + '" /></td><td><input type="radio" name="ReviewStar' + len + '" value="1"/>一星</td><td><input type="radio" name="ReviewStar' + len + '" value="2"/>二星</td><td><input type="radio" name="ReviewStar' + len + '" value="3"/>三星</td><td><input type="radio" name="ReviewStar' + len + '" value="4"/>四星</td><td><input type="radio" name="ReviewStar' + len + '" value="5" checked="checked"/>五星</td></tr>';
+                $("#add-new-title").before(R);
+                $("tr[name='Review1']").length++;
+            } else {
+                alert("最多10条标题");
+            }
         });
     });
 </script>
