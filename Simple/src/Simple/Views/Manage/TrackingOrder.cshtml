@@ -1,5 +1,4 @@
-﻿@model IEnumerable<PreOrder>
-<div>
+﻿<div>
     <section>
         <div class="content-wrapper">
             <section class="content">
@@ -70,11 +69,10 @@
 <script>
     var p = 0;
     function load() {
-        $.get("/Pager/LoadTrackingOrders", {
-            page:p
-        }, function (html) {
+        var url = "/Pager/LoadTrackingOrders";
+        var params = { page: p };
+        $.get(url, params, function (html) {
             $("#order-list").html(html);
-
         });
 
     }

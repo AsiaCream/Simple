@@ -1,23 +1,25 @@
 ﻿@model IEnumerable<HelpfulPreOrder>
 @{
     Layout = null;
-    //用户Helpful待审核页面
+    //用户所有订单页面
 }
-    @foreach (var x in Model)
-    {
-    <tr class="table-tr">
+@foreach (var x in Model)
+{
+    <tr id="table-tr">
         <td>@x.Id</td>
         <td>@x.OrderNumber</td>
+        <td>@x.PostTime</td>
         <td>@x.Country</td>
         <td><a asp-action="HelpfulOrderDetails" asp-controller="Manage" asp-route-id="@x.Id">查看详情</a></td>
         <td><a href="@x.Url" title="@x.Url" target="_blank">查看</a></td>
         <td>@x.HelpfulType</td>
         <td>@x.IsCollection</td>
         <td>@x.Draw</td>
+        <td>@x.DrawTime</td>
         <td>@x.Times</td>
         <td><a href="javascript:remove(@x.Id)">删除</a></td>
-</tr>
-    }
+    </tr>
+}
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
     function remove(id) {
@@ -42,5 +44,6 @@
 
     }
 </script>
+
 
 

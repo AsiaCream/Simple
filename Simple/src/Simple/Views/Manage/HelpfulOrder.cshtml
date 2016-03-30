@@ -8,7 +8,7 @@
         font-size: 8px;
     }
 </style>
-<div>
+<div id="helpfulorder">
     <section>
         <div class="content-wrapper">
             <section class="content">
@@ -86,30 +86,12 @@
 </div>
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#set_feedback_review").click(function () {
-            $(".feedback").fadeIn();
-            $(".review").fadeIn();
-        });
-        $("#set_feedback").click(function () {
-            $(".feedback").fadeIn();
-            $(".review").fadeOut();
-        });
-        $("#set_review").click(function () {
-            $(".feedback").fadeOut();
-            $(".review").fadeIn();
-        });
-        $("#set_order").click(function () {
-            $(".feedback").fadeOut();
-            $(".review").fadeOut();
-        });
         $("#send").click(function () {
             var url = "Manage/OneToOne";
             var params = {
-                "Rate": $("#Rate").val(),
-                "FindType": $("#FindType").val(),
+                "Country": $("#Country").val(),
                 "Url": $("#Url").val(),
-                "ShopName": $("#ShopName").val(),
+                "Times": $("#Times").val(),
                 "GoodsCost": $("#GoodCost").val(),
                 "Freight": $("#Freight").val(),
                 "OrderType": $("input[type='radio' name='OrderType']").val(),

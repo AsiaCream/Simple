@@ -1,5 +1,5 @@
 ﻿@model HelpfulPreOrder
-<div><!--用户查看详细helpful订单信息-->
+<div><!--管理员查看用户详细订单-->
     <section>
         <div class="content-wrapper">
             <section class="content">
@@ -8,6 +8,12 @@
                         <p class="infotitle">Helpful订单详细页 </p>
                             <table class="table table-responsive table-stripted table-hover">
                                 <tbody>
+                                    <tr>
+                                        <th class="must2">*序号</th>
+                                        <td>@Model.Id</td>
+                                        <th class="must2">*订单编号</th>
+                                        <td>@Model.OrderNumber</td>
+                                    </tr>
                                     <tr>
                                         <th class="must2">*国家</th>
                                         <td>@Model.Country</td>
@@ -92,10 +98,14 @@
                                         <th class="must2">*Review10星级</th>
                                         <td>@Model.ReviewStar10</td>
                                     </tr>
-                                    
+
+                                    <tr id="draw">
+                                        <td><a class="form-control btn btn-success" href="javascript:pass(@Model.Id)">审核通过</a></td>
+                                        <td><a class="form-control btn btn-danger" href="javascript:failure(@Model.Id)">审核不通过</a></td>
+                                    </tr>
                                     <tr>
-                                        <td><a asp-action="HelpfulWaitDraw" asp-controller="Manage"  class="form-control btn btn-primary" >返回待审核Helpful订单页面</a></td>
-                                        <td><a asp-action="HelpfulAllOrder" asp-controller="Manage" class="form-control btn btn-primary">查看所有Helpful订单页面</a></td>
+                                        <td><a asp-action="HelpfulDrawOrders" asp-controller="Admin" class="form-control btn btn-primary">返回待审核Helpful订单页面</a></td>
+                                        <td><a asp-action="HelpfulOrders" asp-controller="Admin" class="form-control btn btn-primary">查看所有Helpful订单页面</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -106,4 +116,45 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+        function pass(id) {
+            var jug = confirm("确定审核通过么？");
+            if (jug == true) {
+                
+                    var url = "/Admin/HelpfulPass";
+                    var params = { "id": id };
+                    $.post(url, params, function (data) {
+                        if (data == "success") {
+                            $("#draw").fadeOut();
+                            alert("操作成功");
+                        }
+                        else {
+                            alert("操作失败");
+                        }
+                    })
+               
+
+            }
+        }
+        function failure(id) {
+            var jug = confirm("确定审核不通过吗？");
+            if (jug == true) {
+                    var url = "/Admin/HelpfulFailure";
+                    var params = { "id": id };
+                    $.post(url, params, function (data) {
+                        if (data == "success") {
+                            $("#draw").fadeOut();
+                            alert("操作成功");
+                        }
+                        else {
+                            alert("操作失败");
+                        }
+                    })
+            }
+        }
+
+</script>
+}
+
 

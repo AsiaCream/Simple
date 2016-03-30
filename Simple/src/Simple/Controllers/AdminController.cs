@@ -144,6 +144,7 @@ namespace Simple.Controllers
         {
             var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
             order.Draw = Draw.通过;
+            order.DrawTime = DateTime.Now;
             DB.SaveChanges();
             return Content("success");
         }
@@ -157,9 +158,16 @@ namespace Simple.Controllers
         {
             var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
             order.Draw = Draw.未通过;
+            order.DrawTime = DateTime.Now;
             DB.SaveChanges();
             return Content("success");
         } 
         #endregion
+        [HttpGet]
+        public IActionResult HelpfulDetails(int id)
+        {
+            var ret = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            return View(ret);
+        }
     }
 }

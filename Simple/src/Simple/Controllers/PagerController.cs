@@ -45,5 +45,18 @@ namespace Simple.Controllers
             var myorder = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).Where(x => x.Draw == Draw.待审核).OrderBy(x => x.Id).Skip(page * 3).Take(3).ToList();
             return View(myorder);
         }
+        [HttpGet] //用户所有helpful订单
+        public IActionResult LoadHelpfulAllOrders(int page)
+        {
+            var user = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            var order = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).OrderBy(x => x.PostTime).Skip(page * 3).Take(3).ToList();
+            return View(order);
+        }
+        [HttpGet]//管理员查看所有helpful订单页面
+        public IActionResult LoadHelpfulOrders(int page)
+        {
+            var order = DB.HelpfulPreOrders.OrderByDescending(x => x.PostTime).Skip(page * 3).Take(3).ToList();
+            return View(order);
+        }
     }
 }
