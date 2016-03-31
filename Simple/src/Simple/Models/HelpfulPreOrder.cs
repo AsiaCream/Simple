@@ -6,6 +6,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Simple.Models
 {
+    public enum IsPayFor
+    {
+        未支付,
+        已支付,
+    }
+    public enum IsFinish
+    {
+        未完成,
+        已完成,
+    }
     public class HelpfulPreOrder
     {
         public int Id { get; set; }
@@ -41,6 +51,8 @@ namespace Simple.Models
 
         public State State { get; set; } //是否锁定
         public Draw Draw { get; set; }//是否审核
+        public IsPayFor IsPayFor { get; set; }//是否支付
+        public IsFinish IsFinish { get; set; }//是否完成
 
 
         [ForeignKey("User")]

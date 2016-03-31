@@ -54,6 +54,10 @@ namespace Simple.Models
         public State State { get; set; } //锁定状态
 
         public Draw Draw { get; set; }//审核情况
+
+        public IsFinish IsFinish { get; set; }//是否完成
+
+        public IsPayFor IsPayfor { get; set; }//是否支付
         
         [ForeignKey("User")]
         public string UserId { get; set; }

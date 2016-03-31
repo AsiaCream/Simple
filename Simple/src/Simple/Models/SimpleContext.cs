@@ -13,8 +13,6 @@ namespace Simple.Models
         public DbSet<ShopOrder> ShopOrders { get; set; }
         public DbSet<Poundage> Poundages { get; set; }
         public DbSet<PreOrder> PreOrders { get; set; }
-        public DbSet<PassOrder> PassOrders { get; set; }
-        public DbSet<FailureOrder> FailureOrders { get; set; }
         public DbSet<MyWallet> MyWallet { get; set; }
         public DbSet<System> Systems { get; set; }
         public DbSet<NextOrToday> NextOrTodays { get; set; }
@@ -36,14 +34,6 @@ namespace Simple.Models
             builder.Entity<PreOrder>(e =>
             {
                 e.HasIndex(x=>x.Id);
-            });
-            builder.Entity<PassOrder>(e =>
-            {
-                e.HasIndex(x => x.Id);
-            });
-            builder.Entity<FailureOrder>(e =>
-            {
-                e.HasIndex(x => x.Id);
             });
             builder.Entity<MyWallet>(e =>
             {

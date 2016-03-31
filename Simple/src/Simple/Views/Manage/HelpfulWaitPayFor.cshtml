@@ -27,20 +27,13 @@
                                     <th>序号</th>
                                     <th>订单编号</th>
                                     <th>国家</th>
-                                    <th>标题1</th>
-                                    <th>标题2</th>
-                                    <th>标题3</th>
-                                    <th>标题4</th>
-                                    <th>标题5</th>
-                                    <th>标题6</th>
-                                    <th>标题7</th>
-                                    <th>标题8</th>
-                                    <th>标题9</th>
                                     <th>标题10</th>
                                     <th>链接</th>
                                     <th>Helpful类型</th>
                                     <th>是否收藏(Add to Wish List)</th>
                                     <th>审核状态</th>
+                                    <th>审核时间</th>
+                                    <th>下单时间</th>
                                     <th>单数</th>
                                     <th>操作</th>
                                 </tr>
@@ -66,7 +59,7 @@
 <script>
     var p = 0;
     function load() {
-        $.get("/Pager/LoadHelpfulWaitPayOrders", {
+        $.get("/Pager/LoadHelpfulWaitPay", {
             page:p
         }, function (html) {
             $("#order-list").html(html);

@@ -125,6 +125,8 @@ namespace Simple.Controllers
             preorder.UserId = user.Id;
             preorder.State = State.未锁定;
             preorder.Draw = Draw.待审核;
+            preorder.IsFinish = IsFinish.未完成;
+            preorder.IsPayfor = IsPayFor.未支付;
             preorder.PlatType = plattype.Type;
             preorder.Total = preorder.GoodsCost + preorder.Freight;
             preorder.RMB = preorder.Total * preorder.Rate;
@@ -218,6 +220,8 @@ namespace Simple.Controllers
             helpfulpreorder.OrderNumber = DateTime.Now.ToString("yyMMddhhmmss") + helpfulpreorder.Id.ToString() + num.Number.ToString(); //订单号=时间+单号id+数据库中自增的数
             helpfulpreorder.Draw = Draw.待审核;
             helpfulpreorder.State = State.未锁定;
+            helpfulpreorder.IsFinish = IsFinish.未完成;
+            helpfulpreorder.IsPayFor = IsPayFor.未支付;
             helpfulpreorder.PostTime = DateTime.Now;//下单时间
             DB.SaveChanges();
             return RedirectToAction("HelpfulOrder","Manage");

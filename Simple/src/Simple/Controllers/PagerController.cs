@@ -45,6 +45,13 @@ namespace Simple.Controllers
             var myorder = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).Where(x => x.Draw == Draw.待审核).OrderBy(x => x.Id).Skip(page * 3).Take(3).ToList();
             return View(myorder);
         }
+        [HttpGet]//用户提交审核通过之后，可以进行支付的订单
+        public IActionResult LoadHelpfulWaitPay(int page)
+        {
+            var user = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            var order = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).Where(x => x.Draw == Draw.通过).OrderBy(x => x.DrawTime).Skip(page * 3).Take(3).ToList();
+            return View(order);
+        }
         [HttpGet] //用户所有helpful订单
         public IActionResult LoadHelpfulAllOrders(int page)
         {
