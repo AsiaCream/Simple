@@ -273,6 +273,8 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult HelpfulAllOrder()
         {
+            var orderCount = DB.HelpfulPreOrders.Where(x => x.UserId == UserCurrent.Id).Count();
+            ViewBag.totalRecord = orderCount;
             return View();
         }
         [HttpGet]

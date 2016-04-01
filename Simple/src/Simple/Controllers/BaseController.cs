@@ -25,30 +25,17 @@ namespace Simple.Controllers
         public SignInManager<User> signInManager { get; set; }
         [FromServices]
         public UserManager<User> userManager { get; set; }
+
+        public User UserCurrent { get; set; }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var UserCurrent= DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+                UserCurrent= DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
                 ViewBag.UserCurrent = UserCurrent;
             }
         }
-        /*public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-        {
-            UserCurrent();
-            return base.OnActionExecutionAsync(context, next);
-        }*/
-        /*public virtual User UserCurrent()
-        {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                User UserCurrent = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
-                ViewBag.UserCurrent = UserCurrent;       
-            return UserCurrent;
-            }
-            return UserCurrent;
-        }*/
     }
-   
 }

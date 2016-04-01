@@ -49,10 +49,13 @@
 
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script>
+
     var p = 0;
+    var totalRecord=@ViewBag.totalRecord;
+    var totalPage=(totalRecord+3-1)/3;
     function load() {
         $.get("/Pager/LoadHelpfulAllOrders", {
-            page: p
+            page: p,
         }, function (html) {
             $("#order-list").html(html);
 
@@ -67,7 +70,7 @@
     });
     $("#btn-next").click(function () {
         p++;
-        if (p >1)
+        if (p > totalPage-1)
             p = 0;
             load();
     });

@@ -82,6 +82,7 @@ namespace Simple.Controllers
                 ViewBag.ba = Math.Round(ba, 2) * 100;//待审核
                 var ca = (double)c / a;
                 ViewBag.ca = Math.Round(ca, 2) * 100;//已审核待完成
+
             }
 
             return View();
