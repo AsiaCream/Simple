@@ -4,7 +4,7 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">helpful错误订单列表</p>
+                        <p class="infotitle">helpful可撤销订单列表</p>
                         <input type="text" placeholder="系统订单号" />
                         &nbsp;&nbsp;
                         <input type="text" placeholder="开始时间" />
@@ -27,17 +27,56 @@
                                     <th>国家</th>
                                     <th>标题</th>
                                     <th>链接</th>
-                                    <th>类型</th>
+                                    <th>Helpful类型</th>
                                     <th>是否收藏(Add to Wish List)</th>
-                                    <th>是否审核</th>
+                                    <th>审核情况</th>
+                                    <th>是否支付</th>
+                                    <th>单数</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody id="order-list"></tbody>
                         </table>
+                        <p>
+                            <button id="btn-prev" class="btn btn-primary">上一页</button>
+                            <button id="btn-next" class="btn btn-primary">下一页</button>
+                        </p>
                     </div>
                 </div>
             </section>
         </div>
     </section>
 </div>
+
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+
+    var p = 0;
+    var totalRecord=@ViewBag.totalRecord;
+    var totalPage=(totalRecord+10-1)/10;
+    function load() {
+        $.get("/Pager/LoadHelpfulErrorOrder", {
+            page: p,
+        }, function (html) {
+            $("#order-list").html(html);
+
+        });
+
+    }
+    $("#btn-prev").click(function () {
+        p--;
+        if (p < 0)
+            p = 0;
+        load();
+    });
+    $("#btn-next").click(function () {
+        p++;
+        if (p > totalPage-1)
+            p = 0;
+            load();
+    });
+    $(document).ready(function () {
+        load();
+    });
+</script>
 

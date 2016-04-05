@@ -87,7 +87,7 @@
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
         $("#send").click(function () {
-            var url = "Manage/OneToOne";
+            /*var url = "Manage/OneToOne";
             var params = {
                 "Country": $("#Country").val(),
                 "Url": $("#Url").val(),
@@ -111,7 +111,9 @@
                     alert("提交失败");
                 }
 
-            });
+            });*/
+            alert("提交成功");
+            $("#send").submit;
         });
         $("#add-new-title a").click(function () {
             var len = $("tr[class='Review1']").length + 1;

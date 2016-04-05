@@ -303,6 +303,14 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult HelpfulErrorOrder()
         {
+            var orderCount = DB.HelpfulPreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x=>x.Draw==Draw.通过)
+                .Where(x=>x.IsFinish==IsFinish.未完成)
+                .Where(x=>x.IsPayFor==IsPayFor.已支付)
+                .Where(x=>x.State==State.未锁定)
+                .Count();
+            ViewBag.totalRecord = orderCount;
             return View();
         }
         [HttpGet]

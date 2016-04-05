@@ -30,25 +30,38 @@ namespace Simple.Controllers
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
-        [HttpGet]//加载Manage中HelpfulWaitPayFor页面内容
-        public IActionResult LoadHelpfulWaitPayOrders(int page)
+        [HttpGet]//管理员查看所有helpful订单页面
+        public IActionResult LoadHelpfulOrders(int page)
         {
-            var myorder = DB.HelpfulPreOrders
-                .Where(x => x.UserId == UserCurrent.Id)
-                .Where(x=>x.IsPayFor==IsPayFor.未支付)
-                .Where(x=>x.State==State.未锁定)
-                .Where(x=>x.Draw==Draw.通过)
-                .Where(x=>x.IsFinish==IsFinish.未完成)
-                .OrderBy(x => x.Id)
-                .Skip(page*10).Take(10).ToList();
-            return View(myorder);
+            var order = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
         }
-        [HttpGet]//加载Admin中HelpfulWaitDrawFor页面内容
+        [HttpGet]//加载管理员中中HelpfulWaitDrawFor页面内容
         public IActionResult LoadHelpfulDrawOrders(int page)
         {
             var order = DB.HelpfulPreOrders
-                .Where(x => x.Draw ==Draw.待审核 )
+                .Where(x => x.Draw ==Draw.通过)
+                .Where(x=>x.State==State.未锁定)
+                .Where(x=>x.IsFinish==IsFinish.未完成)
+                .Where(x=>x.IsPayFor==IsPayFor.未支付)
                 .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+
+        /// <summary>
+        /// 以下是用户中Helpful订单情况
+        /// </summary>
+        /// <param name="page">页数</param>
+        /// <returns></returns>
+        [HttpGet] //用户所有helpful订单
+        public IActionResult LoadHelpfulAllOrders(int page)
+        {
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .OrderBy(x => x.PostTime)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
@@ -57,9 +70,9 @@ namespace Simple.Controllers
         {
             var myorder = DB.HelpfulPreOrders
                 .Where(x => x.UserId == UserCurrent.Id)
-                .Where(x=>x.IsPayFor==IsPayFor.未支付)
-                .Where(x=>x.IsFinish==IsFinish.未完成)
-                .Where(x=>x.State==State.未锁定)
+                .Where(x => x.IsPayFor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.State == State.未锁定)
                 .Where(x => x.Draw == Draw.待审核)
                 .OrderBy(x => x.Id)
                 .Skip(page * 10).Take(10).ToList();
@@ -71,29 +84,20 @@ namespace Simple.Controllers
             var order = DB.HelpfulPreOrders
                 .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x => x.Draw == Draw.通过)
-                .Where(x=>x.IsFinish==IsFinish.未完成)
-                .Where(x=>x.IsPayFor==IsPayFor.未支付)
-                .Where(x=>x.State==State.未锁定)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.未支付)
+                .Where(x => x.State == State.未锁定)
                 .OrderBy(x => x.DrawTime)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
-        [HttpGet] //用户所有helpful订单
-        public IActionResult LoadHelpfulAllOrders(int page)
-        {
-            var order = DB.HelpfulPreOrders
-                .Where(x => x.UserId == UserCurrent.Id)
-                .OrderBy(x => x.PostTime)
-                .Skip(page * 10).Take(10).ToList();
-            return View(order);
-        }
-        [HttpGet]//用户已审核通过未完成订单页面
+        [HttpGet]//用户已审核通过已支付并锁定但未完成订单页面，已支付未完成订单
         public IActionResult LoadHelpfulPassNotFinish(int page)
         {
             var order = DB.HelpfulPreOrders
                 .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x=>x.Draw==Draw.通过)
-                .Where(x=>x.State==State.未锁定)
+                .Where(x=>x.State==State.锁定)
                 .Where(x=>x.IsFinish==IsFinish.未完成)
                 .Where(x=>x.IsPayFor==IsPayFor.已支付)
                 .OrderByDescending(x => x.DrawTime)
@@ -101,13 +105,20 @@ namespace Simple.Controllers
                 .Take(10).ToList();
             return View(order);
         }
-        [HttpGet]//管理员查看所有helpful订单页面
-        public IActionResult LoadHelpfulOrders(int page)
+        [HttpGet] //可以撤销Helpful订单列表
+        public IActionResult LoadHelpfulErrorOrder(int page)
         {
             var order = DB.HelpfulPreOrders
-                .OrderByDescending(x => x.PostTime)
-                .Skip(page * 10).Take(10).ToList();
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .OrderByDescending(x => x.DrawTime)
+                .Skip(page * 10)
+                .Take(10).ToList();
             return View(order);
         }
+        
     }
 }

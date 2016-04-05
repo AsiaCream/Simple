@@ -29,10 +29,7 @@
     <![endif]-->
 </head>
 <body class="hold-transition register-page">
-    <div class="register-box">
-        <div class="register-logo" style="margin-top:-60px;">
-            <a asp-action="Account" asp-controller="Login"><b>AsiaCream</b>2016</a>
-        </div>
+    <div class="register-box" style="box-shadow:-20px -20px 20px RGB(54,127,169);margin-top:40px;">
         <div class="register-box-body">
             <p class="login-box-msg">注册成为会员加入我们</p>
             <form>
@@ -70,23 +67,11 @@
                     </select>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="answer" id="answer" placeholder="答案">
-                </div>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox"> 我同意 <a href="#"></a>
-                            </label>
-                        </div>
-                    </div><!-- /.col -->
-                    <div class="col-xs-4">
-                        <button id="sendBtn" class="btn btn-primary btn-block btn-flat">注册</button>
-                    </div><!-- /.col -->
+                    <input type="text" class="form-control" name="answer" id="answer" placeholder="问题答案">
                 </div>
             </form>
-
-
+            <button id="sendBtn" class="btn btn-primary btn-block btn-flat form-control">注册</button>
+        <div style="height:10px;"></div>
             <a asp-action="Login" asp-controller="Account" class="text-center">我已经注册过会员</a>
         </div><!-- /.form-box -->
     </div><!-- /.register-box -->
