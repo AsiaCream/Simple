@@ -49,7 +49,7 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult Modify()
         {
-            var CurrentUser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            //var CurrentUser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
             return View();
         }
         [HttpPost]
@@ -59,10 +59,25 @@ namespace Simple.Controllers
             {
                 return Content("两次输入密码不一致");
             }
-            //var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
-            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(user.Id),password, newpwd);
+            var user = DB.Users.Where(x => x.Id == UserCurrent.Id).SingleOrDefault();
+            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(UserCurrent.Id),password, newpwd);
+            var result = await userManager.ChangePasswordAsync(UserCurrent, password, newpwd);
             await signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
+        }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task <IActionResult> Register(string username,string password,string name,string answer,string question,int qq)
+        {
+            var user = new User { UserName = username, Name=name,Answer = answer, Question = question, QQ = qq };
+            await userManager.CreateAsync(user,password);
+            await userManager.AddToRoleAsync(user, "普通用户");
+            DB.SaveChanges();
+            return Content("success");
         }
     }
 }
