@@ -207,8 +207,9 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult HelpfulOrder(string id, HelpfulPreOrder helpfulpreorder)
+        public IActionResult HelpfulOrder(string id,string Country,string Url,int Times,string Review1,int ReviewStar1,string Review2,int ReviewStar2)
         {
+            var helpfulpreorder = new HelpfulPreOrder { Country = Country, Url = Url, Times = Times, Review1 = Review1, ReviewStar1 = ReviewStar1, Review2 = Review2, ReviewStar2 = ReviewStar2 };
             var oldnum = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
             var num = new IncreasingNumber{ Number = oldnum.Number + 1 };
             var helpfulprice = DB.HelpfulPrices.Where(x=>x.Id==1).SingleOrDefault();//找出当前Helpful价格
@@ -218,13 +219,13 @@ namespace Simple.Controllers
             helpfulpreorder.UserId = user.Id;
             helpfulpreorder.PayFor = helpfulprice.Price * helpfulpreorder.Times+helpfulprice.WishListCost;//需要支付的价格
             helpfulpreorder.OrderNumber = DateTime.Now.ToString("yyMMddhhmmss") + helpfulpreorder.Id.ToString() + num.Number.ToString(); //订单号=时间+单号id+数据库中自增的数
+            helpfulpreorder.PostTime = DateTime.Now;//下单时间
             helpfulpreorder.Draw = Draw.待审核;
             helpfulpreorder.State = State.未锁定;
             helpfulpreorder.IsFinish = IsFinish.未完成;
             helpfulpreorder.IsPayFor = IsPayFor.未支付;
-            helpfulpreorder.PostTime = DateTime.Now;//下单时间
             DB.SaveChanges();
-            return RedirectToAction("HelpfulOrder","Manage");
+            return Content("success");
         }
         [HttpGet]
         public IActionResult HelpfulOrderDetails(int id)

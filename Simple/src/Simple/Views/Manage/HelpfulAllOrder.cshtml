@@ -5,11 +5,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">helpful所有订单</p>
-                        <input type="text" placeholder="系统订单号" />
+                        <label>
+                            系统单号：
+                        </label>
+                        <input type="text" name="orderNumber" />
+                        <br />
+                        <label>
+                            开始时间：
+                        </label>
+                        <input type="date" name="start" placeholder="开始时间" />
                         &nbsp;&nbsp;
-                        <input type="text" placeholder="开始时间" />
-                        &nbsp;&nbsp;
-                        <input type="text" placeholder="结束时间" />
+                        <label>
+                            结束时间：
+                        </label>
+                        <input type="date" name="end" placeholder="结束时间" />
                         &nbsp;&nbsp;
                         <input type="button" class="btn btn-primary" value="查询" />
                         <div style="height:10px;"></div>
@@ -49,8 +58,9 @@
 </div>
 
 <script src="~/js/jQuery-2.1.4.min.js"></script>
+<script src="~/js/bootstrap-timepicker.js"></script>
+<script src="~/js/daterangepicker.js"></script>
 <script>
-
     var p = 0;
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;

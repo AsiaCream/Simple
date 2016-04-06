@@ -1,21 +1,12 @@
-﻿<style>
-    .must2 {
-        color: red;
-    }
-
-    .must3 {
-        color: red;
-        font-size: 8px;
-    }
-</style>
-<div id="helpfulorder">
+﻿<div id="helpfulorder">
     <section>
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">发布Helpful和收藏 </p><label class="must2">请认真填写以下信息 ，本操作价格为 @ViewBag.Price 元 1 单</label>
-                        <form asp-action="HelpfulOrder" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" id="orderForm" method="post">
+                        <form>
+                            <input type="hidden" value="@ViewBag.UserCurrent.Id" id="userid" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
@@ -31,7 +22,7 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">操作数量</th>
-                                        <td><input type="text" class="form-control" value="1" name="Times" /></td>
+                                        <td><input type="text" class="form-control" value="1" name="Times" id="Times"/></td>
                                         <td class="must2">请输入本产品要刷的单数</td>
                                     </tr>
                                     <tr class="Review1">
@@ -67,16 +58,13 @@
                                         <td><input type="radio" name="IsCollection" value="false" checked="checked" />NO</td>
                                         <td class="infotitle">（Add to Wish List）功能单独收费 @ViewBag.WishListCost 元 </td>
                                     </tr>
-                                    <tr>
-                                        <td><input type="submit" id="send" class="form-control btn btn-primary" value="提交并添加下一单"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </form>
+                        <button class="form-control btn btn-primary" id="sendBtn" >提交并添加下一单</button>
                     </div>
                     <div class="col-md-12">
                         <img src="~/img/system/HelpfurExample.jpg" class="caption" />
-
                     </div>
                 </div>
             </section>
@@ -86,35 +74,47 @@
 </div>
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
-        $("#send").click(function () {
-            /*var url = "Manage/OneToOne";
+    $(function () {
+        $("#sendBtn").click(function () {
+            var url = "/Manage/HelpfulOrder";
             var params = {
+                "id":$("#userid").val(),
                 "Country": $("#Country").val(),
                 "Url": $("#Url").val(),
                 "Times": $("#Times").val(),
-                "GoodsCost": $("#GoodCost").val(),
-                "Freight": $("#Freight").val(),
-                "OrderType": $("input[type='radio' name='OrderType']").val(),
-                "NextOrToday": $("input[type='checkbox' name='NextOrToday']").val(),
-                "AvoidWeekend": $("input[type='radio' name='AvoidWeekend']").val(),
-                "Extension": $("input[type='radio' name='Extension']").val(),
-
-
-
-            }
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[name='ReviewStar1']").val(),
+                "Review2":$("#Review2").val(),
+                "ReviewStar2": $("input[name='ReviewStar2']").val()
+                /*"Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
+                "Review1":$("#Review1").val(),
+                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),*/
+            };
             $.post(url, params, function (data) {
                 if (data == "success") {
                     alert("提交成功");
-                    window.location.href = "/Manage/OneToOne";
+                    window.location.href = "/Manage/HelpfulOrder";
                 }
                 else {
                     alert("提交失败");
                 }
+            });
 
-            });*/
-            alert("提交成功");
-            $("#send").submit;
         });
+
         $("#add-new-title a").click(function () {
             var len = $("tr[class='Review1']").length + 1;
             if (len <= 10) {
@@ -125,7 +125,9 @@
                 alert("最多10条标题");
             }
         });
+
     });
+
 </script>
 
 
