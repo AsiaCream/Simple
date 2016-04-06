@@ -57,17 +57,19 @@ namespace Simple.Controllers
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Modify(string password,string newpwd,string confirmpwd)
+        public async Task<IActionResult> Modify(string password,string newpwd)
         {
-            if (confirmpwd != newpwd)
+            if (UserCurrent == null)
             {
-                return Content("两次输入密码不一致");
+                return Content("error");
             }
-            var user = DB.Users.Where(x => x.Id == UserCurrent.Id).SingleOrDefault();
-            //var result = await userManager.ChangePasswordAsync(userManager.FindByIdAsync(UserCurrent.Id),password, newpwd);
-            var result = await userManager.ChangePasswordAsync(UserCurrent, password, newpwd);
-            await signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            else
+            {
+                //await userManager.ChangePasswordAsync(userManager.FindByIdAsync(UserCurrent.Id), password, newpwd);
+                await userManager.ChangePasswordAsync(UserCurrent, password, newpwd);
+                await signInManager.SignOutAsync();
+                return Content("success");
+            }
         }
         [HttpGet]
         public IActionResult Register()
