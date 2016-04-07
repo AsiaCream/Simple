@@ -94,18 +94,27 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult OneToOne(string id, PreOrder preorder)
+        public IActionResult OneToOne(string id,double Rate,string FindType,string GoodsUrl,string ShopName,double GoodsCost,double Freight,string OrderType,string NextOrToday,bool AvoidWeekend,bool Extension,int CommentTime,string Address,string FeedBackStar,string FeedBackContent,string ReviewStar,string ReviewContent,string ReviewTitle,int Times,string Note)
         {
+            var preorder = new PreOrder { Rate = Rate, FindType = FindType, GoodsUrl = GoodsUrl, ShopName = ShopName, GoodsCost = GoodsCost, Freight = Freight, OrderType = OrderType, NextOrToday = NextOrToday, AvoidWeekend = AvoidWeekend, Extension = Extension, CommentTime = CommentTime, FeedBackStar = FeedBackStar, FeedBackContent = FeedBackContent, ReviewStar = ReviewStar, ReviewContent = ReviewContent, ReviewTitle = ReviewTitle, Times = Times, Note = Note };
             //找到用户提交订单中进入店铺方式，进而找出进入店铺方式所需要的价格
-            var findtype = DB.FindTypes.Where(x => x.Type == preorder.FindType).SingleOrDefault();
+            var findtype = DB.FindTypes.Where(x => x.Type == preorder.FindType).FirstOrDefault();
+
             var oldnum = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
             var num = new IncreasingNumber { Number = oldnum.Number + 1 };
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
+
             var plattype = DB.ShopOrders.Where(x => x.Title == preorder.ShopName).SingleOrDefault();
+
             var rate = DB.Rates.Where(x => x.Exchange == preorder.Rate).SingleOrDefault();
+
             DB.PreOrders.Add(preorder);
+
             DB.IncreasingNumbers.Add(num);
+            var s = preorder.Id;
+
             var poundage = new Poundage { PreOrderId = preorder.Id, OrderCost = 30.00, AddressCost = 0.00, SearchCost = findtype.Price, ImageCost = 0.00, NextOrToday = 0.00 };
+
             DB.Poundages.Add(poundage);
             if (preorder.NextOrToday != null)
             {
@@ -132,33 +141,22 @@ namespace Simple.Controllers
             preorder.RMB = preorder.Total * preorder.Rate;
             preorder.PayTotal = preorder.RMB + preorder.Poundage;
             preorder.PreOrderNumber = DateTime.Now.ToString("yyyyMMddhhmmss") + preorder.Id.ToString()+num.Number.ToString() ;
+            preorder.PostTime = DateTime.Now;
             DB.SaveChanges();
 
-            return RedirectToAction("OneToOne","Manage");
+            return Content("success");
         } 
         #endregion
         [HttpGet]
-        public IActionResult OneToMore()
-        {
-            //现将用户找到
-            var user = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
-            //然后将和用户相关联的店铺信息找到，并用ViewBag返回到前台
-            var shop = DB.ShopOrders.Where(x => x.UserId == user.Id).ToList();
-            var c = DB.Rates.OrderBy(x => x.Exchange).ToList();
-            var f = DB.FindTypes.OrderBy(x => x.Id).ToList();
-            ViewBag.Country = c;
-            ViewBag.FindType = f;
-            ViewBag.Shop = shop;
-            return View();
-        }
-        [HttpPost]
-        public IActionResult OneToMore(string id, PreOrder preorder)
-        {
-            return View();
-        }
-        [HttpGet]
         public IActionResult WaitPayFor()
         {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
             return View();
         }
         [HttpGet]
@@ -169,16 +167,25 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult OrderIng()
         {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult Drawed()
-        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
             return View();
         }
         [HttpGet]
         public IActionResult FinishOrder()
         {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .Where(x => x.IsFinish == IsFinish.已完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
             return View();
         }
         [HttpGet]
@@ -189,6 +196,10 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult TrackingOrder()
         {
+            var orderCount = DB.PreOrders
+                .OrderByDescending(x=>x.PostTime)
+                .Count();
+            ViewBag.totalRecord = orderCount;
             return View();
         }
         [HttpGet]
@@ -196,6 +207,7 @@ namespace Simple.Controllers
         {
             return View();
         }
+        #region 发布Helpful订单
         [HttpGet]
         public IActionResult HelpfulOrder()
         {
@@ -207,12 +219,12 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult HelpfulOrder(string id,string Country,string Url,int Times,bool HelpfulType,bool IsCollection,string Review1,int ReviewStar1,string Review2,int ReviewStar2)
+        public IActionResult HelpfulOrder(string id, string Country, string Url, int Times, bool HelpfulType, bool IsCollection, string Review1, int ReviewStar1, string Review2, int ReviewStar2)
         {
-            var helpfulpreorder = new HelpfulPreOrder { Country = Country, Url = Url, Times = Times,HelpfulType=HelpfulType,IsCollection=IsCollection, Review1 = Review1, ReviewStar1 = ReviewStar1, Review2 = Review2, ReviewStar2 = ReviewStar2 };
+            var helpfulpreorder = new HelpfulPreOrder { Country = Country, Url = Url, Times = Times, HelpfulType = HelpfulType, IsCollection = IsCollection, Review1 = Review1, ReviewStar1 = ReviewStar1, Review2 = Review2, ReviewStar2 = ReviewStar2 };
             var oldnum = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
-            var num = new IncreasingNumber{ Number = oldnum.Number + 1 };
-            var helpfulprice = DB.HelpfulPrices.Where(x=>x.Id==1).SingleOrDefault();//找出当前Helpful价格
+            var num = new IncreasingNumber { Number = oldnum.Number + 1 };
+            var helpfulprice = DB.HelpfulPrices.Where(x => x.Id == 1).SingleOrDefault();//找出当前Helpful价格
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();//找出当前提交订单的用户
             DB.HelpfulPreOrders.Add(helpfulpreorder);
             DB.IncreasingNumbers.Add(num);
@@ -233,19 +245,31 @@ namespace Simple.Controllers
             helpfulpreorder.IsPayFor = IsPayFor.未支付;
             DB.SaveChanges();
             return Content("success");
-        }
+        } 
+        #endregion
         [HttpGet]
         public IActionResult HelpfulOrderDetails(int id)
         {
-            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
             return View(order);
         }
         [HttpPost]
         public IActionResult DeleteHelpfulOrder(int id)
         {
-            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
-            var orderuser = DB.Users.Where(x => x.Id == order.UserId).SingleOrDefault();
-            var currentuser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+
+            var orderuser = DB.Users
+                .Where(x => x.Id == order.UserId)
+                .SingleOrDefault();
+
+            var currentuser = DB.Users
+                .Where(x => x.UserName == HttpContext.User.Identity.Name)
+                .SingleOrDefault();
+
             if (orderuser == currentuser)
             {
                 DB.HelpfulPreOrders.Remove(order);
@@ -304,7 +328,10 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult HelpfulAllOrder()
         {
-            var orderCount = DB.HelpfulPreOrders.Where(x => x.UserId == UserCurrent.Id).Count();
+            var orderCount = DB.HelpfulPreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Count();
+
             ViewBag.totalRecord = orderCount;
             return View();
         }

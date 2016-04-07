@@ -50,6 +50,9 @@ namespace Simple.Models
         public double Poundage { get; set; }//手续费
         public double PayTotal { get; set; }//支付金额
         public int Times { get; set; }//刷单次数
+        public DateTime PostTime { get; set; }//下单时间
+        public DateTime DrawTime { get; set; }//审核时间
+        public DateTime FinishTime { get; set; }//完成时间
 
         public State State { get; set; } //锁定状态
 
