@@ -61,7 +61,10 @@
                                 </tbody>
                             </table>
                         </form>
-                        <button class="form-control btn btn-primary" id="sendBtn" >提交并添加下一单</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="form-control btn btn-primary" id="sendBtn">提交并添加下一单</button>
+                        <div style="height:20px;"></div>
                     </div>
                     <div class="col-md-12">
                         <img src="~/img/system/HelpfurExample.jpg" class="caption" />
@@ -79,40 +82,52 @@
             var url = "/Manage/HelpfulOrder";
             var params = {
                 "id":$("#userid").val(),
-                "Country": $("#Country").val(),
+                "Country": $("input:radio[name='Country']:checked").val(),
                 "Url": $("#Url").val(),
                 "Times": $("#Times").val(),
+                "HelpfulType": $("input:radio[name='HelpfulType']:checked").val(),
+                "IsCollection":$("input:radio[name='IsCollection']:checked").val(),
                 "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[name='ReviewStar1']").val(),
+                "ReviewStar1": $("input:radio[name='ReviewStar1']:checked").val(),
                 "Review2":$("#Review2").val(),
-                "ReviewStar2": $("input[name='ReviewStar2']").val()
-                /*"Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input[type='radio' name='ReviewStar1']").val(),*/
+                "ReviewStar2": $("input:radio[name='ReviewStar2']:checked").val(),
+                "Review3":$("#Review3").val(),
+                "ReviewStar3": $("input:radio[name='ReviewStar3']:checked").val(),
+                "Review4":$("#Review4").val(),
+                "ReviewStar4": $("input:radio[name='ReviewStar4']:checked").val(),
+                "Review5":$("#Review5").val(),
+                "ReviewStar5": $("input:radio[name='ReviewStar5']:checked").val(),
+                "Review6":$("#Review6").val(),
+                "ReviewStar6": $("input:radio[name='ReviewStar6']:checked").val(),
+                "Review7":$("#Review7").val(),
+                "ReviewStar7": $("input:radio[name='ReviewStar7']:checked").val(),
+                "Review8":$("#Review8").val(),
+                "ReviewStar8": $("input:radio[name='ReviewStar8']:checked").val(),
+                "Review9":$("#Review9").val(),
+                "ReviewStar9": $("input:radio[name='ReviewStar9']:checked").val(),
+                "Review10":$("#Review10").val(),
+                "ReviewStar10": $("input:radio[name='ReviewStar10']:checked").val(),
             };
-            $.post(url, params, function (data) {
-                if (data == "success") {
-                    alert("提交成功");
-                    window.location.href = "/Manage/HelpfulOrder";
-                }
-                else {
-                    alert("提交失败");
-                }
-            });
-
+            if ($("input:radio[name='Country']:checked").val() == null) {
+                alert("国家不能为空，请选择一个！");
+            }
+            else if ($("#Url").val() == "") {
+                alert("链接地址不能为空，选输入正确的链接地址！");
+            }
+            else if ($("#Times").val()=="") {
+                alert("单数不能为空，请输入单数！");
+            }
+            else {
+                $.post(url, params, function (data) {
+                    if (data == "success") {
+                        alert("提交成功");
+                        window.location.href = "/Manage/HelpfulOrder";
+                    }
+                    else {
+                        alert("提交失败");
+                    }
+                });
+            }
         });
 
         $("#add-new-title a").click(function () {
