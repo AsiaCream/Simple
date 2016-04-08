@@ -53,6 +53,23 @@ namespace Simple.Controllers
                 return RedirectToAction("JoinShopType", "Admin");
             }
         }
+        [HttpPost]
+        public IActionResult DeleteJoinShopType(int id)
+        {
+            var type = DB.FindTypes
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (type == null)
+            {
+                return Content("error");
+            }
+            else
+            {
+                DB.FindTypes.Remove(type);
+                DB.SaveChanges();
+                return Content("success");
+            }
+        }
         #endregion
         [HttpGet]
         public IActionResult CommentTime()

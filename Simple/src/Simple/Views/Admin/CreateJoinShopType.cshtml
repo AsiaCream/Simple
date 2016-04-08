@@ -10,12 +10,20 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">添加进入店铺方式</p>
-                        <form asp-action="CreateShopOrderAmount" asp-controller="Manage" method="post">
+                        <form asp-action="CreateJoinShopType" asp-controller="Admin" method="post">
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*进入店铺方式</th>
                                         <td><input type="text" class="form-control" name="type" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*该方式价格</th>
+                                        <td><input type="text" class="form-control" name="price" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*说明</th>
+                                        <td><input type="text" class="form-control" name="note" /></td>
                                     </tr>
                                     <tr>
                                         <th></th>
@@ -25,8 +33,10 @@
                             </table>
 
                         </form>
-                        <label class="must2">特别说明</label><br />
-                        <label class="must2">进入店铺方式：如搜索进入，链接进入</label>     <br />
+                        <label class="must2">例子</label><br />
+                        <label class="must2">进入店铺方式：搜索进入<br />
+                                             该方式价格：2.00<br />
+                                             说明：以搜索方式进入会多收取2元手续费</label><br />
                         <div style="height:10px;"></div>
                     </div>
                     </div>

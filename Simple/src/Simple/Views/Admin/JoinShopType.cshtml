@@ -24,12 +24,12 @@
                             <tbody>
                                 @foreach (FindType x in Model)
                                 {
-                                    <tr>
+                                    <tr id="table-tr">
                                         <td>@x.Id</td>
                                         <td>@x.Type</td>
                                         <td>@x.Price</td>
                                         <td>@x.Note</td>
-                                        <td><a asp-action="EditJoinShopType" asp-controller="Admin" asp-route-id="@x.Id">编辑</a></td>
+                                        <td><a asp-action="EditJoinShopType" asp-controller="Admin" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp; <a class="text-danger" href="javascript:remove(@x.Id)">删除</a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -42,3 +42,25 @@
         </div>
     </section>
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    function remove(id) {
+        var jug = confirm("确认删除吗");
+        if (jug == true) {
+            var url = "/Admin/DeleteJoinShopType";
+            var parmas = { "id": id };
+            $.post(url, parmas, function (data) {
+                if (data == "success") {
+                    alert("删除成功");
+                    $("#table-tr").remove();
+                }
+                else {
+                    alert("删除失败");
+
+                }
+            });
+
+        }
+
+    }
+</script>

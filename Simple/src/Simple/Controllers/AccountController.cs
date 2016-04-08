@@ -52,7 +52,6 @@ namespace Simple.Controllers
         [HttpGet]
         public IActionResult Modify()
         {
-            //var CurrentUser = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
             return View();
         }
         [Authorize]
@@ -72,14 +71,15 @@ namespace Simple.Controllers
             }
         }
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            ViewBag.MemberCount = (await userManager.GetUsersInRoleAsync("普通用户")).Count();
             return View();
         }
         [HttpPost]
         public async Task <IActionResult> Register(string username,string password,string name,string answer,string question,int qq)
         {
-            var user = new User { UserName = username, Name=name,Answer = answer, Question = question, QQ = qq,Level=1 };
+            var user = new User { UserName = username, Name=name,Answer = answer, Question = question, QQ = qq,Level=1,RegisterTime=DateTime.Now };
             await userManager.CreateAsync(user,password);
             await userManager.AddToRoleAsync(user, "普通用户");
             DB.SaveChanges();
@@ -92,13 +92,34 @@ namespace Simple.Controllers
             return View();
         }
         [Authorize(Roles = ("系统管理员"))]
+        [HttpPost]
         public async Task<IActionResult> CreateAdmin(string username, string password, string name, string answer, string question, int qq)
         {
-            var admin = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = 99 };
+            var admin = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = 99,RegisterTime=DateTime.Now };
             await userManager.CreateAsync(admin, password);
             await userManager.AddToRoleAsync(admin, "系统管理员");
             DB.SaveChanges();
             return Content("success");
+        }
+        [HttpGet]
+        [Authorize(Roles =("系统管理员"))]
+        public async Task<IActionResult> Member()
+        {
+            var users = (await userManager.GetUsersInRoleAsync("普通用户"))
+                .OrderBy(x =>x.RegisterTime)
+                .ToList();
+            ViewBag.MemberCount = (await userManager.GetUsersInRoleAsync("普通用户")).Count();
+            return View(users);
+        }
+        [HttpGet]
+        [Authorize(Roles =("系统管理员"))]
+        public async Task<IActionResult> Admins()
+        {
+            var users = (await userManager.GetUsersInRoleAsync("系统管理员"))
+                .OrderByDescending(x => x.RegisterTime)
+                .ToList();
+            ViewBag.AdminCount = (await userManager.GetUsersInRoleAsync("系统管理员")).Count();
+            return View(users);
         }
     }
 }

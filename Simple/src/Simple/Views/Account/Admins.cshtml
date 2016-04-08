@@ -1,0 +1,47 @@
+﻿@model IEnumerable<User>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">所有管理员 &nbsp;&nbsp;&nbsp;&nbsp; <label class="must2 pull-right">总人数：@ViewBag.AdminCount</label></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-responsive table-stripted table-hover">
+                            <thead>
+                                <tr style="background-color:rgb(60,141,188);">
+                                    <th>添加时间</th>
+                                    <th>用户名</th>
+                                    <th>昵称</th>
+                                    <th>管理员等级</th>
+                                    <th>QQ</th>
+                                    <th>电子邮箱</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (User x in Model)
+                                {
+                                    <tr>
+                                        <td>@x.RegisterTime</td>
+                                        <td>@x.UserName</td>
+                                        <td>@x.Name</td>
+                                        <td>@x.Level</td>
+                                        <td>@x.QQ</td>
+                                        <td>@x.Email</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+

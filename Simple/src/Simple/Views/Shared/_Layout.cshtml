@@ -323,7 +323,6 @@
                                                     <li><a href="#"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 会员等级</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 平台管理员管理</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 汇率更新配置</a></li>
                                                     <li><a asp-action="JoinShopType" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进入店铺方式</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 订单类型及其属性管理</a></li>
@@ -374,9 +373,9 @@
                                                     <i class="fa fa-angle-left pull-right"></i>
                                                 </a>
                                                 <ul class="treeview-menu">
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 会员信息</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 会员店铺管理</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 会员商品管理</a></li>
+                                                    <li><a asp-action="Member" asp-controller="Account"><i class="fa fa-circle-o"></i> 会员信息</a></li>
+                                                    <li><a asp-action="MemberShop" asp-controller="Account"><i class="fa fa-circle-o"></i> 会员店铺查看</a></li>
+                                                    <li><a asp-action="MemberGoods" asp-controller="Account"><i class="fa fa-circle-o"></i> 会员商品查看</a></li>
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -397,12 +396,12 @@
                                             <li class="treeview">
                                                 <a href="#">
                                                     <i class="fa fa-user"></i>
-                                                    <span>人员信息管理</span>
+                                                    <span>管理员信息管理</span>
                                                     <i class="fa fa-angle-left pull-right"></i>
                                                 </a>
                                                 <ul class="treeview-menu">
                                                     <li><a asp-action="CreateAdmin" asp-controller="Account"><i class="fa fa-circle-o"></i> 添加管理员</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 人员基本信息</a></li>
+                                                    <li><a asp-action="Admins" asp-controller="Account"><i class="fa fa-circle-o"></i> 人员基本信息</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 人员刷单列表</a></li>
                                                 </ul>
                                             </li>
