@@ -11,17 +11,8 @@ namespace Simple.Controllers
     [Authorize]
     public class PagerController : BaseController //该控制器用于加载异步分页的另一个页面
     {
-        [HttpGet]
-        public IActionResult LoadWaitPayOrders(int page)
-        {
-            var order = DB.PreOrders
-                .Where(x => x.UserId == UserCurrent.Id)
-                .Where(x => x.State == State.未锁定)
-                .OrderBy(x => x.Id)
-                .Skip(page * 10).Take(10).ToList();
-            return View(order);
-        }
-        [HttpGet]
+        #region 用户订单显示页面
+        [HttpGet]//用户所有订单页面
         public IActionResult LoadTrackingOrders(int page)
         {
             var order = DB.PreOrders
@@ -30,22 +21,80 @@ namespace Simple.Controllers
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
-        [HttpGet]//管理员查看所有helpful订单页面
-        public IActionResult LoadHelpfulOrders(int page)
+        [HttpGet] //用户待支付订单
+        public IActionResult LoadWaitPayOrders(int page)
         {
-            var order = DB.HelpfulPreOrders
-                .OrderByDescending(x => x.PostTime)
+            var order = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .OrderBy(x => x.Id)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
-        [HttpGet]//加载管理员中中HelpfulWaitDrawFor页面内容
-        public IActionResult LoadHelpfulDrawOrders(int page)
+        [HttpGet]//用户待审核订单
+        public IActionResult LoadWaitDraw(int page)
         {
-            var order = DB.HelpfulPreOrders
-                .Where(x => x.Draw ==Draw.通过)
-                .Where(x=>x.State==State.未锁定)
-                .Where(x=>x.IsFinish==IsFinish.未完成)
-                .Where(x=>x.IsPayFor==IsPayFor.未支付)
+            var order = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.待审核)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//用户审核未通过订单
+        public IActionResult LoadNotPassDraw(int page)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.未通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//用户可撤销订单
+        public IActionResult LoadErrorOrder(int page)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//用户进行中订单
+        public IActionResult LoadOrderIng(int page)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//用户已完成订单
+        public IActionResult LoadFinishOrder(int page)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.已完成)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
                 .OrderBy(x => x.Id)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
@@ -78,7 +127,7 @@ namespace Simple.Controllers
                 .Skip(page * 10).Take(10).ToList();
             return View(myorder);
         }
-        [HttpGet]//用户提交审核通过之后，可以进行支付的订单
+        [HttpGet]//用户提交审核通过之后，可以进行支付的Helpful订单
         public IActionResult LoadHelpfulWaitPay(int page)
         {
             var order = DB.HelpfulPreOrders
@@ -91,21 +140,21 @@ namespace Simple.Controllers
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
-        [HttpGet]//用户已审核通过已支付并锁定但未完成订单页面，已支付未完成订单
+        [HttpGet]//用户已审核通过已支付并锁定但未完成Helpful订单页面，已支付未完成订单
         public IActionResult LoadHelpfulPassNotFinish(int page)
         {
             var order = DB.HelpfulPreOrders
                 .Where(x => x.UserId == UserCurrent.Id)
-                .Where(x=>x.Draw==Draw.通过)
-                .Where(x=>x.State==State.锁定)
-                .Where(x=>x.IsFinish==IsFinish.未完成)
-                .Where(x=>x.IsPayFor==IsPayFor.已支付)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
                 .OrderByDescending(x => x.DrawTime)
                 .Skip(page * 10)
                 .Take(10).ToList();
             return View(order);
         }
-        [HttpGet] //可以撤销Helpful订单列表
+        [HttpGet] //用户可以撤销Helpful订单列表
         public IActionResult LoadHelpfulErrorOrder(int page)
         {
             var order = DB.HelpfulPreOrders
@@ -119,6 +168,116 @@ namespace Simple.Controllers
                 .Take(10).ToList();
             return View(order);
         }
+        #endregion
+
+        #region 管理员订单显示页面
+        [HttpGet]//管理员查看所有订单页面
+        public IActionResult LoadAllOrders(int page)
+        {
+            var order = DB.PreOrders
+                .OrderByDescending(x=>x.PostTime)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//管理员查看待审订单页面
+        public IActionResult LoadWaitDrawOrders(int page)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.待审核)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//管理员查看待支付页面
+        public IActionResult LoadWaitPayFor(int page)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//管理员查看审核未通过页面
+        public IActionResult LoadNotPassOrders(int page)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.未通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//已支付列表显示
+        public IActionResult LoadPayedOrders(int page)
+        {
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//管理员查看进行中列表
+        public IActionResult LoadOrderIngOrders(int page)
+        {
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//管理员查看已完成列表
+        public IActionResult LoadFinishOrders(int page)
+        {
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.IsFinish == IsFinish.已完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+
+
+
+
+
+        [HttpGet]//管理员查看所有helpful订单页面
+        public IActionResult LoadHelpfulOrders(int page)
+        {
+            var order = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        }
+        [HttpGet]//加载管理员中中HelpfulWaitDrawFor页面内容
+        public IActionResult LoadHelpfulDrawOrders(int page)
+        {
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.未支付)
+                .OrderBy(x => x.Id)
+                .Skip(page * 10).Take(10).ToList();
+            return View(order);
+        } 
         
+        #endregion
+
     }
 }

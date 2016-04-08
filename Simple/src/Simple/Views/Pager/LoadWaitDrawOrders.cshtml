@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PreOrder>
+@{
+    Layout = null;
+    //管理员待审核页面
+}
+@if (User.IsInRole("系统管理员"))
+{
+    @foreach (var x in Model)
+    {
+        <tr id="table-tr">
+            <td>@x.Id</td>
+            <td>@x.PreOrderNumber</td>
+            <td>@x.Country</td>
+            <td>@x.Rate</td>
+            <td>@x.ShopName</td>
+            <td><a href="@x.GoodsUrl" title="@x.GoodsUrl" target="_blank">查看</a></td>
+            <td><a href="#" title="=@x.Address">查看</a></td>
+            <td>@x.FindType</td>
+            <td>@x.NextOrToday</td>
+            <td>@x.GoodsCost</td>
+            <td>@x.Freight</td>
+            <td>@x.Total</td>
+            <td>@x.RMB</td>
+            <td>@x.Poundage</td>
+            <td>@x.PayTotal</td>
+            <td><a href="#" title="@x.FeedBackContent">复制</a></td>
+            <td><a href="#" title="@x.ReviewContent">复制</a></td>
+            <td>@x.Draw</td>
+            <td>@x.PlatType</td>
+            <td>@x.Times</td>
+            <td><a href="javascript:pass(@x.Id)">审核通过</a>&nbsp;&nbsp;<a href="javascript:failure(@x.Id)">审核不通过</a> </td>
+        </tr>
+    }
+    <script src="~/js/jQuery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+    function pass(id) {
+        var jug = confirm("确定审核通过么？");
+        if (jug==true) {
+            $(function () {
+                var url = "/Admin/OrderPass";
+                var params = { "id": id };
+                $.post(url, params, function (data) {
+                    if (data == "success") {
+                        $("#table-tr").remove();
+                        alert("操作成功");
+                    }
+                    else {
+                        alert("操作失败");
+                    }
+                })
+            });
+
+        }
+            }
+    function failure(id) {
+        var jug = confirm("确定审核不通过吗？");
+            if(jug==true)
+            {
+                $(function () {
+                    var url = "/Admin/OrderFailure";
+                    var params = { "id": id };
+                    $.post(url, params, function (data) {
+                        if (data == "success") {
+                            $("#table-tr").remove();
+                            alert("操作成功");
+                        }
+                        else {
+                            alert("操作失败");
+                        }
+                    })
+                });
+            }
+        }
+    </script>
+}
+
+
+

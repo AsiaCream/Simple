@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<PreOrder>
-@{ 
+@{
     Layout = null;
-    //用户待支付列表
 }
-    @foreach (var x in Model)
-    {
+@foreach (var x in Model)
+{
     <tr>
         <td>@x.Id</td>
         <td>@x.PreOrderNumber</td>
@@ -25,6 +24,9 @@
         <td>@x.Draw</td>
         <td>@x.PlatType</td>
         <td>@x.Times</td>
-        <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
     </tr>
-    }
+}
+
+
+
+

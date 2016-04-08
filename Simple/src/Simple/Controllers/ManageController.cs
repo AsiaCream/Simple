@@ -145,9 +145,21 @@ namespace Simple.Controllers
             DB.SaveChanges();
 
             return Content("success");
-        } 
+        }
         #endregion
-        [HttpGet]
+        [HttpGet] //待审核订单
+        public IActionResult WaitDraw()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.待审核)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]  //待支付订单
         public IActionResult WaitPayFor()
         {
             var orderCount = DB.PreOrders
@@ -159,12 +171,36 @@ namespace Simple.Controllers
             ViewBag.totalRecord = orderCount;
             return View();
         }
-        [HttpGet]
+        [HttpGet]//用户审核未通过订单
+        public IActionResult NotPassDraw()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.未通过)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]//用户今日订单
         public IActionResult TodayOrder()
         {
             return View();
         }
-        [HttpGet]
+        [HttpGet]   //用户可撤销订单
+        public IActionResult ErrorOrder()
+        { 
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]  //进行中订单
         public IActionResult OrderIng()
         {
             var orderCount = DB.PreOrders
@@ -176,7 +212,7 @@ namespace Simple.Controllers
             ViewBag.totalRecord = orderCount;
             return View();
         }
-        [HttpGet]
+        [HttpGet]  //已完成订单
         public IActionResult FinishOrder()
         {
             var orderCount = DB.PreOrders
@@ -188,12 +224,7 @@ namespace Simple.Controllers
             ViewBag.totalRecord = orderCount;
             return View();
         }
-        [HttpGet]
-        public IActionResult EditAddress()
-        {
-            return View();
-        }
-        [HttpGet]
+        [HttpGet] //所有订单跟踪
         public IActionResult TrackingOrder()
         {
             var orderCount = DB.PreOrders
@@ -202,11 +233,8 @@ namespace Simple.Controllers
             ViewBag.totalRecord = orderCount;
             return View();
         }
-        [HttpGet]
-        public IActionResult ErrorOrder()
-        {
-            return View();
-        }
+        
+
         #region 发布Helpful订单
         [HttpGet]
         public IActionResult HelpfulOrder()

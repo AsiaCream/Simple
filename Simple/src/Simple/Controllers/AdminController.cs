@@ -67,7 +67,7 @@ namespace Simple.Controllers
             return View(commenttime);
         }
         [HttpPost]
-        public IActionResult EditCommentTime(int id,CommentTime Commentime)
+        public IActionResult EditCommentTime(int id, CommentTime Commentime)
         {
             var old = DB.CommentTimes.Where(x => x.Id == id).SingleOrDefault();
             if (old == null)
@@ -96,7 +96,7 @@ namespace Simple.Controllers
             return View(ret);
         }
         [HttpPost]
-        public IActionResult EditHelpfulPrice(int id,HelpfulPrice helpfulprice)
+        public IActionResult EditHelpfulPrice(int id, HelpfulPrice helpfulprice)
         {
             var old = DB.HelpfulPrices.Where(x => x.Id == id).SingleOrDefault();
             if (old == null)
@@ -110,27 +110,135 @@ namespace Simple.Controllers
                 DB.SaveChanges();
                 return RedirectToAction("HelpfulPrice", "Admin");
             }
-            
+
         }
         #endregion 
 
 
 
-        [HttpGet]
-        public IActionResult PreOrder()
+        [HttpGet]//所有订单
+        public IActionResult AllOrders()
         {
-            var ret = DB.PreOrders.Where(x=>x.Draw==Draw.待审核).OrderBy(x => x.Id).ToList();
-            return View(ret);
+            var orderCount = DB.PreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
         }
-        [HttpGet]
+        [HttpGet]//待审核订单
+        public IActionResult WaitDrawOrders()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.待审核)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]//待支付订单
+        public IActionResult WaitPayOrders()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]//审核未通过列表
+        public IActionResult NotPassOrders()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.未通过)
+                .Where(x => x.IsPayfor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]  //已支付列表
+        public IActionResult PayedOrders()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]//进行中订单
+        public IActionResult OrdersIng()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]//已完成订单
+        public IActionResult FinishOrders()
+        {
+            var orderCount = DB.PreOrders
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .Where(x => x.IsFinish == IsFinish.已完成)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult OrderPass(int id)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            order.Draw = Draw.通过;
+            order.DrawTime = DateTime.Now;
+            DB.SaveChanges();
+            return Content("success");
+        }
+        [HttpPost]
+        public IActionResult OrderFailure(int id)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            order.Draw = Draw.未通过;
+            order.DrawTime = DateTime.Now;
+            DB.SaveChanges();
+            return Content("success");
+        }
+
+
+
+        [HttpGet]//helpful所有订单
         public IActionResult HelpfulOrders()
         {
-            var ret = DB.HelpfulPreOrders.OrderBy(x => x.Id).ToList();
-            return View(ret);
+            var orderCount = DB.HelpfulPreOrders
+                .OrderByDescending(x=>x.PostTime)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
         }
-        [HttpGet]
+        [HttpGet]//helpful待审核订单
         public IActionResult HelpfulDrawOrders()
         {
+            var orderCount = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Where(x=>x.Draw==Draw.待审核)
+                .Count();
+            ViewBag.totalRecord = orderCount;
             return View();
         }
         #region Helpful审核方法
@@ -142,7 +250,9 @@ namespace Simple.Controllers
         [HttpPost]
         public IActionResult HelpfulPass(int id)
         {
-            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
             order.Draw = Draw.通过;
             order.DrawTime = DateTime.Now;
             DB.SaveChanges();
@@ -156,17 +266,21 @@ namespace Simple.Controllers
         [HttpPost]
         public IActionResult HelpfulFailure(int id)
         {
-            var order = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
             order.Draw = Draw.未通过;
             order.DrawTime = DateTime.Now;
             DB.SaveChanges();
             return Content("success");
         } 
         #endregion
-        [HttpGet]
+        [HttpGet]//用户Helpful详细
         public IActionResult HelpfulDetails(int id)
         {
-            var ret = DB.HelpfulPreOrders.Where(x => x.Id == id).SingleOrDefault();
+            var ret = DB.HelpfulPreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
             return View(ret);
         }
     }

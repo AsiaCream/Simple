@@ -5,7 +5,7 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">已完成订单</p>
+                        <p class="infotitle">审核未通过订单</p>
                         <p class="must2">如想快速发布一对一订单，可以点击<a asp-action="OneToOne" asp-controller="Manage">此处</a>跳转</p>
                         <input type="text" placeholder="系统订单号" />
                         &nbsp;&nbsp;
@@ -43,10 +43,7 @@
                                     <th>支付金额</th>
                                     <th>FeedBack</th>
                                     <th>Review</th>
-                                    <th>下单时间</th>
                                     <th>审核情况</th>
-                                    <th>审核时间</th>
-                                    <th>完成时间</th>
                                     <th>类型</th>
                                     <th>单数</th>
                                     <th>操作</th>
@@ -71,7 +68,7 @@
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;
     function load() {
-        $.get("/Pager/LoadFinishOrder", {
+        $.get("/Pager/LoadNotPassDraw", {
             page:p
         }, function (html) {
             $("#order-list").html(html);
@@ -95,5 +92,4 @@
         load();
     });
 </script>
-
 

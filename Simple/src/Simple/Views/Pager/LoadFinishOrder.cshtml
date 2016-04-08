@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<PreOrder>
-@{ 
+@{
     Layout = null;
-    //用户待支付列表
+    //用户查看已完成订单
 }
-    @foreach (var x in Model)
-    {
+@foreach (var x in Model)
+{
     <tr>
         <td>@x.Id</td>
         <td>@x.PreOrderNumber</td>
@@ -22,9 +22,13 @@
         <td>@x.PayTotal</td>
         <td><a href="#" title="@x.FeedBackContent">复制</a></td>
         <td><a href="#" title="@x.ReviewContent">复制</a></td>
+        <td>@x.PostTime</td>
         <td>@x.Draw</td>
+        <td>@x.DrawTime</td>
+        <td>@x.FinishTime</td>
         <td>@x.PlatType</td>
         <td>@x.Times</td>
         <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
     </tr>
-    }
+}
+

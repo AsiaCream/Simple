@@ -262,10 +262,11 @@
                                                     <li><a asp-action="ShopOrderAmount" asp-controller="Manage"><i class="fa fa-circle-o"></i>店铺订单量设置</a></li>
                                                     <li><a asp-action="TrackingOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单跟踪</a></li>
                                                     <li><a asp-action="OneToOne" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布一产品一单</a></li>
-                                                    <li><a asp-action="WaitPayFor" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付列表</a></li>
-                                                    <li><a asp-action="NotPassDraw" asp-controller="Manage"><i class="fa fa-circle-o"></i> 审核未通过列表</a></li>
-                                                    <li><a asp-action="ErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 可撤销订单列表</a></li>
+                                                    <li><a asp-action="WaitDraw" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待审核订单</a></li>
+                                                    <li><a asp-action="WaitPayFor" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
+                                                    <li><a asp-action="NotPassDraw" asp-controller="Manage"><i class="fa fa-circle-o"></i> 审核未通过订单</a></li>
                                                     <li><a asp-action="TodayOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今天订单</a></li>
+                                                    <li><a asp-action="ErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 可撤销订单列表</a></li>
                                                     <li><a asp-action="OrderIng" asp-controller="Manage"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
                                                     <li><a asp-action="FinishOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
                                                 </ul>
@@ -341,12 +342,13 @@
                                                     <i class="fa fa-angle-left pull-right"></i>
                                                 </a>
                                                 <ul class="treeview-menu">
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 所有下单列表</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 待操作订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 撤销失败订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已撤销订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
+                                                    <li><a asp-action="AllOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 所有下单列表</a></li>
+                                                    <li><a asp-action="WaitDrawOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待审核订单列表</a></li>
+                                                    <li><a asp-action="WaitPayOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待支付订单列表</a></li>
+                                                    <li><a asp-action="NotPassOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 审核未通过订单列表</a></li>
+                                                    <li><a asp-action="PayedOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 已支付订单</a></li>
+                                                    <li><a asp-action="OrdersIng" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
+                                                    <li><a asp-action="FinishOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
 
                                                 </ul>
                                             </li>

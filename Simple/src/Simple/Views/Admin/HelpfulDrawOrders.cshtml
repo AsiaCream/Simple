@@ -43,6 +43,8 @@
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script>
     var p = 0;
+    var totalRecord=@ViewBag.totalRecord;
+    var totalPage=(totalRecord+10-1)/10;
     function load() {
         $.get("/Pager/LoadHelpfulDrawOrders", {
             page:p

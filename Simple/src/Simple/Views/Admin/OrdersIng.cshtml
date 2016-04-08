@@ -1,12 +1,11 @@
 ﻿<div>
     <section>
-        <!--用户审核未通过订单页面-->
+        <!--管理员查看所有进行中订单页面-->
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">已完成订单</p>
-                        <p class="must2">如想快速发布一对一订单，可以点击<a asp-action="OneToOne" asp-controller="Manage">此处</a>跳转</p>
+                        <p class="infotitle">进行中订单</p>
                         <input type="text" placeholder="系统订单号" />
                         &nbsp;&nbsp;
                         <input type="text" placeholder="开始时间" />
@@ -14,11 +13,6 @@
                         <input type="text" placeholder="结束时间" />&nbsp;&nbsp;
                         <input type="button" class="btn btn-primary" value="查询" />
                         <label class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;未操作（不含错单）：0  &nbsp;&nbsp;&nbsp;&nbsp; 错单：0</label>
-                        <div style="height:10px;"></div>
-
-                        <input type="button" class="btn btn-success " value="在线支付" />
-                        &nbsp;&nbsp;
-                        <input type="button" class="btn btn-danger " value="批量删除" />
                         <div style="height:10px;"></div>
                     </div>
                 </div>
@@ -43,13 +37,9 @@
                                     <th>支付金额</th>
                                     <th>FeedBack</th>
                                     <th>Review</th>
-                                    <th>下单时间</th>
                                     <th>审核情况</th>
-                                    <th>审核时间</th>
-                                    <th>完成时间</th>
                                     <th>类型</th>
                                     <th>单数</th>
-                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="order-list"></tbody>
@@ -71,7 +61,7 @@
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;
     function load() {
-        $.get("/Pager/LoadFinishOrder", {
+        $.get("/Pager/LoadOrderIngOrders", {
             page:p
         }, function (html) {
             $("#order-list").html(html);
