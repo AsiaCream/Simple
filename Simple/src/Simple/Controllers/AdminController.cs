@@ -254,10 +254,54 @@ namespace Simple.Controllers
             var orderCount = DB.HelpfulPreOrders
                 .OrderByDescending(x => x.PostTime)
                 .Where(x=>x.Draw==Draw.待审核)
+                .Where(x=>x.IsFinish==IsFinish.未完成)
+                .Where(x=>x.IsPayFor==IsPayFor.未支付)
+                .Where(x=>x.State==State.未锁定)
                 .Count();
             ViewBag.totalRecord = orderCount;
             return View();
         }
+        [HttpGet]//helpful待支付订单
+        public IActionResult HelpfulWaitPayFor()
+        {
+            var orderCount = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.未支付)
+                .Where(x => x.State == State.未锁定)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+        }
+        [HttpGet]//Helpful审核失败订单
+        public IActionResult HelpfulFailure()
+        {
+            var orderCount = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Where(x => x.Draw == Draw.未通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.未支付)
+                .Where(x => x.State == State.未锁定)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+        }
+        [HttpGet]//Helpful进行中订单
+        public IActionResult HelpfulOrderIng()
+        {
+            var orderCount = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.State == State.锁定)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+
+
+
+
         #region Helpful审核方法
         /// <summary>
         /// 审核通过

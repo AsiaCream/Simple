@@ -1,11 +1,25 @@
-﻿<div>  
-    <section> <!--管理员待审核Helpful订单-->
+﻿<div>
+    <section>
+        <!--管理员查看审核失败helpful列表-->
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">helpful待审核订单</p>
-                        <p class="must2">如想快速审核其它订单，可以点击<a asp-action="PreOrder" asp-controller="Admin">此处</a>跳转</p>
+                        <p class="infotitle">helpful审核失败订单</p>
+                        <label>
+                            系统单号：
+                        </label>
+                        <input type="text" />
+                        <br />
+                        <label>
+                            开始时间：
+                        </label>
+                        <input type="date" />
+                        &nbsp;&nbsp;
+                        <input type="button" class="btn btn-primary" value="查询" />
+                        &nbsp;&nbsp;
+                        <input type="button" class="btn btn-danger " value="批量删除" />
+                        <div style="height:10px;"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -21,6 +35,8 @@
                                     <th>Helpful类型</th>
                                     <th>是否收藏(Add to Wish List)</th>
                                     <th>审核状态</th>
+                                    <th>审核时间</th>
+                                    <th>下单时间</th>
                                     <th>单数</th>
                                     <th>操作</th>
                                 </tr>
@@ -46,7 +62,7 @@
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;
     function load() {
-        $.get("/Pager/LoadHelpfulDrawOrders", {
+        $.get("/Pager/LoadHelpfulFailures", {
             page:p
         }, function (html) {
             $("#order-list").html(html);
@@ -61,7 +77,7 @@
     });
     $("#btn-next").click(function () {
         p++;
-        if (p >1)
+        if (p >totalPage-1)
             p = 0;
             load();
     });

@@ -1,5 +1,5 @@
 ﻿<div>  
-    <section>
+    <section><!--用户helpful待支付列表-->
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
@@ -13,12 +13,7 @@
                         <label>
                             开始时间：
                         </label>
-                        <input type="text" />
-                        &nbsp;&nbsp;
-                        <label>
-                            结束时间：
-                        </label>
-                        <input type="text" />
+                        <input type="date" />
                         &nbsp;&nbsp;
                         <input type="button" class="btn btn-primary" value="查询" />
                         <div style="height:10px;"></div>
@@ -70,7 +65,7 @@
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;
     function load() {
-        $.get("/Pager/LoadHelpfulWaitPay", {
+        $.get("/Pager/LoadHelpfulWaitPays", {
             page:p
         }, function (html) {
             $("#order-list").html(html);

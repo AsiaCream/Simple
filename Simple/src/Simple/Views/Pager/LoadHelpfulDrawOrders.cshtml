@@ -7,7 +7,7 @@
 
     @foreach (var x in Model)
     {
-    <tr id="table-tr">
+    <tr id="table-tr-@x.Id">
         <td>@x.Id</td>
         <td>@x.OrderNumber</td>
         <td>@x.Country</td>
@@ -30,7 +30,7 @@
                 var params = { "id": id };
                 $.post(url, params, function (data) {
                     if (data == "success") {
-                        $("#table-tr").remove();
+                        $("#table-tr-"+id).remove();
                         alert("操作成功");
                     }
                     else {
@@ -50,7 +50,7 @@
                     var params = { "id": id };
                     $.post(url, params, function (data) {
                         if (data == "success") {
-                            $("#table-tr").remove();
+                            $("#table-tr-"+id).remove();
                             alert("操作成功");
                         }
                         else {

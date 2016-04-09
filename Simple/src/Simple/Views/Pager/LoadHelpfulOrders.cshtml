@@ -5,7 +5,7 @@
 }
 @foreach (var x in Model)
 {
-    <tr id="table-tr">
+    <tr id="table-tr-@x.Id">
         <td>@x.Id</td>
         <td>@x.OrderNumber</td>
         <td>@x.Country</td>

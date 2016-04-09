@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<HelpfulPreOrder>
 @{
     Layout = null;
-    //用户所有订单页面
+    //管理员查看Helpful进行中页面
 }
 @foreach (var x in Model)
 {
-    <tr id="table-tr-@x.Id">
+    <tr class="table-tr-@x.Id">
         <td>@x.Id</td>
         <td>@x.OrderNumber</td>
-        <td>@x.PostTime</td>
         <td>@x.Country</td>
         <td><a asp-action="HelpfulOrderDetails" asp-controller="Manage" asp-route-id="@x.Id">查看详情</a></td>
         <td><a href="@x.Url" title="@x.Url" target="_blank">查看</a></td>
@@ -16,6 +15,7 @@
         <td>@x.IsCollection</td>
         <td>@x.Draw</td>
         <td>@x.DrawTime</td>
+        <td>@x.PostTime</td>
         <td>@x.Times</td>
         <td><a href="javascript:remove(@x.Id)">删除</a></td>
     </tr>
@@ -30,7 +30,7 @@
                 var params = { "id": id };
                 $.post(url, params, function (data) {
                     if (data == "success") {
-                        $("#table-tr"+id).remove();
+                        $("#table-tr-"+id).remove();
                         alert("删除成功");
                     }
                     else {
@@ -44,6 +44,5 @@
 
     }
 </script>
-
 
 

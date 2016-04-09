@@ -360,10 +360,12 @@
                                                 <ul class="treeview-menu">
                                                     <li><a asp-action="HelpfulOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 所有下单列表</a></li>
                                                     <li><a asp-action="HelpfulDrawOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待审核订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 撤销失败订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已撤销订单</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
+                                                    <li><a asp-action="HelpfulWaitPayFor" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
+                                                    <li><a asp-action="HelpfulFailure" asp-controller="Admin"><i class="fa fa-circle-o"></i> 审核未通过订单</a></li>                                                    
+                                                    <li><a asp-action="HelpfulTodayOrder" asp-controller="Admin"><i class="fa fa-circle-o"></i> 今日订单</a></li>     
+                                                    <li><a asp-action="HelpfulErrorOrder" asp-controller="Admin"><i class="fa fa-circle-o"></i> 可撤销订单</a></li>
+                                                    <li><a asp-action="HelpfulOrderIng" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
+                                                    <li><a asp-action="HelpfulFinish" asp-controller="Admin"><i class="fa fa-circle-o"></i> 已完成订单</a></li>     
                                                 </ul>
                                             </li>
                                             <li class="treeview">

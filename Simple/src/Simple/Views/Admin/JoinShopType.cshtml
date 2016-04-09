@@ -24,7 +24,7 @@
                             <tbody>
                                 @foreach (FindType x in Model)
                                 {
-                                    <tr id="table-tr">
+                                    <tr id="table-tr-@x.Id">
                                         <td>@x.Id</td>
                                         <td>@x.Type</td>
                                         <td>@x.Price</td>
@@ -51,8 +51,8 @@
             var parmas = { "id": id };
             $.post(url, parmas, function (data) {
                 if (data == "success") {
-                    alert("删除成功");
-                    $("#table-tr").remove();
+                    alert("删除成功")
+                    $("#table-tr-"+id).remove();
                 }
                 else {
                     alert("删除失败");
