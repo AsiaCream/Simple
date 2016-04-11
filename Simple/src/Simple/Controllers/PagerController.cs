@@ -218,7 +218,7 @@ namespace Simple.Controllers
             return View(order);
         }
         [HttpGet]//管理员查看待支付页面
-        public IActionResult WaitPayOrders(int page)
+        public IActionResult LoadWaitPayOrders(int page)
         {
             var order = DB.PreOrders
                 .Where(x => x.State == State.未锁定)
