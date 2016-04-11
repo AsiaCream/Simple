@@ -84,5 +84,14 @@ namespace Simple.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// 错误页面
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }
