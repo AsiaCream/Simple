@@ -61,7 +61,7 @@
                     var params = { "id": id };
                     $.post(url, params, function (data) {
                         if (data == "success") {
-                            $("#table-tr").remove();
+                            $("#table-tr-"+id).remove();
                             alert("操作成功");
                         }
                         else {

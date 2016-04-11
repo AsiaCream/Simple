@@ -1,11 +1,11 @@
 ﻿<div>
     <section>
-        <!--管理员查看已支付列表-->
+        <!--管理员查看可撤销订单列表-->
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">已支付支付列表</p>
+                        <p class="infotitle">可撤销订单列表</p>
                         <input type="text" placeholder="系统订单号" />
                         &nbsp;&nbsp;
                         <input type="button" class="btn btn-primary" value="查询" />
@@ -59,7 +59,7 @@
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;
     function load() {
-        $.get("/Pager/LoadPayedOrders", {
+        $.get("/Pager/LoadErrorOrders", {
             page:p
         }, function (html) {
             $("#order-list").html(html);

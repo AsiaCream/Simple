@@ -5,7 +5,7 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <a asp-action="CreateJoinShopType" asp-controller="Admin" class="btn btn-primary">添加进入店铺方式</a>
+                        <a asp-action="CreateJoinShopType" asp-controller="System" class="btn btn-primary">添加进入店铺方式</a>
                         <div style="height:20px;"></div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                                         <td>@x.Type</td>
                                         <td>@x.Price</td>
                                         <td>@x.Note</td>
-                                        <td><a asp-action="EditJoinShopType" asp-controller="Admin" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp; <a class="text-danger" href="javascript:remove(@x.Id)">删除</a></td>
+                                        <td><a asp-action="EditJoinShopType" asp-controller="System" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp; <a class="text-danger" href="javascript:remove(@x.Id)">删除</a></td>
                                     </tr>
                                 }
                             </tbody>

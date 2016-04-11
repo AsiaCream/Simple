@@ -1,0 +1,26 @@
+﻿@model IEnumerable<HelpfulPreOrder>
+@{
+    Layout = null;
+    //管理员查看可撤销订单页面
+}
+@if (User.IsInRole("系统管理员"))
+{
+
+    @foreach (var x in Model)
+    {
+        <tr id="table-tr-@x.Id">
+            <td>@x.Id</td>
+            <td>@x.OrderNumber</td>
+            <td>@x.Country</td>
+            <td><a asp-action="HelpfulDetails" asp-controller="Admin" asp-route-id="@x.Id">查看详情</a></td>
+            <td><a href="@x.Url" title="@x.Url" target="_blank">查看</a></td>
+            <td>@x.HelpfulType</td>
+            <td>@x.IsCollection</td>
+            <td>@x.Draw</td>
+            <td>@x.Times</td>
+            <td><a class="text-success" href="javascript:pass(@x.Id)">审核通过</a><br /><a class="text-danger" href="javascript:failure(@x.Id)">审核不通过</a></td>
+        </tr>
+    }
+}
+
+

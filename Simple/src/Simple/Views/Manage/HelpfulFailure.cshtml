@@ -1,24 +1,15 @@
 ﻿<div>
-    <section>
-        <!--用户审核未通过订单页面-->
+    <section><!--用户审核未通过页面-->
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">审核未通过订单</p>
-                        <p class="must2">如想快速发布一对一订单，可以点击<a asp-action="OneToOne" asp-controller="Manage">此处</a>跳转</p>
-                        <input type="text" placeholder="系统订单号" />
-                        &nbsp;&nbsp;
-                        <input type="text" placeholder="开始时间" />
-                        &nbsp;&nbsp;
-                        <input type="text" placeholder="结束时间" />&nbsp;&nbsp;
+                        <p class="infotitle">helpful审核未通过订单</p>
+                        <label>
+                            系统单号：
+                        </label>
+                        <input type="text" name="orderNumber" />
                         <input type="button" class="btn btn-primary" value="查询" />
-                        <label class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;未操作（不含错单）：0  &nbsp;&nbsp;&nbsp;&nbsp; 错单：0</label>
-                        <div style="height:10px;"></div>
-
-                        <input type="button" class="btn btn-success " value="在线支付" />
-                        &nbsp;&nbsp;
-                        <input type="button" class="btn btn-danger " value="批量删除" />
                         <div style="height:10px;"></div>
                     </div>
                 </div>
@@ -26,25 +17,17 @@
                     <div class="col-md-12">
                         <table class="table table-responsive table-stripted table-hover" style="background-color:white;">
                             <thead>
-                                <tr class="table-title">
+                                <tr style="background-color:rgb(60,141,188);">
                                     <th>序号</th>
                                     <th>订单编号</th>
+                                    <th>发布时间</th>
                                     <th>国家</th>
-                                    <th>店铺名</th>
+                                    <th>Review标题</th>
                                     <th>链接</th>
                                     <th>类型</th>
-                                    <th>下单前天操作</th>
-                                    <th>价格</th>
-                                    <th>运费</th>
-                                    <th>汇率</th>
-                                    <th>总计</th>
-                                    <th>RMB总计</th>
-                                    <th>手续费</th>
-                                    <th>支付金额</th>
-                                    <th>FeedBack</th>
-                                    <th>Review</th>
-                                    <th>审核情况</th>
-                                    <th>类型</th>
+                                    <th>是否收藏(Add to Wish List)</th>
+                                    <th>是否审核</th>
+                                    <th>审核时间</th>
                                     <th>单数</th>
                                     <th>操作</th>
                                 </tr>
@@ -56,6 +39,7 @@
                             <button id="btn-next" class="btn btn-primary">下一页</button>
                         </p>
                     </div>
+
                 </div>
             </section>
         </div>
@@ -63,13 +47,14 @@
 </div>
 
 <script src="~/js/jQuery-2.1.4.min.js"></script>
+<script src="~/js/daterangepicker.js"></script>
 <script>
     var p = 0;
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;
     function load() {
-        $.get("/Pager/LoadNotPassDraw", {
-            page:p
+        $.get("/Pager/LoadHelpfulFailure", {
+            page: p,
         }, function (html) {
             $("#order-list").html(html);
 
@@ -84,7 +69,7 @@
     });
     $("#btn-next").click(function () {
         p++;
-        if (p >totalPage-1)
+        if (p > totalPage-1)
             p = 0;
             load();
     });
@@ -92,4 +77,5 @@
         load();
     });
 </script>
+
 

@@ -1,4 +1,4 @@
-﻿@model HelpfulPrice
+﻿@model CommentTime
 <style>
     .must2 {
         color: red;
@@ -14,21 +14,21 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">修改Helpful价格以及WishList价格</p>
-                        <form asp-action="EditHelpfulPrice" asp-controller="Admin" method="post">
+                        <p class="infotitle">修改评价时间以及评价时间备注</p>
+                        <form asp-action="EditCommentTime" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
-                                        <th class="must2">*Helpful一单价格</th>
-                                        <td><input type="text" class="form-control" name="price" value="@Model.Price" /></td>
+                                        <th class="must2">*当前评价时间</th>
+                                        <td><input type="text" class="form-control" name="date" value="@Model.Date" /></td>
                                     </tr>
                                     <tr>
-                                        <th class="must2">*WishLish价格</th>
-                                        <td><input type="text" class="form-control" name="wishlistcost" value="@Model.WishListCost" /></td>
+                                        <th class="must2">*评价时间后的备注</th>
+                                        <td><input type="text" class="form-control" name="note" value="@Model.Note" /></td>
                                     </tr>
                                     <tr>
-                                        <th><a asp-action="HelpfulPrice" asp-controller="Admin" class="btn btn-primary form-control">返回Helpful设置页面</a></th>
+                                        <th><a asp-action="CommentTime" asp-controller="System" class="btn btn-primary form-control">返回评价时间设置页面</a></th>
                                         <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
                                     </tr>
                                 </tbody>
@@ -36,7 +36,7 @@
 
                         </form>
                         <label class="must2" style="color:gold;">特别说明</label><br />
-                        <label class="must2">Helpful订单价格请勿随意修改，以免新老用户错乱！</label>     <br />
+                        <label class="must2">评价时间请勿随意修改，以免新老用户错乱！</label>     <br />
                         <div style="height:10px;"></div>
                     </div>
                 </div>

@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <!-- Bootstrap Responsive -->
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/css/ionicons.css" />
     <!-- jvectormap -->
     <link rel="stylesheet" href="~/css/jquery-jvectormap-1.2.2.css">
     <!-- Theme style -->
@@ -260,15 +260,14 @@
                                                 </a>
                                                 <ul class="treeview-menu">
                                                     <li><a asp-action="ShopOrderAmount" asp-controller="Manage"><i class="fa fa-circle-o"></i>店铺订单量设置</a></li>
-                                                    <li><a asp-action="TrackingOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单跟踪</a></li>
+                                                    <li><a asp-action="AllOrders" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单跟踪</a></li>
                                                     <li><a asp-action="OneToOne" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布一产品一单</a></li>
-                                                    <li><a asp-action="WaitDraw" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待审核订单</a></li>
-                                                    <li><a asp-action="WaitPayFor" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
-                                                    <li><a asp-action="NotPassDraw" asp-controller="Manage"><i class="fa fa-circle-o"></i> 审核未通过订单</a></li>
-                                                    <li><a asp-action="TodayOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今天订单</a></li>
-                                                    <li><a asp-action="ErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 可撤销订单列表</a></li>
+                                                    <li><a asp-action="WaitDrawOrders" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待审核订单</a></li>
+                                                    <li><a asp-action="WaitPayOrders" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
+                                                    <li><a asp-action="NotPassOrders" asp-controller="Manage"><i class="fa fa-circle-o"></i> 审核未通过订单</a></li>
+                                                    <li><a asp-action="ErrorOrders" asp-controller="Manage"><i class="fa fa-circle-o"></i> 可撤销订单列表</a></li>
                                                     <li><a asp-action="OrderIng" asp-controller="Manage"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
-                                                    <li><a asp-action="FinishOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
+                                                    <li><a asp-action="FinishOrders" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -278,14 +277,14 @@
                                                     <i class="fa fa-angle-left pull-right"></i>
                                                 </a>
                                                 <ul class="treeview-menu">
-                                                    <li><a asp-action="HelpfulOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布Helpful和收藏</a></li>
-                                                    <li><a asp-action="HelpfulAllOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单</a></li>
+                                                    <li><a asp-action="CreateHelpfulOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 发布Helpful和收藏</a></li>
+                                                    <li><a asp-action="HelpfulOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 所有订单</a></li>
                                                     <li><a asp-action="HelpfulWaitDraw" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待审核订单</a></li>
                                                     <li><a asp-action="HelpfulWaitPayFor" asp-controller="Manage"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
-                                                    <li><a asp-action="HelpfulPassNotFinish" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已支付未完成订单</a></li>
-                                                    <li><a asp-action="HelpfulTodayOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 今日排单</a></li>
+                                                    <li><a asp-action="HelpfulFailure" asp-controller="Manage"><i class="fa fa-circle-o"></i> 审核未通过订单</a></li>
+                                                    <li><a asp-action="HelpfulOrderIng" asp-controller="Manage"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
                                                     <li><a asp-action="HelpfulErrorOrder" asp-controller="Manage"><i class="fa fa-circle-o"></i> 可撤销订单列表</a></li>
-                                                    
+                                                    <li><a asp-action="HelpfulFinish" asp-controller="Manage"><i class="fa fa-circle-o"></i> 已完成订单列表</a></li>
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -294,8 +293,8 @@
                                                     <i class="fa fa-angle-left pull-right"></i>
                                                 </a>
                                                 <ul class="treeview-menu">
-                                                    <li><a asp-action="RestCost" asp-controller="Manage"><i class="fa fa-circle-o"></i> 帐户充值和余额查询</a></li>
-                                                    <li><a asp-action="CostRecord" asp-controller="Manage"><i class="fa fa-circle-o"></i> 消费记录</a></li>
+                                                    <li><a asp-action="RestCost" asp-controller="Payfor"><i class="fa fa-circle-o"></i> 帐户充值和余额查询</a></li>
+                                                    <li><a asp-action="CostRecord" asp-controller="Payfor"><i class="fa fa-circle-o"></i> 消费记录</a></li>
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -343,10 +342,10 @@
                                                 <ul class="treeview-menu">
                                                     <li><a asp-action="AllOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 所有下单列表</a></li>
                                                     <li><a asp-action="WaitDrawOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待审核订单列表</a></li>
-                                                    <li><a asp-action="WaitPayOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待支付订单列表</a></li>
+                                                    <li><a asp-action="WaiPayOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待支付订单列表</a></li>
                                                     <li><a asp-action="NotPassOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 审核未通过订单列表</a></li>
-                                                    <li><a asp-action="PayedOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 已支付订单</a></li>
-                                                    <li><a asp-action="OrdersIng" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
+                                                    <li><a asp-action="ErrorOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 可撤销订单</a></li>
+                                                    <li><a asp-action="OrderIng" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
                                                     <li><a asp-action="FinishOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 已完成订单</a></li>
 
                                                 </ul>
@@ -362,7 +361,6 @@
                                                     <li><a asp-action="HelpfulDrawOrders" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待审核订单</a></li>
                                                     <li><a asp-action="HelpfulWaitPayFor" asp-controller="Admin"><i class="fa fa-circle-o"></i> 待支付订单</a></li>
                                                     <li><a asp-action="HelpfulFailure" asp-controller="Admin"><i class="fa fa-circle-o"></i> 审核未通过订单</a></li>                                                    
-                                                    <li><a asp-action="HelpfulTodayOrder" asp-controller="Admin"><i class="fa fa-circle-o"></i> 今日订单</a></li>     
                                                     <li><a asp-action="HelpfulErrorOrder" asp-controller="Admin"><i class="fa fa-circle-o"></i> 可撤销订单</a></li>
                                                     <li><a asp-action="HelpfulOrderIng" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进行中订单</a></li>
                                                     <li><a asp-action="HelpfulFinish" asp-controller="Admin"><i class="fa fa-circle-o"></i> 已完成订单</a></li>     

@@ -11,128 +11,6 @@ namespace Simple.Controllers
     [Authorize(Roles = "系统管理员")]
     public class AdminController : BaseController
     {
-        #region 进入店铺方式显示，修改
-        [HttpGet]
-        public IActionResult JoinShopType()
-        {
-            var type = DB.FindTypes.OrderBy(x => x.Id).ToList();
-            return View(type);
-        }
-        [HttpGet]
-        public IActionResult CreateJoinShopType()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult CreateJoinShopType(FindType findtype)
-        {
-            DB.FindTypes.Add(findtype);
-            DB.SaveChanges();
-            return View();
-        }
-        [HttpGet]
-        public IActionResult EditJoinShopType(int id)
-        {
-            var ret = DB.FindTypes.Where(x => x.Id == id).SingleOrDefault();
-            return View(ret);
-        }
-        [HttpPost]
-        public IActionResult EditJoinShopType(int id, FindType findtype)
-        {
-            var old = DB.FindTypes.Where(x => x.Id == id).SingleOrDefault();
-            if (old == null)
-            {
-                return Content("该进入店铺方式不存在");
-            }
-            else
-            {
-                old.Type = findtype.Type;
-                old.Price = findtype.Price;
-                old.Note = findtype.Note;
-                DB.SaveChanges();
-                return RedirectToAction("JoinShopType", "Admin");
-            }
-        }
-        [HttpPost]
-        public IActionResult DeleteJoinShopType(int id)
-        {
-            var type = DB.FindTypes
-                .Where(x => x.Id == id)
-                .SingleOrDefault();
-            if (type == null)
-            {
-                return Content("error");
-            }
-            else
-            {
-                DB.FindTypes.Remove(type);
-                DB.SaveChanges();
-                return Content("success");
-            }
-        }
-        #endregion
-        [HttpGet]
-        public IActionResult CommentTime()
-        {
-            var ret = DB.CommentTimes.OrderBy(x => x.Id).ToList();
-            return View(ret);
-        }
-        [HttpGet]
-        public IActionResult EditCommentTime(int id)
-        {
-            var commenttime = DB.CommentTimes.Where(x => x.Id == id).SingleOrDefault();
-            return View(commenttime);
-        }
-        [HttpPost]
-        public IActionResult EditCommentTime(int id, CommentTime Commentime)
-        {
-            var old = DB.CommentTimes.Where(x => x.Id == id).SingleOrDefault();
-            if (old == null)
-            {
-                return Content("找不到选项");
-            }
-            else
-            {
-                old.Date = Commentime.Date;
-                old.Note = Commentime.Note;
-                DB.SaveChanges();
-                return RedirectToAction("CommentTime", "Admin");
-            }
-        }
-        #region Helpful费用管理
-        [HttpGet]
-        public IActionResult HelpfulPrice()
-        {
-            var ret = DB.HelpfulPrices.ToList();
-            return View(ret);
-        }
-        [HttpGet]
-        public IActionResult EditHelpfulPrice(int id)
-        {
-            var ret = DB.HelpfulPrices.Where(x => x.Id == id).SingleOrDefault();
-            return View(ret);
-        }
-        [HttpPost]
-        public IActionResult EditHelpfulPrice(int id, HelpfulPrice helpfulprice)
-        {
-            var old = DB.HelpfulPrices.Where(x => x.Id == id).SingleOrDefault();
-            if (old == null)
-            {
-                return Content("找不到选项");
-            }
-            else
-            {
-                old.Price = helpfulprice.Price;
-                old.WishListCost = helpfulprice.WishListCost;
-                DB.SaveChanges();
-                return RedirectToAction("HelpfulPrice", "Admin");
-            }
-
-        }
-        #endregion 
-
-
-
         [HttpGet]//所有订单
         public IActionResult AllOrders()
         {
@@ -178,8 +56,8 @@ namespace Simple.Controllers
             ViewBag.totalRecord = orderCount;
             return View();
         }
-        [HttpGet]  //已支付列表
-        public IActionResult PayedOrders()
+        [HttpGet]  //已可撤销列表
+        public IActionResult ErrorOrders()
         {
             var orderCount = DB.PreOrders
                 .Where(x => x.State == State.未锁定)
@@ -191,7 +69,7 @@ namespace Simple.Controllers
             return View();
         }
         [HttpGet]//进行中订单
-        public IActionResult OrdersIng()
+        public IActionResult OrderIng()
         {
             var orderCount = DB.PreOrders
                 .Where(x => x.State == State.锁定)
@@ -272,6 +150,7 @@ namespace Simple.Controllers
                 .Where(x => x.State == State.未锁定)
                 .Count();
             ViewBag.totalRecord = orderCount;
+            return View();
         }
         [HttpGet]//Helpful审核失败订单
         public IActionResult HelpfulFailure()
@@ -284,6 +163,20 @@ namespace Simple.Controllers
                 .Where(x => x.State == State.未锁定)
                 .Count();
             ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]//Helpful可撤销订单列表
+        public IActionResult HelpfulErrorOrder()
+        {
+            var orderCount = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.State == State.未锁定)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
         }
         [HttpGet]//Helpful进行中订单
         public IActionResult HelpfulOrderIng()
@@ -292,6 +185,19 @@ namespace Simple.Controllers
                 .OrderByDescending(x => x.PostTime)
                 .Where(x => x.Draw == Draw.通过)
                 .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.State == State.锁定)
+                .Count();
+            ViewBag.totalRecord = orderCount;
+            return View();
+        }
+        [HttpGet]//Helpful已完成订单
+        public IActionResult HelpfulFinish()
+        {
+            var orderCount = DB.HelpfulPreOrders
+                .OrderByDescending(x => x.PostTime)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.已完成)
                 .Where(x => x.IsPayFor == IsPayFor.已支付)
                 .Where(x => x.State == State.锁定)
                 .Count();

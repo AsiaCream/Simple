@@ -1,148 +1,91 @@
-﻿<div id="helpfulorder">
+﻿<div>
     <section>
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">发布Helpful和收藏 </p><label class="must2">请认真填写以下信息 ，本操作价格为 @ViewBag.Price 元 1 单</label>
-                        <form>
-                            <input type="hidden" value="@ViewBag.UserCurrent.Id" id="userid" />
-                            <table class="table table-responsive table-stripted">
-                                <tbody>
-                                    <tr>
-                                        <th class="must2">*国家</th>
-                                        @foreach (Rate x in ViewBag.Country)
-                                        {
-                                            <td><input type="radio" name="Country" id="Country" value="@x.Country" />@x.Country</td>
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <th class="must2">*连接</th>
-                                        <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" name="Url" id="Url" /></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="must2">操作数量</th>
-                                        <td><input type="text" class="form-control" value="1" name="Times" id="Times"/></td>
-                                        <td class="must2">请输入本产品要刷的单数</td>
-                                    </tr>
-                                    <tr class="Review1">
-                                        <th class="must2">*Review1标题</th>
-                                        <td><input class="form-control" name="Review1" /></td>
-                                        <td><input type="radio" name="ReviewStar1" value="1" />一星</td>
-                                        <td><input type="radio" name="ReviewStar1" value="2" />二星</td>
-                                        <td><input type="radio" name="ReviewStar1" value="3" />三星</td>
-                                        <td><input type="radio" name="ReviewStar1" value="4" />四星</td>
-                                        <td><input type="radio" name="ReviewStar1" value="5" checked="checked"/>五星</td>
-                                    </tr>
-                                    <tr class="Review1">
-                                        <th class="must2">*Review2标题</th>
-                                        <td><input class="form-control" name="Review2" /></td>
-                                        <td><input type="radio" name="ReviewStar2" value="1"/>一星</td>
-                                        <td><input type="radio" name="ReviewStar2" value="2"/>二星</td>
-                                        <td><input type="radio" name="ReviewStar2" value="3"/>三星</td>
-                                        <td><input type="radio" name="ReviewStar2" value="4"/>四星</td>
-                                        <td><input type="radio" name="ReviewStar2" value="5" checked="checked" />五星</td>
-                                    </tr>
-                                    <tr id="add-new-title">
-                                        <th></th>
-                                        <th><a href="#" class="must2">新增加一个标题（一次最多提交十个标题）</a></th>
-                                    </tr>
-                                    <tr>
-                                        <th class="must2">*Helpful类型</th>
-                                        <td><input type="radio" name="HelpfulType" value="true" checked="checked" />YES</td>
-                                        <td><input type="radio" name="HelpfulType" value="false" />No</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="must2">*是否收藏产品</th>
-                                        <td><input type="radio" name="IsCollection" value="true" />YES</td>
-                                        <td><input type="radio" name="IsCollection" value="false" checked="checked" />NO</td>
-                                        <td class="infotitle">（Add to Wish List）功能单独收费 @ViewBag.WishListCost 元 </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
+                        <p class="infotitle">helpful所有订单</p>
+                        <label>
+                            系统单号：
+                        </label>
+                        <input type="text" name="orderNumber" />
+                        <br />
+                        <label>
+                            开始时间：
+                        </label>
+                        <input type="date" name="start" placeholder="开始时间" />
+                        &nbsp;&nbsp;
+                        <label>
+                            结束时间：
+                        </label>
+                        <input type="date" name="end" placeholder="结束时间" />
+                        &nbsp;&nbsp;
+                        <input type="button" class="btn btn-primary" value="查询" />
+                        <div style="height:10px;"></div>
                     </div>
-                    <div class="col-md-3">
-                        <button class="form-control btn btn-primary" id="sendBtn">提交并添加下一单</button>
-                        <div style="height:20px;"></div>
-                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12">
-                        <img src="~/img/system/HelpfurExample.jpg" class="caption" />
+                        <table class="table table-responsive table-stripted table-hover" style="background-color:white;">
+                            <thead>
+                                <tr style="background-color:rgb(60,141,188);">
+                                    <th>序号</th>
+                                    <th>订单编号</th>
+                                    <th>发布时间</th>
+                                    <th>国家</th>
+                                    <th>Review标题</th>
+                                    <th>链接</th>
+                                    <th>类型</th>
+                                    <th>是否收藏(Add to Wish List)</th>
+                                    <th>是否审核</th>
+                                    <th>审核时间</th>
+                                    <th>单数</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-list"></tbody>
+                        </table>
+                        <p>
+                            <button id="btn-prev" class="btn btn-primary">上一页</button>
+                            <button id="btn-next" class="btn btn-primary">下一页</button>
+                        </p>
                     </div>
+
                 </div>
             </section>
         </div>
     </section>
-
 </div>
+
 <script src="~/js/jQuery-2.1.4.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $("#sendBtn").click(function () {
-            var url = "/Manage/HelpfulOrder";
-            var params = {
-                "id":$("#userid").val(),
-                "Country": $("input:radio[name='Country']:checked").val(),
-                "Url": $("#Url").val(),
-                "Times": $("#Times").val(),
-                "HelpfulType": $("input:radio[name='HelpfulType']:checked").val(),
-                "IsCollection":$("input:radio[name='IsCollection']:checked").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input:radio[name='ReviewStar1']:checked").val(),
-                "Review2":$("#Review2").val(),
-                "ReviewStar2": $("input:radio[name='ReviewStar2']:checked").val(),
-                "Review3":$("#Review3").val(),
-                "ReviewStar3": $("input:radio[name='ReviewStar3']:checked").val(),
-                "Review4":$("#Review4").val(),
-                "ReviewStar4": $("input:radio[name='ReviewStar4']:checked").val(),
-                "Review5":$("#Review5").val(),
-                "ReviewStar5": $("input:radio[name='ReviewStar5']:checked").val(),
-                "Review6":$("#Review6").val(),
-                "ReviewStar6": $("input:radio[name='ReviewStar6']:checked").val(),
-                "Review7":$("#Review7").val(),
-                "ReviewStar7": $("input:radio[name='ReviewStar7']:checked").val(),
-                "Review8":$("#Review8").val(),
-                "ReviewStar8": $("input:radio[name='ReviewStar8']:checked").val(),
-                "Review9":$("#Review9").val(),
-                "ReviewStar9": $("input:radio[name='ReviewStar9']:checked").val(),
-                "Review10":$("#Review10").val(),
-                "ReviewStar10": $("input:radio[name='ReviewStar10']:checked").val(),
-            };
-            if ($("input:radio[name='Country']:checked").val() == null) {
-                alert("国家不能为空，请选择一个！");
-            }
-            else if ($("#Url").val() == "") {
-                alert("链接地址不能为空，选输入正确的链接地址！");
-            }
-            else if ($("#Times").val()=="") {
-                alert("单数不能为空，请输入单数！");
-            }
-            else {
-                $.post(url, params, function (data) {
-                    if (data == "success") {
-                        alert("提交成功");
-                        window.location.href = "/Manage/HelpfulOrder";
-                    }
-                    else {
-                        alert("提交失败");
-                    }
-                });
-            }
+<script src="~/js/daterangepicker.js"></script>
+<script>
+    var p = 0;
+    var totalRecord=@ViewBag.totalRecord;
+    var totalPage=(totalRecord+10-1)/10;
+    function load() {
+        $.get("/Pager/LoadHelpfulAllOrders", {
+            page: p,
+        }, function (html) {
+            $("#order-list").html(html);
+
         });
 
-        $("#add-new-title a").click(function () {
-            var len = $("tr[class='Review1']").length + 1;
-            if (len <= 10) {
-                var R = '<tr class="Review1"><th class="must2">*Review' + len + '标题</th><td><input class="form-control" name="Review' + len + '" /></td><td><input type="radio" name="ReviewStar' + len + '" value="1"/>一星</td><td><input type="radio" name="ReviewStar' + len + '" value="2"/>二星</td><td><input type="radio" name="ReviewStar' + len + '" value="3"/>三星</td><td><input type="radio" name="ReviewStar' + len + '" value="4"/>四星</td><td><input type="radio" name="ReviewStar' + len + '" value="5" checked="checked"/>五星</td></tr>';
-                $("#add-new-title").before(R);
-                $("tr[name='Review1']").length++;
-            } else {
-                alert("最多10条标题");
-            }
-        });
-
+    }
+    $("#btn-prev").click(function () {
+        p--;
+        if (p < 0)
+            p = 0;
+        load();
     });
-
+    $("#btn-next").click(function () {
+        p++;
+        if (p > totalPage-1)
+            p = 0;
+            load();
+    });
+    $(document).ready(function () {
+        load();
+    });
 </script>
-
 
