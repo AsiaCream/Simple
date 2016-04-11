@@ -20,7 +20,8 @@ namespace Simple.Models
     public class PreOrder
     {   
         public int Id { get; set; }
-        public string PreOrderNumber { get; set; }
+        public string PreOrderNumber { get; set; }//订单号
+        public string TrueOrderNumber { get; set; }//真实订单号
         public string Country { get; set; }
         public double Rate { get; set; }
         public string FindType { get; set; }
@@ -52,7 +53,8 @@ namespace Simple.Models
         public int Times { get; set; }//刷单次数
         public DateTime PostTime { get; set; }//下单时间
         public DateTime DrawTime { get; set; }//审核时间
-        public DateTime FinishTime { get; set; }//完成时间
+        public DateTime StarTime { get; set; }//订单开刷时间
+        public DateTime FinishTime { get; set; }//订单完成时间
 
         public State State { get; set; } //锁定状态
 
