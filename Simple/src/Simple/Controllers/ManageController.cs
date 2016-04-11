@@ -50,7 +50,13 @@ namespace Simple.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var shop = DB.ShopOrders.Where(x => x.Id == id).SingleOrDefault();
+                var shop = DB.ShopOrders
+                    .Where(x => x.Id == id)
+                    .SingleOrDefault();
+                var plattype = DB.PlatTypes
+                    .OrderBy(x => x.Id)
+                    .ToList();
+                ViewBag.PlatType = plattype;
                 return View(shop);
             }
             else
@@ -68,6 +74,7 @@ namespace Simple.Controllers
             }
             else
             {
+                old.Type = shop.Type;
                 old.Title = shop.Title;
                 old.MaxOneDay = shop.MaxOneDay;
                 old.MaxOneEvaluation = shop.MaxOneEvaluation;

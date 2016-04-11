@@ -1,13 +1,4 @@
 ﻿@model ShopOrder
-<style>
-    .must2 {
-        color: red;
-    }
-
-    .infolb {
-        color: white;
-    }
-</style>
 <div>
     <section>
         <div class="content-wrapper">
@@ -21,7 +12,12 @@
                                 <tbody>
                                     <tr>
                                         <th class="must2">*所在平台</th>
-                                        <td><input type="text" class="form-control" name="type" value="@Model.Type" /></td>
+                                        <td><select name="type" class="form-control">
+                                              @foreach(PlatType x in ViewBag.PlatType)
+                                              {
+                                                  <option>@x.Title</option>
+                                              }
+                                            </select>
                                     </tr>
                                     <tr>
                                         <th class="must2">*店铺名</th>
@@ -36,7 +32,7 @@
                                         <td><input type="text" class="form-control" name="maxoneevaluation" value="@Model.MaxOneEvaluation" /></td>
                                     </tr>
                                     <tr>
-                                        <th></th>
+                                        <th><a asp-action="ShopOrderAmount" asp-controller="Manage" class="form-control btn btn-primary">返回店铺订单量列表设置</a></th>
                                         <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
                                     </tr>
                                 </tbody>
