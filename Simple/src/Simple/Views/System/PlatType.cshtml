@@ -1,11 +1,11 @@
-﻿@model IEnumerable<FindType>
+﻿@model IEnumerable<PlatType>
 <div>
     <section>
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <a asp-action="CreateJoinShopType" asp-controller="System" class="btn btn-primary">添加进入店铺方式</a>
+                        <a asp-action="CreatePlatType" asp-controller="System" class="btn btn-primary">添加平台类型</a>
                         <div style="height:20px;"></div>
                     </div>
                 </div>
@@ -15,21 +15,17 @@
                             <thead>
                                 <tr style="background-color:rgb(60,141,188);">
                                     <th>序号</th>
-                                    <th>进入店铺方式</th>
-                                    <th>该方式对应的价格</th>
-                                    <th>说明</th>
+                                    <th>平台类型</th>
                                     <th>可操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (FindType x in Model)
+                                @foreach (PlatType x in Model)
                                 {
                                     <tr id="table-tr-@x.Id">
                                         <td>@x.Id</td>
-                                        <td>@x.Type</td>
-                                        <td>@x.Price</td>
-                                        <td>@x.Note</td>
-                                        <td><a asp-action="EditJoinShopType" asp-controller="System" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp; <a class="text-danger" href="javascript:remove(@x.Id)">删除</a></td>
+                                        <td>@x.Title</td>
+                                        <td><a asp-action="EditPlatType" asp-controller="System" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp; <a class="text-danger" href="javascript:remove(@x.Id)">删除</a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -47,7 +43,7 @@
     function remove(id) {
         var jug = confirm("确认删除吗");
         if (jug == true) {
-            var url = "/System/DeleteJoinShopType";
+            var url = "/System/DeletePlatType";
             var parmas = { "id": id };
             $.post(url, parmas, function (data) {
                 if (data == "success") {
@@ -56,7 +52,6 @@
                 }
                 else {
                     alert("删除失败");
-
                 }
             });
 
@@ -64,3 +59,4 @@
 
     }
 </script>
+

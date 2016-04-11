@@ -30,7 +30,7 @@
                 var params = { "id": id };
                 $.post(url, params, function (data) {
                     if (data == "success") {
-                        $("#table-tr"+id).remove();
+                        $("#table-tr-"+id).remove();
                         alert("删除成功");
                     }
                     else {
@@ -39,9 +39,7 @@
                 });
 
             });
-
         }
-
     }
 </script>
 

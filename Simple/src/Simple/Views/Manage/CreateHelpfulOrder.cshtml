@@ -79,7 +79,7 @@
 <script type="text/javascript">
     $(function () {
         $("#sendBtn").click(function () {
-            var url = "/Manage/HelpfulOrder";
+            var url = "/Manage/CreateHelpfulOrder";
             var params = {
                 "id":$("#userid").val(),
                 "Country": $("input:radio[name='Country']:checked").val(),
@@ -121,7 +121,7 @@
                 $.post(url, params, function (data) {
                     if (data == "success") {
                         alert("提交成功");
-                        window.location.href = "/Manage/HelpfulOrder";
+                        window.location.href = "/Manage/CreateHelpfulOrder";
                     }
                     else {
                         alert("提交失败");

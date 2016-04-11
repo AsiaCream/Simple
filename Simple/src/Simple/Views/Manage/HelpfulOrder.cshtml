@@ -64,7 +64,7 @@
     var totalRecord=@ViewBag.totalRecord;
     var totalPage=(totalRecord+10-1)/10;
     function load() {
-        $.get("/Pager/LoadHelpfulAllOrders", {
+        $.get("/Pager/LoadHelpfulOrder", {
             page: p,
         }, function (html) {
             $("#order-list").html(html);

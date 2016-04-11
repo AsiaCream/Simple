@@ -46,6 +46,9 @@
         .table-title{
             background-color:rgb(60,141,188);
         }
+        .infolb {
+        color: white;
+    }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -320,7 +323,7 @@
                                                 </a>
                                                 <ul class="treeview-menu">
                                                     <li><a href="#"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
+                                                    <li><a asp-action="PlatType" asp-controller="System"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 会员等级</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 汇率更新配置</a></li>
                                                     <li><a asp-action="JoinShopType" asp-controller="Admin"><i class="fa fa-circle-o"></i> 进入店铺方式</a></li>

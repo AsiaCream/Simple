@@ -1,0 +1,36 @@
+﻿<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">添加平台类型</p>
+                        <form asp-action="CreatePlatType" asp-controller="System" method="post">
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*平台类型</th>
+                                        <td><input type="text" class="form-control" name="Title" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="PlatType" asp-controller="System" class="form-control btn btn-primary">返回平台类型列表</a></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="添加"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </form>
+                        <label class="must2">例子</label><br />
+                        <label class="must2">
+                            平台类型：Ebay<br />
+                        </label><br />
+                        <div style="height:10px;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+
+
