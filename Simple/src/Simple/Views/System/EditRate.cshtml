@@ -1,0 +1,43 @@
+﻿@model Rate
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">汇率修改</p>
+                        <form asp-action="EditRate" asp-controller="System" method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <table class="table table-responsive table-stripted" style="background-color:white;">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*国家</th>
+                                        <td><input type="text" class="form-control" name="Country" value="@Model.Country" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*汇率</th>
+                                        <td><input type="text" class="form-control" name="Exchange" value="@Model.Exchange" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="Rate" asp-controller="System" class="form-control btn btn-primary">返回汇率列表</a></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <label class="must2" style="color:gold;">特别说明</label><br />
+                        <label class="must2">汇率类型请根据当时汇率修改！</label><br />
+                        <div style="height:10px;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>
+
+
+
+
+
+

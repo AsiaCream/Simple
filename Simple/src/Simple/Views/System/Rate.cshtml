@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Rate>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a asp-action="CreateRate" asp-controller="System" class="btn btn-primary">添加汇率</a>
+                        <div style="height:20px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-responsive table-stripted table-hover">
+                            <thead>
+                                <tr style="background-color:rgb(60,141,188);">
+                                    <th>序号</th>
+                                    <th>国家</th>
+                                    <th>汇率</th>
+                                    <th>可操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Rate x in Model)
+                                {
+                                    <tr id="table-tr-@x.Id">
+                                        <td>@x.Id</td>
+                                        <td>@x.Country</td>
+                                        <td>@x.Exchange</td>
+                                        <td><a asp-action="EditRate" asp-controller="System" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp; <a class="text-danger" href="javascript:remove(@x.Id)">删除</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    function remove(id) {
+        var jug = confirm("确认删除吗");
+        if (jug == true) {
+            var url = "/System/DeleteRate";
+            var parmas = { "id": id };
+            $.post(url, parmas, function (data) {
+                if (data == "success") {
+                    alert("删除成功")
+                    $("#table-tr-"+id).remove();
+                }
+                else {
+                    alert("删除失败");
+                }
+            });
+
+        }
+
+    }
+</script>
+
+

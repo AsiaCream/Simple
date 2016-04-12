@@ -205,9 +205,9 @@ namespace Simple.Controllers
                 DB.SaveChanges();
                 return Content("success");
             }
-        } 
+        }
         #endregion
-
+        #region 隔天下单/首天下单类型
         [HttpGet]//显示当前隔天下单/首天下单类型
         public IActionResult NextOrToday()
         {
@@ -226,7 +226,7 @@ namespace Simple.Controllers
         {
             DB.NextOrTodays.Add(newtype);
             DB.SaveChanges();
-            return RedirectToAction("NextOrToday","System");
+            return RedirectToAction("NextOrToday", "System");
         }
         [HttpGet]//修改隔天下单/首天下单类型
         public IActionResult EditNextOrToday(int id)
@@ -244,7 +244,7 @@ namespace Simple.Controllers
             }
         }
         [HttpPost]
-        public IActionResult EditNextOrToday(int id,NextOrToday newtype)
+        public IActionResult EditNextOrToday(int id, NextOrToday newtype)
         {
             var old = DB.NextOrTodays
                 .Where(x => x.Id == id)
@@ -279,5 +279,78 @@ namespace Simple.Controllers
                 return Content("success");
             }
         }
+        #endregion
+        #region 汇率管理
+        [HttpGet]//显示当前汇率列表
+        public IActionResult Rate()
+        {
+            var rate = DB.Rates
+                .OrderBy(x => x.Id)
+                .ToList();
+            return View(rate);
+        }
+        [HttpGet]//添加汇率以及对应国家
+        public IActionResult CreateRate()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateRate(Rate rate)
+        {
+            DB.Rates.Add(rate);
+            DB.SaveChanges();
+            return RedirectToAction("Rate", "System");
+        }
+        [HttpGet]//修改编辑汇率
+        public IActionResult EditRate(int id)
+        {
+            var old = DB.Rates
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (old == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                return View(old);
+            }
+        }
+        [HttpPost]
+        public IActionResult EditRate(int id, Rate newrate)
+        {
+            var old = DB.Rates
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (old == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                old.Country = newrate.Country;
+                old.Exchange = newrate.Exchange;
+                DB.SaveChanges();
+                return RedirectToAction("Rate", "System");
+            }
+        }
+        [HttpPost]//删除汇率
+        public IActionResult DeleteRate(int id)
+        {
+            var rate = DB.Rates
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (rate == null)
+            {
+                return Content("error");
+            }
+            else
+            {
+                DB.Rates.Remove(rate);
+                DB.SaveChanges();
+                return View();
+            }
+        } 
+        #endregion
     }
 }
