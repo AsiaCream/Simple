@@ -37,9 +37,9 @@ namespace Simple.Models
                 db.ShopOrders.Add (new ShopOrder {  MaxOneDay = 2, MaxOneEvaluation = 3, Title = "ABC", UserId = guest.Id,Type="Ebay" });
 
                 //初始化隔天下单/首天
-                db.NextOrTodays.Add(new NextOrToday { Type = "查看" });
-                db.NextOrTodays.Add(new NextOrToday { Type = "加购物车" });
-                db.NextOrTodays.Add(new NextOrToday { Type = "加wishlist" });
+                db.NextOrTodays.Add(new NextOrToday { Type = "查看",Price=10.00,Note="" });
+                db.NextOrTodays.Add(new NextOrToday { Type = "加购物车",Price = 10.00, Note = "" });
+                db.NextOrTodays.Add(new NextOrToday { Type = "加wishlist", Price = 10.00, Note = "选择本项目加收10元，三项不重复计费" });
 
                 //初始化进入店铺方式及对应价格
                 db.FindTypes.Add(new FindType { Type = "链接进入",Price=0.00,Note="", });

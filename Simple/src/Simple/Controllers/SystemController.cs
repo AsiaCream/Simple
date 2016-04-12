@@ -54,7 +54,7 @@ namespace Simple.Controllers
                 old.Price = findtype.Price;
                 old.Note = findtype.Note;
                 DB.SaveChanges();
-                return RedirectToAction("JoinShopType", "Admin");
+                return RedirectToAction("JoinShopType", "System");
             }
         }
         [HttpPost]
@@ -101,7 +101,7 @@ namespace Simple.Controllers
                 old.Date = Commentime.Date;
                 old.Note = Commentime.Note;
                 DB.SaveChanges();
-                return RedirectToAction("CommentTime", "Admin");
+                return RedirectToAction("CommentTime", "System");
             }
         } 
         #endregion
@@ -131,11 +131,12 @@ namespace Simple.Controllers
                 old.Price = helpfulprice.Price;
                 old.WishListCost = helpfulprice.WishListCost;
                 DB.SaveChanges();
-                return RedirectToAction("HelpfulPrice", "Admin");
+                return RedirectToAction("HelpfulPrice", "System");
             }
 
         }
-        #endregion 
+        #endregion
+        #region 平台分类管理
         [HttpGet]//平台分类
         public IActionResult PlatType()
         {
@@ -201,6 +202,79 @@ namespace Simple.Controllers
             else
             {
                 DB.PlatTypes.Remove(type);
+                DB.SaveChanges();
+                return Content("success");
+            }
+        } 
+        #endregion
+
+        [HttpGet]//显示当前隔天下单/首天下单类型
+        public IActionResult NextOrToday()
+        {
+            var type = DB.NextOrTodays
+                .OrderBy(x => x.Id)
+                .ToList();
+            return View(type);
+        }
+        [HttpGet]//添加隔天下单/首天下单类型
+        public IActionResult CreateNextOrToday()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateNextOrToday(NextOrToday newtype)
+        {
+            DB.NextOrTodays.Add(newtype);
+            DB.SaveChanges();
+            return RedirectToAction("NextOrToday","System");
+        }
+        [HttpGet]//修改隔天下单/首天下单类型
+        public IActionResult EditNextOrToday(int id)
+        {
+            var old = DB.NextOrTodays
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (old == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                return View(old);
+            }
+        }
+        [HttpPost]
+        public IActionResult EditNextOrToday(int id,NextOrToday newtype)
+        {
+            var old = DB.NextOrTodays
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (old == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                old.Type = newtype.Type;
+                old.Price = newtype.Price;
+                old.Note = newtype.Note;
+                DB.SaveChanges();
+                return RedirectToAction("NextOrToday", "System");
+            }
+        }
+        [HttpPost]
+        public IActionResult DeleteNextOrToday(int id)
+        {
+            var type = DB.NextOrTodays
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (type == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                DB.NextOrTodays.Remove(type);
                 DB.SaveChanges();
                 return Content("success");
             }

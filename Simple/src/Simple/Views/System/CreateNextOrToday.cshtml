@@ -1,0 +1,48 @@
+﻿<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">添加隔天下单/首天下单类型</p>
+                        <form asp-action="CreateNextOrToday" asp-controller="System" method="post">
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*进入隔天下单/首天下单类型</th>
+                                        <td><input type="text" class="form-control" name="type" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*该方式价格</th>
+                                        <td><input type="text" class="form-control" name="price" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*说明</th>
+                                        <td><input type="text" class="form-control" name="note" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="NextOrToday" asp-controller="System" class="form-control btn btn-primary">返回隔天下单/首天下单类型</a></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="添加"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </form>
+                        <label class="must2">例子</label><br />
+                        <label class="must2">
+                            隔天下单/首天下单类型：搜索进入<br />
+                            该方式价格：10.00<br />
+                            说明：选择本项目加收10元，三项不重复计费
+                        </label><br />
+                        <label class="must2">为避免出现错误，三者类型价格请设置成一样</label><br />
+                        <label class="must2">若该类型价格不统一，用户隔天下单/首天下单类型中价格会以该类型最高价格进行计算</label>
+                        <div style="height:10px;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+
+

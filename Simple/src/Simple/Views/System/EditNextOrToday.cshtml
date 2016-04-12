@@ -1,21 +1,21 @@
-﻿@model FindType
+﻿@model NextOrToday
 <div>
     <section>
         <div class="content-wrapper">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="infotitle">进入店铺方式修改</p>
-                        <form asp-action="EditJoinShopType" asp-controller="System" method="post">
+                        <p class="infotitle">隔天下单/首天下单类型修改</p>
+                        <form asp-action="EditNextOrToday" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
-                                        <th class="must2">*进入店铺方式</th>
+                                        <th class="must2">*隔天下单/首天下单类型</th>
                                         <td><input type="text" class="form-control" name="type" value="@Model.Type" /></td>
                                     </tr>
                                     <tr>
-                                        <th class="must2">*该方式对应的价格</th>
+                                        <th class="must2">*该类型对应的价格</th>
                                         <td><input type="text" class="form-control" name="Price" value="@Model.Price" /></td>
                                     </tr>
                                     <tr>
@@ -23,7 +23,7 @@
                                         <td><input type="text" class="form-control" name="Note" value="@Model.Note" /></td>
                                     </tr>
                                     <tr>
-                                        <th><a asp-action="JoinShopType" asp-controller="System" class="btn btn-primary">返回进入店铺方式列表</a></th>
+                                        <th><a asp-action="NextOrToday" asp-controller="System" class="form-control btn btn-primary">返回隔天下单/首天下单类型列表</a></th>
                                         <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
                                     </tr>
                                 </tbody>
@@ -31,7 +31,7 @@
 
                         </form>
                         <label class="must2" style="color:gold;">特别说明</label><br />
-                        <label class="must2">进入店铺方式请勿随意修改，以免新老用户错乱！</label>     <br />
+                        <label class="must2">隔天下单/首天下单类型请勿随意修改，以免新老用户错乱！</label>     <br />
                         <div style="height:10px;"></div>
                     </div>
                 </div>
@@ -40,6 +40,7 @@
     </section>
 
 </div>
+
 
 
 
