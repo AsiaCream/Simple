@@ -37,7 +37,6 @@ namespace Simple.Models
         public int CommentTime { get; set; }//评价时间
         public string Address { get; set; }
         public string FeedBackStar { get; set; }
-        public string FeedBackModel { get; set; }
         public string FeedBackContent { get; set; }
         public string ReviewStar { get; set; }
         public string ReviewContent { get; set; }
