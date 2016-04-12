@@ -51,11 +51,12 @@ namespace Simple.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
+
                 var shop = DB.ShopOrders
                     .Where(x => x.Id == id)
                     .SingleOrDefault();
                 var plattype = DB.PlatTypes
-                    .OrderBy(x => x.Id)
+                    .Where(x => x.Title!=shop.Type)
                     .ToList();
                 ViewBag.PlatType = plattype;
                 return View(shop);

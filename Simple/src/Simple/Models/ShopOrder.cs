@@ -9,7 +9,7 @@ namespace Simple.Models
     public class ShopOrder
     {
         public int Id { get; set;}
-        public string Title { get; set; }
+        public string Title { get; set; }//店铺名称
         public string Type { get; set; }//店铺所在平台信息，如Amazon,Ebay等等
         public int MaxOneDay { get; set; }
         public int MaxOneEvaluation { get; set; }

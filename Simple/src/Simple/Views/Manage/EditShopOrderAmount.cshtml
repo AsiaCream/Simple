@@ -13,6 +13,7 @@
                                     <tr>
                                         <th class="must2">*所在平台</th>
                                         <td><select name="type" class="form-control">
+                                              <option>@Model.Type</option>
                                               @foreach(PlatType x in ViewBag.PlatType)
                                               {
                                                   <option>@x.Title</option>
