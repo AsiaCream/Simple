@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
+using Microsoft.Data.Entity;
 using Simple.Models;
 
 namespace Simple.Controllers
@@ -91,51 +92,113 @@ namespace Simple.Controllers
             //现将用户找到
             var user = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
             //然后将和用户相关联的店铺信息找到，并用ViewBag返回到前台
-            var shop = DB.ShopOrders.Where(x => x.UserId == user.Id).ToList();
-            var c = DB.Rates.OrderBy(x => x.Exchange).ToList();
-            var f = DB.FindTypes.OrderBy(x => x.Id).ToList();
-            var commentTime = DB.CommentTimes.OrderBy(x => x.Id).ToList();
+            var shop = DB.ShopOrders
+                .Where(x => x.UserId == user.Id)
+                .ToList();
+            var c = DB.Rates
+                .OrderBy(x => x.Exchange)
+                .ToList();
+            var f = DB.FindTypes
+                .OrderBy(x => x.Id)
+                .ToList();
+            var commentTime = DB.CommentTimes
+                .OrderBy(x => x.Id)
+                .ToList();
+            var n = DB.NextOrTodays
+                .OrderBy(x => x.Id)
+                .ToList();
             ViewBag.CommentTime = commentTime;
             ViewBag.Country = c;
             ViewBag.FindType = f;
             ViewBag.Shop = shop;
+            ViewBag.NextOrToday = n;
             return View();
         }
         [HttpPost]
         public IActionResult OneToOne(string id,double Rate,string FindType,string GoodsUrl,string ShopName,double GoodsCost,double Freight,string OrderType,string NextOrToday,bool AvoidWeekend,bool Extension,int CommentTime,string Address,string FeedBackStar,string FeedBackContent,string ReviewStar,string ReviewContent,string ReviewTitle,int Times,string Note)
         {
-            var preorder = new PreOrder { Rate = Rate, FindType = FindType, GoodsUrl = GoodsUrl, ShopName = ShopName, GoodsCost = GoodsCost, Freight = Freight, OrderType = OrderType, NextOrToday = NextOrToday, AvoidWeekend = AvoidWeekend, Extension = Extension, CommentTime = CommentTime, FeedBackStar = FeedBackStar, FeedBackContent = FeedBackContent, ReviewStar = ReviewStar, ReviewContent = ReviewContent, ReviewTitle = ReviewTitle, Times = Times, Note = Note };
+            var preorder = new PreOrder
+            {
+                Rate = Rate,
+                FindType = FindType,
+                GoodsUrl = GoodsUrl,
+                ShopName = ShopName,
+                GoodsCost = GoodsCost,
+                Freight = Freight,
+                OrderType = OrderType,
+                NextOrToday = NextOrToday,
+                AvoidWeekend = AvoidWeekend,
+                Extension = Extension,
+                CommentTime = CommentTime,
+                FeedBackStar = FeedBackStar,
+                FeedBackContent = FeedBackContent,
+                ReviewStar = ReviewStar,
+                ReviewContent = ReviewContent,
+                ReviewTitle = ReviewTitle,
+                Times = Times,
+                Note = Note
+            };
             //找到用户提交订单中进入店铺方式，进而找出进入店铺方式所需要的价格
-            var findtype = DB.FindTypes.Where(x => x.Type == preorder.FindType).FirstOrDefault();
+            var findtype = DB.FindTypes
+                .Where(x => x.Type == preorder.FindType)
+                .SingleOrDefault();
+            //找到隔天下单/首天下单类型以及找到最高价格
+            var nextortoday = DB.NextOrTodays
+                .OrderByDescending(x => x.Price)
+                .FirstOrDefault();
+                
+            var oldnum = DB.IncreasingNumbers
+                .OrderByDescending(x => x.Number)
+                .First();
 
-            var oldnum = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
             var num = new IncreasingNumber { Number = oldnum.Number + 1 };
-            var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();
+            //找出对应的id用户
+            var user = DB.Users
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
 
-            var plattype = DB.ShopOrders.Where(x => x.Title == preorder.ShopName).SingleOrDefault();
-
-            var rate = DB.Rates.Where(x => x.Exchange == preorder.Rate).SingleOrDefault();
+            //找出对应订单店铺名所在平台
+            var plattype = DB.ShopOrders
+                .Where(x => x.Title == preorder.ShopName)
+                .SingleOrDefault();
+            //找出订单汇率，通过这个找到对应国家
+            var rate = DB.Rates
+                .Where(x => x.Exchange == preorder.Rate)
+                .SingleOrDefault();
 
             DB.PreOrders.Add(preorder);
 
             DB.IncreasingNumbers.Add(num);
+
             var s = preorder.Id;
 
-            var poundage = new Poundage { PreOrderId = preorder.Id, OrderCost = 30.00, AddressCost = 0.00, SearchCost = findtype.Price, ImageCost = 0.00, NextOrToday = 0.00 };
+            var poundage = new Poundage
+            {
+                PreOrderId = preorder.Id,
+                OrderCost = 30.00,
+                AddressCost = 0.00,
+                SearchCost = findtype.Price,
+                ImageCost = 0.00,
+                NextOrToday = 0.00
+            };
 
             DB.Poundages.Add(poundage);
             if (preorder.NextOrToday != null)
             {
-                poundage.NextOrToday = 10.00;
+                //把隔天下单/首天下单价格加入手续费中
+                poundage.NextOrToday = nextortoday.Price;
             }
             if (preorder.ImageUrl1 != null || preorder.ImageUrl2 != null || preorder.ImageUrl3 != null)
             {
+                //把图片价格加入手续费中
                 poundage.ImageCost = 20.00;
             }
             if (preorder.Address != null)
             {
+                //把地址价格加入手续费中
                 poundage.AddressCost = 5.00;
             }
+            //计算手续费总价=订单价格+搜索价格+图片价格+地址价格+隔天下单价格
             poundage.TotalCost = poundage.OrderCost + poundage.SearchCost + poundage.ImageCost + poundage.AddressCost+poundage.NextOrToday;
             preorder.Poundage = poundage.TotalCost;
             preorder.Country = rate.Country;

@@ -65,15 +65,16 @@
                                     </tr>
                                     <tr class="must2">
                                         <th>*特别说明</th>
-                                        <td class="must3">请控制review订单量，总review订单比例不能超过总刷单量的30%</td>
+                                        <td class="must3">请控制review订单量总review订单比例不能超过总刷单量的30%</td>
                                         <td class="must3">如果超过这个比例我们将加价或将review的订单改为feedback订单</td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*隔天下单/首天</th>
-                                        <td><input type="checkbox" name="NextOrToday" value="查看" />查看</td>
-                                        <td><input type="checkbox" name="NextOrToday" value="加购物车" />加购物车</td>
-                                        <td><input type="checkbox" name="NextOrToday" value="加wishlist" />加wishlist</td>
-                                        <td class="must3">选择本项目加收10元，三项不重复计费</td>
+                                        @foreach(NextOrToday x in ViewBag.NextOrToday)
+                                        {
+                                            <td><input type="checkbox" name="NextOrToday" value="@x.Type"/>@x.Type</td>
+                                            <td class="must3">@x.Note</td>
+                                        }
                                     </tr>
                                     <tr>
                                         <th class="must2">*是否避开周末</th>
@@ -197,6 +198,17 @@
             $(".review").fadeOut();
         });
         $("#send").click(function () {
+            //获取复选框里的所有值
+            var aa = document.getElementsByName("NextOrToday");
+            var nextortoday = "";
+            for (var i = 0; i < aa.length;i++)
+            {
+                if(aa[i].checked){
+                    nextortoday = aa[i].value + nextortoday;
+                }
+            
+            }
+            alert(nextortoday);
             var url = "/Manage/OneToOne";
             var params = {
                 "id":$("#userid").val(),
@@ -207,7 +219,8 @@
                 "GoodsCost": $("#GoodsCost").val(),
                 "Freight": $("#Freight").val(),
                 "OrderType": $("input[name='OrderType']:checked").val(),
-                "NextOrToday": $("input[name='NextOrToday']:checked").val(),
+                //"NextOrToday": $("input[name='NextOrToday']:checked").val(),
+                "NextOrToday":nextortoday,
                 "AvoidWeekend": $("input[name='AvoidWeekend']:checked").val(),
                 "Extension": $("input[name='Extension']:checked").val(),
                 "CommentTime": $("#CommentTime").val(),
