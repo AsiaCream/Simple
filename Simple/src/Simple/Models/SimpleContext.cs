@@ -24,6 +24,8 @@ namespace Simple.Models
         public DbSet<HelpfulPreOrder> HelpfulPreOrders { get; set; }
         public DbSet<HelpfulPrice> HelpfulPrices { get; set; }
         public DbSet<CommentTime> CommentTimes { get; set; }
+        public DbSet<FeedBackModel> FeedBackModels { get; set; }
+        public DbSet<FeedBackStar> FeedBackStars { get; set; } 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -34,6 +36,10 @@ namespace Simple.Models
             builder.Entity<PreOrder>(e =>
             {
                 e.HasIndex(x=>x.Id);
+                e.HasIndex(x => x.PostTime);
+                e.HasIndex(x => x.DrawTime);
+                e.HasIndex(x => x.StarTime);
+                e.HasIndex(x => x.FinishTime);
             });
             builder.Entity<MyWallet>(e =>
             {
@@ -50,6 +56,7 @@ namespace Simple.Models
             builder.Entity<FindType>(e =>
             {
                 e.HasIndex(x => x.Id);
+                e.HasIndex(x => x.Price);
             });
             builder.Entity<OrderType>(e =>
             {
@@ -58,6 +65,7 @@ namespace Simple.Models
             builder.Entity<IncreasingNumber>(e =>
             {
                 e.HasIndex(x => x.Id);
+                e.HasIndex(x => x.Number);
             });
             builder.Entity<PlatType>(e =>
             {
@@ -66,20 +74,31 @@ namespace Simple.Models
             builder.Entity<Poundage>(e =>
             {
                 e.HasIndex(x => x.Id);
+                e.HasIndex(x => x.TotalCost);
             });
             builder.Entity<Rate>(e =>
             {
                 e.HasIndex(x => x.Id);
+                e.HasIndex(x => x.Exchange);
             });
             builder.Entity<HelpfulPreOrder>(e =>
             {
                 e.HasIndex(x => x.Id);
+                e.HasIndex(x => x.PayFor);
             });
             builder.Entity<HelpfulPrice>(e =>
             {
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<CommentTime>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<FeedBackModel>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<FeedBackStar>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

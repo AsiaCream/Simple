@@ -350,6 +350,79 @@ namespace Simple.Controllers
                 DB.SaveChanges();
                 return View();
             }
+        }
+        #endregion
+        #region FeedBack模版管理
+        [HttpGet]//FeedBack模版设置
+        public IActionResult FeedBackModel()
+        {
+            var feedback = DB.FeedBackModels
+                .OrderBy(x => x.Id)
+                .ToList();
+            return View(feedback);
+        }
+        [HttpGet]//创建Feedback模版
+        public IActionResult CreateFeedBackModel()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateFeedBackModel(FeedBackModel newfeedbackmodel)
+        {
+            DB.FeedBackModels.Add(newfeedbackmodel);
+            DB.SaveChanges();
+            return RedirectToAction("FeedBackModel", "System");
+        }
+        [HttpGet]//修改Feedback模版
+        public IActionResult EditFeedBackModel(int id)
+        {
+            var feedback = DB.FeedBackModels
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (feedback == null)
+            {
+                return RedirectToAction("Error", "System");
+            }
+            else
+            {
+                return View(feedback);
+            }
+
+        }
+        [HttpPost]
+        public IActionResult EditFeedBackModel(int id, FeedBackModel newfeedbackmodel)
+        {
+            var oldfeedback = DB.FeedBackModels
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (oldfeedback == null)
+            {
+                return RedirectToAction("Error", "System");
+            }
+            else
+            {
+                oldfeedback.Content = newfeedbackmodel.Content;
+                DB.SaveChanges();
+                return RedirectToAction("FeedBackModel", "System");
+            }
+
+        }
+        [HttpPost]//删除Feedback模版
+        public IActionResult DeleteFeedBackModel(int id)
+        {
+            var feedback = DB.FeedBackModels
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (feedback == null)
+            {
+                return RedirectToAction("Error", "System");
+            }
+            else
+            {
+                DB.FeedBackModels.Remove(feedback);
+                DB.SaveChanges();
+                return Content("success");
+            }
         } 
         #endregion
     }

@@ -1,0 +1,39 @@
+﻿@model FeedBackModel
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">FeedBack模版修改</p>
+                        <form asp-action="EditFeedBackModel" asp-controller="System" method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*模版内容</th>
+                                        <td><input type="text" class="form-control" name="Content" value="@Model.Content" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="FeedBackModel" asp-controller="System" class="form-control btn btn-primary">返回FeedBack模版列表</a></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                       <!-- <label class="must2" style="color:gold;">特别说明</label><br />
+                        <label class="must2">平台类型请勿随意修改，以免新老用户错乱！</label>     <br />
+                        <div style="height:10px;"></div>-->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>
+
+
+
+
+
+

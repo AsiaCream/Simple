@@ -120,9 +120,12 @@
                                     <tr class="feedback">
                                         <th class="must2">*FeedBack模版</th>
                                         <td>
-                                            <select name="FeedBackModel">
+                                            <select class="form-control">
                                                 <option>请选择FeedBack模版</option>
-                                                <option>Great</option>
+                                                @foreach (FeedBackModel x in ViewBag.FeedBackModel)
+                                                {
+                                                    <option>@x.Content</option>
+                                                }
                                             </select>
                                         </td>
                                     </tr>

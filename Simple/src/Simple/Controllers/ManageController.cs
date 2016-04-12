@@ -107,11 +107,15 @@ namespace Simple.Controllers
             var n = DB.NextOrTodays
                 .OrderBy(x => x.Id)
                 .ToList();
+            var fb = DB.FeedBackModels
+                .OrderBy(x => x.Id)
+                .ToList();
             ViewBag.CommentTime = commentTime;
             ViewBag.Country = c;
             ViewBag.FindType = f;
             ViewBag.Shop = shop;
             ViewBag.NextOrToday = n;
+            ViewBag.FeedBackModel = fb;
             return View();
         }
         [HttpPost]

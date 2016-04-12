@@ -20,6 +20,7 @@ namespace Simple.Models
 
             if (db.Database != null && db.Database.EnsureCreated())
             {
+                //初始化系统用户角色
                 await roleManager.CreateAsync(new IdentityRole { Name = "系统管理员" });
                 await roleManager.CreateAsync(new IdentityRole { Name = "普通用户" });
 
@@ -58,12 +59,16 @@ namespace Simple.Models
                 db.Rates.Add(new Rate { Country = "加", Exchange = 5.38 });
                 db.Rates.Add(new Rate { Country = "欧", Exchange = 7.59 });
 
+                //初始化FeedBack模版
+                db.FeedBackModels.Add(new FeedBackModel { Content = "Good quality!Good price!" });
+                db.FeedBackModels.Add(new FeedBackModel { Content = "値段の割りにはとっても可愛くレースもゴージャス感があり、気に入りました。" });
+                db.FeedBackModels.Add(new FeedBackModel { Content = "Item arrived quickly and in perfect condition. Very satisfied! Will buy more." });
+
                 //初始化平台类型
                 db.PlatTypes.Add(new PlatType { Title = "Amazon" });
                 db.PlatTypes.Add(new PlatType { Title = "Ebay" });
 
                 //初始化Helpful价格
-
                 db.HelpfulPrices.Add(new HelpfulPrice { Price = 2.00,WishListCost=2.00 });
 
                 //初始化评价时间以及备注
