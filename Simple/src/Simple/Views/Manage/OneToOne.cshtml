@@ -120,7 +120,7 @@
                                     <tr class="feedback">
                                         <th class="must2">*FeedBack模版</th>
                                         <td>
-                                            <select class="form-control">
+                                            <select class="form-control" id="select-fbm">
                                                 <option>请选择FeedBack模版</option>
                                                 @foreach (FeedBackModel x in ViewBag.FeedBackModel)
                                                 {
@@ -199,6 +199,9 @@
         $("#set_order").click(function () {
             $(".feedback").fadeOut();
             $(".review").fadeOut();
+        });
+        $("#select-fbm").change(function () {
+            document.getElementById("FeedBackContent").value = $("#select-fbm").val();
         });
         $("#send").click(function () {
             //获取复选框里的所有值
