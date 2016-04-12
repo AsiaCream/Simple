@@ -41,6 +41,12 @@ namespace Simple.Models
                 db.NextOrTodays.Add(new NextOrToday { Type = "加购物车",Price = 10.00, Note = "" });
                 db.NextOrTodays.Add(new NextOrToday { Type = "加wishlist", Price = 10.00, Note = "选择本项目加收10元，三项不重复计费" });
 
+                //初始化订单类型
+                db.OrderTypes.Add(new OrderType { Type = "下单 + feedback + review", Price = 0.00, Note = "" });
+                db.OrderTypes.Add(new OrderType { Type = "下单 + feedback", Price = 0.00, Note = "" });
+                db.OrderTypes.Add(new OrderType { Type = "下单 +  review", Price = 0.00, Note = "" });
+                db.OrderTypes.Add(new OrderType { Type = "只下单不评价", Price = 0.00, Note = "" });
+
                 //初始化进入店铺方式及对应价格
                 db.FindTypes.Add(new FindType { Type = "链接进入",Price=0.00,Note="", });
                 db.FindTypes.Add(new FindType { Type = "搜索进入",Price=2.00,Note="以搜索方式进入，加收10.00元手续费"});
@@ -62,7 +68,7 @@ namespace Simple.Models
 
                 //初始化评价时间以及备注
                 db.CommentTimes.Add(new CommentTime { Date = 15, Note = "亚马逊订单生成时开始计时" });
-
+                
                 //初始化IncreasingNumber
                 db.IncreasingNumbers.Add(new IncreasingNumber { Number = 0 });
 
