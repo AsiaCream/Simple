@@ -77,6 +77,9 @@ namespace Simple.Models
                 //初始化IncreasingNumber
                 db.IncreasingNumbers.Add(new IncreasingNumber { Number = 0 });
 
+                //初始化系统标题
+                db.SystemInfos.Add(new SystemInfo { BigTitle = "Simple", SmallTitle = "S",Company= "宝印科技有限公司",Url="http://www.asiacream.cn" });
+
             }
             db.SaveChanges();
         }

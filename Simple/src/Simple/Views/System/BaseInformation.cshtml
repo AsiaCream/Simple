@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SystemInfo>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="infotitle">当前系统信息</label>
+                        <div style="height:10px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-responsive table-stripted">
+                            <tbody>
+                                @foreach (SystemInfo x in Model)
+                                {
+                                    <tr>
+                                        <th class="must2">*大标题</th>
+                                        <th>@x.BigTitle</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*小标题</th>
+                                        <th>@x.SmallTitle</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*公司链接地址</th>
+                                        <th>@x.Url</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*公司名称</th>
+                                        <th>@x.Company</th>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="EditBaseInformation" asp-controller="System" asp-route-id="@x.Id" class="btn btn-primary">修改系统信息</a></th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+

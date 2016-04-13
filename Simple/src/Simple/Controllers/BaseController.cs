@@ -36,6 +36,10 @@ namespace Simple.Controllers
                 UserCurrent= DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
                 ViewBag.UserCurrent = UserCurrent;
             }
+            ViewBag.BigTitle = DB.SystemInfos.SingleOrDefault(x => x.Id == 1).BigTitle;
+            ViewBag.SmallTitle = DB.SystemInfos.SingleOrDefault(x => x.Id == 1).SmallTitle;
+            ViewBag.Company = DB.SystemInfos.SingleOrDefault(x => x.Id == 1).Company;
+            ViewBag.Url = DB.SystemInfos.SingleOrDefault(x => x.Id == 1).Url;
         }
     }
 }

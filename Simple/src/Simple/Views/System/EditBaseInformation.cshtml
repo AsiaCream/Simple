@@ -1,0 +1,48 @@
+﻿@model SystemInfo
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">系统基本信息设置</p>
+                        <form asp-action="EditBaseInformation" asp-controller="System" method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*大标题</th>
+                                        <td><input type="text" class="form-control" name="BigTitle" value="@Model.BigTitle" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*小标题</th>
+                                        <td><input type="text" class="form-control" name="SmallTitle" value="@Model.SmallTitle" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*公司链接地址</th>
+                                        <td><input type="text" class="form-control" name="Url" value="@Model.Url" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*公司地址</th>
+                                        <td><input type="text" class="form-control" name="Company" value="@Model.Company" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="BaseInformation" asp-controller="System" class="form-control btn btn-primary">返回系统设置</a></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>
+
+
+
+
+
+

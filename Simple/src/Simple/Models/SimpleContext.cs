@@ -14,7 +14,7 @@ namespace Simple.Models
         public DbSet<Poundage> Poundages { get; set; }
         public DbSet<PreOrder> PreOrders { get; set; }
         public DbSet<MyWallet> MyWallet { get; set; }
-        public DbSet<System> Systems { get; set; }
+        public DbSet<SystemInfo> SystemInfos { get; set; }
         public DbSet<NextOrToday> NextOrTodays { get; set; }
         public DbSet<FindType> FindTypes { get; set; }
         public DbSet<OrderType> OrderTypes { get; set; }
@@ -45,7 +45,7 @@ namespace Simple.Models
             {
                 e.HasIndex(x => x.Id);
             });
-            builder.Entity<System>(e =>
+            builder.Entity<SystemInfo>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

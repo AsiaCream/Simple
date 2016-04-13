@@ -423,6 +423,51 @@ namespace Simple.Controllers
                 DB.SaveChanges();
                 return Content("success");
             }
+        }
+        #endregion
+        #region 系统平台设置
+        [HttpGet]//系统设置
+        public IActionResult BaseInformation()
+        {
+            var baseinfo = DB.SystemInfos
+                .OrderBy(x => x.Id)
+                .ToList();
+            return View(baseinfo);
+        }
+        [HttpGet]
+        public IActionResult EditBaseInformation(int id)
+        {
+            var old = DB.SystemInfos
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (old == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                return View(old);
+            }
+        }
+        [HttpPost]
+        public IActionResult EditBaseInformation(int id, SystemInfo newsystem)
+        {
+            var oldsystem = DB.SystemInfos
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (oldsystem == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                oldsystem.BigTitle = newsystem.BigTitle;
+                oldsystem.SmallTitle = newsystem.SmallTitle;
+                oldsystem.Url = newsystem.Url;
+                oldsystem.Company = newsystem.Company;
+                DB.SaveChanges();
+                return RedirectToAction("BaseInformation", "System");
+            }
         } 
         #endregion
     }

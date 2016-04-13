@@ -59,9 +59,9 @@
             <!-- Logo -->
             <a asp-action="Index" asp-controller="Home" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>S</b></span>
+                <span class="logo-mini"><b>@ViewBag.SmallTitle</b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Simple</b></span>
+                <span class="logo-lg"><b>@ViewBag.BigTitle</b></span>
             </a>
 
             <!-- Header Navbar: style can be found in header.less -->
@@ -322,14 +322,14 @@
                                                     <i class="fa fa-angle-left pull-right"></i>
                                                 </a>
                                                 <ul class="treeview-menu">
-                                                    <li><a asp-action="BaseInformation"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
+                                                    <li><a asp-action="BaseInformation" asp-controller="System"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
                                                     <li><a asp-action="PlatType" asp-controller="System"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
                                                     <li><a asp-action="MemberLevel" asp-controller="System"><i class="fa fa-circle-o"></i> 会员等级</a></li>
                                                     <li><a asp-action="Rate" asp-controller="System"><i class="fa fa-circle-o"></i> 汇率更新配置</a></li>
                                                     <li><a asp-action="JoinShopType" asp-controller="System"><i class="fa fa-circle-o"></i> 进入店铺方式</a></li>
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 订单类型及其属性管理</a></li>
                                                     <li><a asp-action="NextOrToday" asp-controller="System"><i class="fa fa-circle-o"></i> 隔天下单/首天属性管理</a></li>
-                                                    <li><a asp-action="CommentTime" asp-controller="System"><i class="fa fa-circle-o"></i> 评价时间管理</a></li>
+                                                    <li><a asp-action="CommentTime" asp-controller="System"><i class="fa fa-circle-o"></i> Ebay评价时间管理</a></li>
                                                     <li><a asp-action="HelpfulPrice" asp-controller="System"><i class="fa fa-circle-o"></i> Helpful一单费用设置管理</a></li>
                                                     <li><a asp-action="Extension" asp-controller="System"><i class="fa fa-circle-o"></i> 推广设置</a></li>
                                                     <li><a asp-action="FeedBackStar"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>
@@ -426,7 +426,11 @@
         <div class="pull-right hidden-xs">
             <b id="current-time"></b>
         </div>
-        <strong>Copyright &copy; 2016 <a href="http://www.baoyin.com">宝印科技有限公司</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 
+        <script>
+				document.write((new Date()).getFullYear());
+        </script>
+             <a href="@ViewBag.Url" target="_blank">@ViewBag.Company</a>.</strong> All rights reserved.
     </footer>
 
 

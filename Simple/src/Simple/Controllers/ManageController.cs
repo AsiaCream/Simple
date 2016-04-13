@@ -51,7 +51,6 @@ namespace Simple.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-
                 var shop = DB.ShopOrders
                     .Where(x => x.Id == id)
                     .SingleOrDefault();
@@ -63,6 +62,7 @@ namespace Simple.Controllers
             }
             else
             {
+                
                 return RedirectToAction("Login", "Account");
             }
         }
