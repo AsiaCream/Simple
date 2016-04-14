@@ -48,15 +48,14 @@ namespace Simple.Controllers
             }
             else
             {
-                var user = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
                 //用户Index页面中显示订单数
-                var oa = DB.PreOrders.Count();//总单数
+                var oa = DB.PreOrders.Where(x=>x.UserId==UserCurrent.Id).Count();//总单数
                 ViewBag.PreOrderAll = oa;
-                var ob = DB.PreOrders.Where(x=>x.UserId==user.Id).Where(x => x.Draw == Draw.待审核).Count();//待审核
+                var ob = DB.PreOrders.Where(x=>x.UserId==UserCurrent.Id).Where(x => x.Draw == Draw.待审核).Count();//待审核
                 ViewBag.PreOrderWaitDraw = ob;
-                var oc = DB.PreOrders.Where(x => x.UserId == user.Id).Where(x => x.Draw == Draw.通过).Where(x=>x.IsFinish==IsFinish.未完成).Count();//审核待完成
+                var oc = DB.PreOrders.Where(x => x.UserId == UserCurrent.Id).Where(x => x.Draw == Draw.通过).Where(x=>x.IsFinish==IsFinish.未完成).Count();//审核待完成
                 ViewBag.PreOrderDraw = oc;
-                var od = DB.PreOrders.Where(x => x.UserId == user.Id).Where(x => x.IsFinish == IsFinish.已完成).Count();//已完成订单
+                var od = DB.PreOrders.Where(x => x.UserId == UserCurrent.Id).Where(x => x.IsFinish == IsFinish.已完成).Count();//已完成订单
                 ViewBag.PreOrderFinish = od;
                 var oda = (double)od / oa;
                 ViewBag.oda = Math.Round(oda, 2) * 100;//已完成
@@ -67,13 +66,13 @@ namespace Simple.Controllers
 
                 //用户Index页面Helpful订单展示
                 
-                var a = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).Count();
+                var a = DB.HelpfulPreOrders.Where(x => x.UserId == UserCurrent.Id).Count();
                 ViewBag.HelpfulAll = a;
-                var b = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).Where(x => x.Draw == Draw.待审核).Count();//待审核
+                var b = DB.HelpfulPreOrders.Where(x => x.UserId == UserCurrent.Id).Where(x => x.Draw == Draw.待审核).Count();//待审核
                 ViewBag.HelpfulWaitDraw = b;
-                var c = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).Where(x => x.Draw == Draw.通过).Where(x=>x.IsFinish==IsFinish.未完成).Count();//审核待完成
+                var c = DB.HelpfulPreOrders.Where(x => x.UserId == UserCurrent.Id).Where(x => x.Draw == Draw.通过).Where(x=>x.IsFinish==IsFinish.未完成).Count();//审核待完成
                 ViewBag.HelpfulDraw = c;
-                var d = DB.HelpfulPreOrders.Where(x => x.UserId == user.Id).Where(x => x.IsFinish == IsFinish.已完成).Count();//已完成订单
+                var d = DB.HelpfulPreOrders.Where(x => x.UserId == UserCurrent.Id).Where(x => x.IsFinish == IsFinish.已完成).Count();//已完成订单
                 ViewBag.HelpfulFinish = d;
                 var da = (double)d / a;
                 ViewBag.da = Math.Round(da, 2) * 100;//已完成
@@ -92,6 +91,32 @@ namespace Simple.Controllers
         public IActionResult Error()
         {
             return View();
+        } 
+        [HttpGet]
+        public IActionResult UserSearchResult(string key)
+        {
+            var orders = DB.PreOrders
+                .Where(x=>x.UserId==UserCurrent.Id)
+                .Where(x => x.PreOrderNumber == key || x.ShopName.Contains(key) || x.TrueOrderNumber == key)
+                .OrderBy(x => x.PostTime)
+                .ToList();
+            return View(orders);
+        }
+        [HttpPost]
+        public IActionResult UserSearch(string key)
+        {
+            var orders = DB.PreOrders
+               .Where(x=>x.UserId==UserCurrent.Id)
+               .Where(x => x.PreOrderNumber == key||x.ShopName.Contains(key)||x.TrueOrderNumber==key)
+               .ToList();
+            if (orders.Count() == 0)
+            {
+                return Content("error");
+            }
+            else
+            {
+                return Content("success");
+            }
         }
     }
 }
