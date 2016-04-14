@@ -238,6 +238,10 @@
                 "Times": $("#Times").val(),
                 "Note": $("#Note").val(),
             }
+            if ($("#ShopName").val() == null) {
+                alert("请先到导航栏店铺订单量设置中添加您的店铺！");
+
+            }
             if ($("input[name='Rate']:checked").val()==null) {
                 alert("汇率不能为空，请选择！");
             }
