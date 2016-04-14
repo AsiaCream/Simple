@@ -58,7 +58,7 @@ namespace Simple
 
             app.UseMvc(x => x.MapRoute("dafault", "{controller=Account}/{action=Login}/{id?}"));
 
-            await SampleData.InitDB(app.ApplicationServices);
+           await SampleData.InitDB(app.ApplicationServices);
         }
 
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);

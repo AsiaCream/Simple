@@ -22,11 +22,16 @@
         <td>@x.Poundage</td>
         <td>@x.PayTotal</td>
         <td>@x.TrueOrderNumber</td>
-        <td><a href="#" title="@x.FeedBackContent">复制</a></td>
-        <td><a href="#" title="@x.ReviewContent">复制</a></td>
+        <td><a href="#" title="@x.FeedBackContent" id="fb_text" >复制</a></td>
+        <td><a href="#" title="@x.ReviewContent" id="rew_text" >复制</a></td>
         <td>@x.Draw</td>
         <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
         <td>@x.Times</td>
     </tr>
     }
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    
+
+</script>
 

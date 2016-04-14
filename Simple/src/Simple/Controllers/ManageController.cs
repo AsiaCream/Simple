@@ -85,7 +85,6 @@ namespace Simple.Controllers
             }
         }
         #endregion
-
         #region 发布一产品一单
         [HttpGet]
         public IActionResult OneToOne()
@@ -223,6 +222,80 @@ namespace Simple.Controllers
             return Content("success");
         }
         #endregion
+        [HttpGet]
+        public IActionResult EditOrder(int id)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (order == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                ViewBag.FeedBackModel = DB.FeedBackModels
+                    .OrderBy(x => x.Id)
+                    .ToList();
+                ViewBag.Country = DB.Rates
+                    .Where(x => x.Exchange != order.Rate)
+                    .ToList();
+                ViewBag.FindType = DB.FindTypes
+                    .Where(x => x.Type != order.FindType)
+                    .ToList();
+                ViewBag.Shop = DB.ShopOrders
+                    .Where(x => x.UserId == order.UserId)
+                    .Where(x => x.Title != order.ShopName)
+                    .ToList();
+                ViewBag.NextOrToday = DB.NextOrTodays
+                    .Where(x => x.Type != order.NextOrToday)
+                    .ToList();
+                return View(order);
+            }
+        }
+        [HttpPost]
+        public IActionResult EditOrder(int id,double Rate, string FindType, string GoodsUrl, string ShopName, 
+            double GoodsCost, double Freight, string OrderType, string NextOrToday, bool AvoidWeekend, 
+            bool Extension, int CommentTime, string Address, string FeedBackStar, string FeedBackContent, 
+            string ReviewStar, string ReviewContent, string ReviewTitle, int Times, string Note)
+        {
+            var old = DB.PreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (old == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                //找到之前手续费
+                var poundage = DB.Poundages
+                    .Where(x => x.PreOrderId == old.Id)
+                    .Single();
+                old.Rate = Rate;
+                old.FindType = FindType;
+                old.GoodsUrl = GoodsUrl;
+                old.ShopName = ShopName;
+                old.GoodsCost = GoodsCost;
+                old.Freight = Freight;
+                old.OrderType = OrderType;
+                old.NextOrToday = NextOrToday;
+                old.AvoidWeekend = AvoidWeekend;
+                old.Extension = Extension;
+                old.CommentTime = CommentTime;
+                old.Address = Address;
+                old.FeedBackStar = FeedBackStar;
+                old.FeedBackContent = FeedBackContent;
+                old.ReviewStar = ReviewStar;
+                old.ReviewContent = ReviewContent;
+                old.ReviewTitle = ReviewTitle;
+                old.Times = Times;
+                old.Note = Note;
+                DB.SaveChanges();
+
+                return Content("success");
+            }
+        }
         #region 用户订单页面管理
         [HttpGet] //所有订单
         public IActionResult AllOrders()
@@ -311,8 +384,6 @@ namespace Simple.Controllers
             return View();
         }
         #endregion
-
-
         #region 发布Helpful订单
         [HttpGet]
         public IActionResult CreateHelpfulOrder()
@@ -351,8 +422,9 @@ namespace Simple.Controllers
             helpfulpreorder.IsPayFor = IsPayFor.未支付;
             DB.SaveChanges();
             return Content("success");
-        } 
+        }
         #endregion
+        #region Helpful订单管理
         [HttpGet]//用户Helpful详细
         public IActionResult HelpfulOrderDetails(int id)
         {
@@ -366,7 +438,7 @@ namespace Simple.Controllers
         {
             var order = DB.HelpfulPreOrders
                 .Where(x => x.Id == id)
-                .Where(x=>x.State==State.未锁定)
+                .Where(x => x.State == State.未锁定)
                 .SingleOrDefault();
 
             var orderuser = DB.Users
@@ -403,10 +475,10 @@ namespace Simple.Controllers
         {
             var orderCount = DB.HelpfulPreOrders
                 .Where(x => x.UserId == UserCurrent.Id)
-                .Where(x=>x.Draw==Draw.待审核)
-                .Where(x=>x.State==State.未锁定)
-                .Where(x=>x.IsPayFor==IsPayFor.未支付)
-                .Where(x=>x.IsFinish==IsFinish.未完成)
+                .Where(x => x.Draw == Draw.待审核)
+                .Where(x => x.State == State.未锁定)
+                .Where(x => x.IsPayFor == IsPayFor.未支付)
+                .Where(x => x.IsFinish == IsFinish.未完成)
                 .Count();
             ViewBag.totalRecord = orderCount;
             return View();
@@ -447,10 +519,10 @@ namespace Simple.Controllers
         {
             var orderCount = DB.HelpfulPreOrders
                 .Where(x => x.UserId == UserCurrent.Id)
-                .Where(x=>x.Draw==Draw.通过)
-                .Where(x=>x.IsFinish==IsFinish.未完成)
-                .Where(x=>x.IsPayFor==IsPayFor.已支付)
-                .Where(x=>x.State==State.未锁定)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.State == State.未锁定)
                 .Count();
             ViewBag.totalRecord = orderCount;
             return View();
@@ -480,7 +552,8 @@ namespace Simple.Controllers
                 .Count();
             ViewBag.totalRecord = orderCount;
             return View();
-        }
-        
+        } 
+        #endregion
+
     }
 }

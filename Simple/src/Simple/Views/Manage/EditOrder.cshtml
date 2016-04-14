@@ -1,0 +1,278 @@
+﻿@model PreOrder
+<style>
+    .feedback {
+        display: none;
+    }
+
+    .review {
+        display: none;
+    }
+</style>
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12 col-sx-12">
+                        <p class="infotitle">修改订单页面</p>
+                        <form>
+                            <input type="hidden" value="@Model.Id" name="id" />
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2 col-md-2 col-sx-2">*国家（汇率）</th>
+                                        <td><input type="radio" name="Rate" id="Rate" checked="checked" value="@Model.Rate" />@Model.Country &nbsp;(@Model.Rate)</td>
+                                        @foreach (Rate x in ViewBag.Country)
+                                        {
+                                            <td><input type="radio" name="Rate" id="Rate" value="@x.Exchange" />@x.Country &nbsp;(@x.Exchange)</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*进入店铺方式</th>
+                                        <td><input type="radio" name="FindType" id="FindType" checked="checked" value="@Model.FindType" />@Model.FindType</td>
+                                        @foreach (FindType x in ViewBag.FindType)
+                                        {
+                                            <td><input type="radio" name="FindType" id="FindType" value="@x.Type" />@x.Type</td>
+                                            <td class="must2">@x.Note</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*产品连接</th>
+                                        <td><input class="form-control" type="text" value="@Model.GoodsUrl" name="GoodsUrl" id="GoodsUrl" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*请选择您的店铺</th>
+                                        <td>
+                                            <select class="form-control" name="ShopName" id="ShopName">
+                                                <option>@Model.ShopName</option>
+                                                @foreach (ShopOrder x in ViewBag.Shop)
+                                                {
+                                                    <option>@x.Title</option>
+                                                }
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*产品价格</th>
+                                        <td><input type="text" class="form-control" value="@Model.GoodsCost" name="GoodsCost" id="GoodsCost" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*运费</th>
+                                        <td><input class="form-control" type="text" value="@Model.Freight" name="Freight" id="Freight" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*订单类型</th>
+                                        <td><input type="radio" id="set_feedback_review" name="OrderType" value="下单 + feedback + review" />下单 + feedback + review</td>
+                                        <td><input type="radio" id="set_feedback" name="OrderType" value="下单 + feedback" />下单 + feedback</td>
+                                        <td><input type="radio" id="set_review" name="OrderType" value="下单 +  review" />下单 +  review</td>
+                                        <td><input type="radio" id="set_order" checked="checked" name="OrderType" value="只下单不评价" />只下单不评价</td>
+                                    </tr>
+                                    <tr class="must2">
+                                        <th>*特别说明</th>
+                                        <td class="must3">请控制review订单量总review订单比例不能超过总刷单量的30%</td>
+                                        <td class="must3">如果超过这个比例我们将加价或将review的订单改为feedback订单</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*隔天下单/首天</th>
+                                        <td><input type="checkbox" name="NextOrToday" value="@Model.NextOrToday" />@Model.NextOrToday</td>
+                                        @foreach (NextOrToday x in ViewBag.NextOrToday)
+                                        {
+                                            <td><input type="checkbox" name="NextOrToday" value="@x.Type" />@x.Type</td>
+                                            <td class="must3">@x.Note</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*是否避开周末</th>
+                                        <td><input type="radio" name="AvoidWeekend" value="0" checked="checked" />不需避开周末</td>
+                                        <td><input type="radio" name="AvoidWeekend" value="1" />避开周末</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*是否免费推广</th>
+                                        <td><input type="radio" name="Extension" value="1" checked="checked" />推广</td>
+                                        <td><input type="radio" name="Extension" value="0" />不推广</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*评价时间</th>
+                                        <td><input type="text" class="form-control" value="@Model.CommentTime" name="CommentTime" id="CommentTime" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*收件人地址</th>
+                                        <td><textarea class="form-control" id="Address" name="Address" style="height:200px;resize:none;" placeholder="选填项（加收五元服务费）适用于修改收货信息，保证自己安排签到的客户">@Model.Address</textarea></td>
+                                        <td>
+                                            Full Name: MekeEva
+                                            Address Line 1: 307 VININGS VINTAGE CIR
+                                            Address Line 2:
+                                            City：MABLETON,
+                                            State/Province/Region: GEORGIA
+                                            Country:US
+                                            ZIP: 30126-7238
+                                            Phone Number: 000-000-0000
+                                        </td>
+                                        <td class="must3">
+                                            本项目为：选填项(加收五元服务费)适用于需修改收货信息，
+                                            保证自己安排签收的客户
+                                        </td>
+                                    </tr>
+                                    <tr class="feedback">
+                                        <th class="must2">*FeedBack星级</th>
+                                        <td><input type="radio" name="FeedBackStar" value="四星" />四星</td>
+                                        <td><input type="radio" name="FeedBackStar" value="五星" />五星</td>
+                                    </tr>
+                                    <tr class="feedback">
+                                        <th class="must2">*FeedBack模版</th>
+                                        <td>
+                                            <select class="form-control" id="select-fbm">
+                                                <option>请选择FeedBack模版</option>
+                                                @foreach (FeedBackModel x in ViewBag.FeedBackModel)
+                                                {
+                                                    <option>@x.Content</option>
+                                                }
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="feedback">
+                                        <th class="must2">*FeedBack内容</th>
+                                        <td><textarea class="form-control " style="height:100px;resize:none;" name="FeedBackContent" id="FeedBackContent">@Model.FeedBackContent</textarea></td>
+                                    </tr>
+                                    <tr class="review">
+                                        <th class="must2">*Review星级</th>
+                                        <td><input type="radio" value="四星" name="ReviewStar" />四星</td>
+                                        <td><input type="radio" value="五星" name="ReviewStar" />五星</td>
+                                    </tr>
+                                    <tr class="review">
+                                        <th class="must2">*Review内容</th>
+                                        <td><textarea class="form-control" style="height:100px;resize:none;" name="ReviewContent" id="ReviewContent">@Model.ReviewContent</textarea></td>
+                                    </tr>
+                                    <tr class="review">
+                                        <th class="must2">*Review标题</th>
+                                        <td><input class="form-control" name="ReviewTitle" id="ReviewTitle" value="@Model.ReviewTitle"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">刷单数量</th>
+                                        <td><input type="text" class="form-control" name="Times" id="Times" value="@Model.Times" /></td>
+                                        <td class="must2">请输入修改后的单数</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">备注</th>
+                                        <td><textarea class="form-control" id="Note" style="height:100px;resize:none;" name="Note">@Model.Note</textarea> </td>
+                                    </tr>
+                                    <tr>
+                                        <th>图片评价1</th>
+                                        <td><input type="file" name="ImageUrl1" id="ImageUrl1" /></td>
+                                        <td class="must3">20.00元一次（3张以内只收一次）</td>
+                                    </tr>
+                                    <tr>
+                                        <th>图片评价2</th>
+                                        <td><input type="file" name="ImageUrl2" id="ImageUrl2" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>图片评价3</th>
+                                        <td><input type="file" name="ImageUrl3" id="ImageUrl3" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <button id="send" class="form-control btn btn-primary">提交修改</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#set_feedback_review").click(function () {
+            $(".feedback").fadeIn();
+            $(".review").fadeIn();
+        });
+        $("#set_feedback").click(function () {
+            $(".feedback").fadeIn();
+            $(".review").fadeOut();
+        });
+        $("#set_review").click(function () {
+            $(".feedback").fadeOut();
+            $(".review").fadeIn();
+        });
+        $("#set_order").click(function () {
+            $(".feedback").fadeOut();
+            $(".review").fadeOut();
+        });
+        $("#select-fbm").change(function () {
+            document.getElementById("FeedBackContent").value = $("#select-fbm").val();
+        });
+        $("#send").click(function () {
+            //获取复选框里的所有值
+            var aa = document.getElementsByName("NextOrToday");
+            var nextortoday = "";
+            for (var i = 0; i < aa.length;i++)
+            {
+                if(aa[i].checked){
+                    nextortoday = aa[i].value + nextortoday;
+                }
+
+            }
+            var url = "/Manage/EditOrder";
+            var params = {
+                "id":$("#id").val(),
+                "Rate": $("input[name='Rate']:checked").val(),
+                "FindType": $("input[name='FindType']:checked").val(),
+                "GoodsUrl": $("#GoodsUrl").val(),
+                "ShopName": $("#ShopName").val(),
+                "GoodsCost": $("#GoodsCost").val(),
+                "Freight": $("#Freight").val(),
+                "OrderType": $("input[name='OrderType']:checked").val(),
+                "NextOrToday":nextortoday,
+                "AvoidWeekend": $("input[name='AvoidWeekend']:checked").val(),
+                "Extension": $("input[name='Extension']:checked").val(),
+                "CommentTime": $("#CommentTime").val(),
+                "Address": $("#Address").val(),
+                "FeedBackStar": $("input[name=FeedBackStar]:checked").val(),
+                "FeedBackContent": $("#FeedBackContent").val(),
+                "ReviewStar": $("input[name='ReviewStar']:checked").val(),
+                "ReviewContent": $("#ReviewContent").val(),
+                "ReviewTitle": $("#ReviewTitle").val(),
+                "Times": $("#Times").val(),
+                "Note": $("#Note").val(),
+            }
+            if ($("input[name='Rate']:checked").val()==null) {
+                alert("汇率不能为空，请选择！");
+            }
+            else if ($("input[name='FindType']:checked").val()==null)
+                {
+                alert("进入店铺方式不能为空！");
+            }
+            else if ($("#GoodsUrl").val()=="")
+                {
+                alert("商品地址不能为空！");
+            }
+            else if ($("#GoodsCost").val() == "") {
+                alert("商品价格不能为空！");
+            }
+            else if ($("#Freight").val() == "") {
+                alert("运费不能为空！");
+            }
+            else if ($("#Times").val()=="") {
+                alert("请输入产品的单数！");
+            }
+            else {
+        $.post(url, params, function (data) {
+            if (data == "success") {
+                alert("提交成功");
+                window.location.href = "/Manage/OrderDetails/";
+            }
+            else {
+                alert("提交失败");
+            }
+
+        });
+
+    }
+        });
+    });
+</script>
+
+
