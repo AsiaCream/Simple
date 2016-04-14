@@ -9,7 +9,6 @@ using Microsoft.AspNet.Authorization;
 using Simple.Models;
 
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Simple.Controllers
 {
@@ -79,11 +78,19 @@ namespace Simple.Controllers
         [HttpPost]
         public async Task <IActionResult> Register(string username,string password,string name,string answer,string question,int qq)
         {
-            var user = new User { UserName = username, Name=name,Answer = answer, Question = question, QQ = qq,Level=1,RegisterTime=DateTime.Now };
-            await userManager.CreateAsync(user,password);
-            await userManager.AddToRoleAsync(user, "普通用户");
-            DB.SaveChanges();
-            return Content("success");
+            var olduser = DB.Users.Where(x => x.UserName == username).SingleOrDefault();
+            if(olduser!=null)
+            {
+                return Content("error");
+            }
+            else{
+                var user = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = 1, RegisterTime = DateTime.Now };
+                await userManager.CreateAsync(user, password);
+                await userManager.AddToRoleAsync(user, "普通用户");
+                DB.SaveChanges();
+                return Content("success");
+            }
+            
         }
         [Authorize(Roles =("系统管理员"))]
         [HttpGet]
