@@ -3,55 +3,129 @@
     Layout = null;
     //用户搜索结果
 }
-<p>搜索结果如下所示：</p>
-<table class="table table-hover">
-    <tr style="background-color:rgb(60,141,188);">
-        <th>序号</th>
-        <th>订单编号</th>
-        <th>国家</th>
-        <th>店铺名</th>
-        <th>链接</th>
-        <th>地址</th>
-        <th>类型</th>
-        <th>隔天下单/首天</th>
-        <th>价格</th>
-        <th>运费</th>
-        <th>总计</th>
-        <th>RMB总计</th>
-        <th>手续费</th>
-        <th>支付金额</th>
-        <th>Amazon单号</th>
-        <th>FeedBack</th>
-        <th>Review</th>
-        <th>是否审核</th>
-        <th>操作</th>
-        <th>单数</th>
-    </tr>
-    <tr>
+    <p>Ebay搜索结果如下所示：</p>
+    <table class="table table-hover">
+        <tr style="background-color:rgb(60,141,188);">
+            <th>序号</th>
+            <th>订单编号</th>
+            <th>国家</th>
+            <th>店铺名</th>
+            <th>链接</th>
+            <th>地址</th>
+            <th>类型</th>
+            <th>隔天下单/首天</th>
+            <th>价格</th>
+            <th>运费</th>
+            <th>总计</th>
+            <th>RMB总计</th>
+            <th>手续费</th>
+            <th>支付金额</th>
+            <th>Amazon单号</th>
+            <th>FeedBack</th>
+            <th>Review</th>
+            <th>是否审核</th>
+            <th>操作</th>
+            <th>单数</th>
+        </tr>
         @foreach (var x in Model)
         {
-        <tr>
-            <td>@x.Id</td>
-            <td>@x.PreOrderNumber</td>
-            <td>@x.Country</td>
-            <td>@x.ShopName</td>
-            <td><a href="@x.GoodsUrl" title="@x.GoodsUrl" target="_blank">查看</a></td>
-            <td><a href="#" title="@x.Address">查看</a></td>
-            <td>@x.OrderType</td>
-            <td>@x.NextOrToday</td>
-            <td>@x.GoodsCost</td>
-            <td>@x.Freight</td>
-            <td>@x.Total</td>
-            <td>@x.RMB</td>
-            <td>@x.Poundage</td>
-            <td>@x.PayTotal</td>
-            <td>@x.TrueOrderNumber</td>
-            <td><a href="#" title="@x.FeedBackContent" id="fb_text">复制</a></td>
-            <td><a href="#" title="@x.ReviewContent" id="rew_text">复制</a></td>
-            <td>@x.Draw</td>
-            <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
-            <td>@x.Times</td>
-        </tr>
+            <tr id="table-tr-@x.Id">
+                <td>@x.Id</td>
+                <td>@x.PreOrderNumber</td>
+                <td>@x.Country</td>
+                <td>@x.ShopName</td>
+                <td><a href="@x.GoodsUrl" title="@x.GoodsUrl" target="_blank">查看</a></td>
+                <td><a href="#" title="@x.Address">查看</a></td>
+                <td>@x.OrderType</td>
+                <td>@x.NextOrToday</td>
+                <td>@x.GoodsCost</td>
+                <td>@x.Freight</td>
+                <td>@x.Total</td>
+                <td>@x.RMB</td>
+                <td>@x.Poundage</td>
+                <td>@x.PayTotal</td>
+                <td>@x.TrueOrderNumber</td>
+                <td><a href="#" title="@x.FeedBackContent" id="fb_text">复制</a></td>
+                <td><a href="#" title="@x.ReviewContent" id="rew_text">复制</a></td>
+                <td>@x.Draw</td>
+                <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="Remove(@x.Id)">删除</a> </td>
+                <td>@x.Times</td>
+            </tr>
         }
-</table>
+    </table>
+
+@if (ViewBag.HelpfulOrder != null)
+{
+    <p>Helpful订单搜索如下所示</p>
+    <table class="table table-responsive table-stripted table-hover" style="background-color:white;">
+        <thead>
+            <tr style="background-color:rgb(60,141,188);">
+                <th>序号</th>
+                <th>订单编号</th>
+                <th>发布时间</th>
+                <th>国家</th>
+                <th>Review标题</th>
+                <th>链接</th>
+                <th>类型</th>
+                <th>是否收藏(Add to Wish List)</th>
+                <th>是否审核</th>
+                <th>审核时间</th>
+                <th>单数</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="table-htr-@ViewBag.HelpfulOrder.Id">
+                <td>@ViewBag.HelpfulOrder.Id</td>
+                <td>@ViewBag.HelpfulOrder.OrderNumber</td>
+                <td>@ViewBag.HelpfulOrder.PostTime</td>
+                <td>@ViewBag.HelpfulOrder.Country</td>
+                <td><a href="#">查看</a></td>
+                <td><a href="#">查看</a></td>
+                <td>@ViewBag.HelpfulOrder.HelpfulType</td>
+                <td>@ViewBag.HelpfulOrder.IsCollection</td>
+                <td>@ViewBag.HelpfulOrder.Draw</td>
+                <td>@ViewBag.HelpfulOrder.DrawTime</td>
+                <td>@ViewBag.HelpfulOrder.Times</td>
+                <td><a href="javascript:void(0)" onclick="RemoveHelpful(@ViewBag.HelpfulOrder.Id)">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+}
+<script type="text/javascript">
+    function Remove(id) {
+        var jug = confirm("确认删除吗？");
+        if (jug == true) {
+            var url="/Manage/DeleteOrder";
+            var params={"id":id};
+            $.post(url, params, function (data) {
+                if(data=="success")
+                {
+                    $("#table-tr-" + id).Remove();
+                    alert("删除成功");
+                }
+                else {
+                    alert("删除失败");
+                }
+            });
+        }
+    }
+    function RemoveHelpful(id) {
+        var jug = confirm("确认删除吗？");
+        if (jug == true) {
+            var url = "/Manage/DeleteHelpfulOrder";
+            var params = { "id": id };
+            $.post(url, params, function (data) {
+                if (data == "success") {
+                    $("#table-htr-" + id).Remove();
+                    alert("删除成功");
+                }
+                else {
+                    alert("删除失败");
+                }
+            });
+        }
+    }
+</script>
 
