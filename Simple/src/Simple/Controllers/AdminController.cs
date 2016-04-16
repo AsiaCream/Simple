@@ -204,10 +204,6 @@ namespace Simple.Controllers
             ViewBag.totalRecord = orderCount;
             return View();
         }
-
-
-
-
         #region Helpful审核方法
         /// <summary>
         /// 审核通过
@@ -249,6 +245,14 @@ namespace Simple.Controllers
                 .Where(x => x.Id == id)
                 .SingleOrDefault();
             return View(ret);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MemberShop()
+        {
+            var Shop = (await userManager.GetUsersInRoleAsync("普通用户")).Count();
+            ViewBag.totalRecord = Shop;
+            return View();
         }
     }
 }

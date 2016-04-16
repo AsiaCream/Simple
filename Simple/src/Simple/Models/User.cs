@@ -19,5 +19,6 @@ namespace Simple.Models
 
         public virtual ICollection<PreOrder> PreOrders { get; set; } = new List<PreOrder>();
         public virtual ICollection<HelpfulPreOrder> HelpfulPreOrders { get; set; } = new List<HelpfulPreOrder>();
+        public virtual ICollection<ShopOrder> ShopOrders { get; set; } = new List<ShopOrder>();
     }
 }

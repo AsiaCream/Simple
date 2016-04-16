@@ -362,6 +362,12 @@ namespace Simple.Controllers
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
+        [HttpGet]
+        public async Task<IActionResult> LoadMemberShop(int page)
+        {
+            var users = (await userManager.GetUsersInRoleAsync("普通用户")).ToList();
+            return View(users);
+        }
 
         #endregion
 

@@ -1,0 +1,65 @@
+﻿<div>
+    <section>
+        <!--管理员查看会员店铺列表-->
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">会员店铺列表</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-responsive table-stripted table-hover" style="background-color:white;">
+                            <thead>
+                                <tr class="table-title">
+                                    <th>店铺名</th>
+                                    <th>会员名</th>
+                                    <th>会员帐号</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shopname-list"></tbody>
+                        </table>
+                        <p>
+                            <button id="btn-prev" class="btn btn-primary">上一页</button>
+                            <button id="btn-next" class="btn btn-primary">下一页</button>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    var p = 0;
+    var totalRecord=@ViewBag.totalRecord;
+    var totalPage=(totalRecord+10-1)/10;
+    function load() {
+        $.get("/Pager/LoadMemberShop", {
+            page:p
+        }, function (html) {
+            $("#shopname-list").html(html);
+
+        });
+
+    }
+    $("#btn-prev").click(function () {
+        p--;
+        if (p < 0)
+            p = 0;
+        load();
+    });
+    $("#btn-next").click(function () {
+        p++;
+        if (p >totalPage-1)
+            p = 0;
+            load();
+    });
+    $(document).ready(function () {
+        load();
+    });
+</script>
+
+
