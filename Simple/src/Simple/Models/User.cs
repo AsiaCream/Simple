@@ -16,5 +16,8 @@ namespace Simple.Models
         public string Answer { get; set; }//找回答案
         public int Level { get; set; } //会员等级
         public DateTime RegisterTime { get; set; }//注册时间
+
+        public virtual ICollection<PreOrder> PreOrders { get; set; } = new List<PreOrder>();
+        public virtual ICollection<HelpfulPreOrder> HelpfulPreOrders { get; set; } = new List<HelpfulPreOrder>();
     }
 }
