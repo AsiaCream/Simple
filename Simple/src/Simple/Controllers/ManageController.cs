@@ -296,6 +296,23 @@ namespace Simple.Controllers
                 return Content("success");
             }
         }
+        [HttpPost]
+        public IActionResult DeleteOrder(int id)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (order == null)
+            {
+                return Content("error");
+            }
+            else
+            {
+                DB.PreOrders.Remove(order);
+                DB.SaveChanges();
+                return Content("success");
+            }
+        }
         #region 用户订单页面管理
         [HttpGet] //所有订单
         public IActionResult AllOrders()
