@@ -301,5 +301,38 @@ namespace Simple.Controllers
                 return Content("success");
             }
         }
+        [Authorize(Roles =("系统管理员"))]
+        [HttpPost]
+        public IActionResult AdminSearch(string key)
+        {
+            var orders = DB.PreOrders
+               .Where(x => x.PreOrderNumber == key || x.ShopName.Contains(key) || x.TrueOrderNumber == key)
+               .Count();
+            var helpful = DB.HelpfulPreOrders
+                .Where(x => x.OrderNumber == key)
+                .SingleOrDefault();
+            if (orders == 0 && helpful == null)
+            {
+                return Content("error");
+            }
+            else
+            {
+                return Content("success");
+            }
+        }
+        [HttpGet]
+        public IActionResult AdminSearchResult(string key)
+        {
+            var orders = DB.PreOrders
+                .Where(x => x.PreOrderNumber == key || x.ShopName.Contains(key) || x.TrueOrderNumber == key)
+                .OrderBy(x => x.PostTime)
+                .ToList();
+            var helpful = DB.HelpfulPreOrders
+                .Where(x => x.OrderNumber == key)
+                .SingleOrDefault();
+            ViewBag.HelpfulOrder = helpful;
+            return View(orders);
+
+        }
     }
 }
