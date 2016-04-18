@@ -259,40 +259,68 @@ namespace Simple.Controllers
             bool Extension, int CommentTime, string Address, string FeedBackStar, string FeedBackContent, 
             string ReviewStar, string ReviewContent, string ReviewTitle, int Times, string Note)
         {
-            var old = DB.PreOrders
+                var oldorder = DB.PreOrders
                 .Where(x => x.Id == id)
                 .SingleOrDefault();
-            if (old == null)
+            if (oldorder == null)
             {
                 return RedirectToAction("Error", "Home");
             }
             else
             {
+                var rate = DB.Rates
+                    .Where(x => x.Exchange == Rate)
+                    .SingleOrDefault();
+
+                oldorder.Country = rate.Country;
+                oldorder.Rate = Rate;
+                oldorder.FindType = FindType;
+                oldorder.GoodsUrl = GoodsUrl;
+                oldorder.ShopName = ShopName;
+                oldorder.GoodsCost = GoodsCost;
+                oldorder.Freight = Freight;
+                oldorder.OrderType = OrderType;
+                oldorder.NextOrToday = NextOrToday;
+                oldorder.AvoidWeekend = AvoidWeekend;
+                oldorder.Extension = Extension;
+                oldorder.CommentTime = CommentTime;
+                oldorder.Address = Address;
+                oldorder.FeedBackStar = FeedBackStar;
+                oldorder.FeedBackContent = FeedBackContent;
+                oldorder.ReviewStar = ReviewStar;
+                oldorder.ReviewContent = ReviewContent;
+                oldorder.ReviewTitle = ReviewTitle;
+                oldorder.Times = Times;
+                oldorder.Note = Note;
                 //找到之前手续费
                 var poundage = DB.Poundages
-                    .Where(x => x.PreOrderId == old.Id)
+                    .Where(x => x.PreOrderId == oldorder.Id)
                     .Single();
-                old.Rate = Rate;
-                old.FindType = FindType;
-                old.GoodsUrl = GoodsUrl;
-                old.ShopName = ShopName;
-                old.GoodsCost = GoodsCost;
-                old.Freight = Freight;
-                old.OrderType = OrderType;
-                old.NextOrToday = NextOrToday;
-                old.AvoidWeekend = AvoidWeekend;
-                old.Extension = Extension;
-                old.CommentTime = CommentTime;
-                old.Address = Address;
-                old.FeedBackStar = FeedBackStar;
-                old.FeedBackContent = FeedBackContent;
-                old.ReviewStar = ReviewStar;
-                old.ReviewContent = ReviewContent;
-                old.ReviewTitle = ReviewTitle;
-                old.Times = Times;
-                old.Note = Note;
+                var findprice = DB.FindTypes
+                    .Where(x => x.Type == FindType)
+                    .SingleOrDefault()
+                    .Price;
+                if (NextOrToday != null)
+                {
+                    oldorder.NextOrToday = NextOrToday;
+                    poundage.NextOrToday = DB.NextOrTodays
+                        .OrderByDescending(x => x.Price)
+                        .FirstOrDefault()
+                        .Price;
+                }
+                if (Address != null)
+                {
+                    poundage.AddressCost = 5.00;
+                }
+                poundage.SearchCost = findprice;
+                poundage.TotalCost = (poundage.ImageCost + poundage.OrderCost + poundage.SearchCost + poundage.AddressCost+poundage.NextOrToday)*oldorder.Times;
+                oldorder.Poundage = poundage.TotalCost;
+                oldorder.Total = (oldorder.GoodsCost + oldorder.Freight) * oldorder.Times;
+                oldorder.RMB = oldorder.Total * oldorder.Rate;
+                oldorder.PayTotal = oldorder.RMB + poundage.TotalCost;
+                oldorder.Draw = Draw.待审核;
+                
                 DB.SaveChanges();
-
                 return Content("success");
             }
         }
@@ -357,11 +385,6 @@ namespace Simple.Controllers
                 .Where(x => x.IsFinish == IsFinish.未完成)
                 .Count();
             ViewBag.totalRecord = orderCount;
-            return View();
-        }
-        [HttpGet]//用户今日订单
-        public IActionResult TodayOrder()
-        {
             return View();
         }
         [HttpGet]   //用户可撤销订单

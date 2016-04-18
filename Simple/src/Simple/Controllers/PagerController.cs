@@ -22,7 +22,7 @@ namespace Simple.Controllers
             return View(order);
         }
         [HttpGet]//用户待审核订单
-        public IActionResult LoadWaitDraw(int page)
+        public IActionResult LoadWaitDrawOrder(int page)
         {
             var order = DB.PreOrders
                 .Where(x => x.UserId == UserCurrent.Id)

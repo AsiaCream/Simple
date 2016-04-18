@@ -66,5 +66,7 @@ namespace Simple.Models
         [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual User User { get; set; }
+
+        public virtual ICollection<Poundage> Poundages { get; set; } = new List<Poundage>();
     }
 }
