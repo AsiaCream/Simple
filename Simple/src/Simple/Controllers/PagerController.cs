@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
+using Microsoft.Data.Entity;
 using Simple.Models;
-
 namespace Simple.Controllers
 {
     [Authorize]
@@ -363,10 +363,14 @@ namespace Simple.Controllers
             return View(order);
         }
         [HttpGet]
-        public async Task<IActionResult> LoadMemberShop(int page)
+        public IActionResult LoadMemberShop(int page)
         {
-            var users = (await userManager.GetUsersInRoleAsync("普通用户")).ToList();
-            return View(users);
+            var shops = DB.ShopOrders
+                .Include(x=>x.User)
+                .OrderBy(x => x.UserId)
+                .ToList(); 
+            
+            return View(shops);
         }
 
         #endregion

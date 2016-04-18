@@ -1,8 +1,16 @@
-﻿@model IEnumerable<User>
+﻿@model IEnumerable<ShopOrder>
 @{ 
     Layout = null;
 }
 @foreach(var x in Model)
 {
-
+    <tr>
+        <td>@x.Id</td>
+        <td>@x.Type</td>
+        <td>@x.Title</td>
+        <td>@x.User.Name</td>
+        <td>@x.User.UserName</td>
+        <td>@x.MaxOneDay</td>
+        <td>@x.MaxOneEvaluation</td>
+    </tr>
 }
