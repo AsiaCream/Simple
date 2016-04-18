@@ -16,7 +16,7 @@
                     <div class="col-md-12 col-sx-12">
                         <p class="infotitle">修改订单页面</p>
                         <form>
-                            <input type="hidden" value="@Model.Id" name="id" />
+                            <input type="hidden" value="@Model.Id" name="id" id="orderid" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
@@ -74,7 +74,7 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*隔天下单/首天</th>
-                                        <td><input type="checkbox" name="NextOrToday" value="@Model.NextOrToday" />@Model.NextOrToday</td>
+                                        <td><input type="checkbox" name="NextOrToday" value="@Model.NextOrToday" checked="checked" />@Model.NextOrToday</td>
                                         @foreach (NextOrToday x in ViewBag.NextOrToday)
                                         {
                                             <td><input type="checkbox" name="NextOrToday" value="@x.Type" />@x.Type</td>
@@ -217,7 +217,7 @@
             }
             var url = "/Manage/EditOrder";
             var params = {
-                "id":$("#id").val(),
+                "id":$("#orderid").val(),
                 "Rate": $("input[name='Rate']:checked").val(),
                 "FindType": $("input[name='FindType']:checked").val(),
                 "GoodsUrl": $("#GoodsUrl").val(),
@@ -262,7 +262,7 @@
         $.post(url, params, function (data) {
             if (data == "success") {
                 alert("提交成功");
-                window.location.href = "/Manage/OrderDetails/";
+                window.location.href = "/Manage/WaitDrawOrders/";
             }
             else {
                 alert("提交失败");
