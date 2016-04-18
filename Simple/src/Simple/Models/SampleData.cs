@@ -50,7 +50,7 @@ namespace Simple.Models
 
                 //初始化进入店铺方式及对应价格
                 db.FindTypes.Add(new FindType { Type = "链接进入",Price=0.00,Note="", });
-                db.FindTypes.Add(new FindType { Type = "搜索进入",Price=2.00,Note="以搜索方式进入，加收10.00元手续费"});
+                db.FindTypes.Add(new FindType { Type = "搜索进入",Price=10.00,Note="以搜索方式进入，加收10.00元手续费"});
 
                 //初始化汇率以及对应国家
                 db.Rates.Add(new Rate { Country = "美", Exchange = 6.6 });
