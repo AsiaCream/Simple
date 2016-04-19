@@ -14,7 +14,7 @@ namespace Simple.Models
         public int? QQ { get; set; }//QQ
         public string Question{ get; set; }//找回问题
         public string Answer { get; set; }//找回答案
-        public int Level { get; set; } //会员等级
+        public string Level { get; set; } //会员等级
         public DateTime RegisterTime { get; set; }//注册时间
 
         public virtual ICollection<PreOrder> PreOrders { get; set; } = new List<PreOrder>();

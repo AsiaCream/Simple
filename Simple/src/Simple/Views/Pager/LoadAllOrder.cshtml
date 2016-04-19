@@ -25,7 +25,7 @@
         <td><a href="#" title="@x.FeedBackContent" id="fb_text" >复制</a></td>
         <td><a href="#" title="@x.ReviewContent" id="rew_text" >复制</a></td>
         <td>@x.Draw</td>
-        <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="Delete(@x.Id)">删除</a> </td>
+        <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id" class="btn btn-info">编辑</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="Delete(@x.Id)" class="btn btn-danger">删除</a><a asp-action="OrderDetails" asp-controller="Manage" asp-route-id="@x.Id" class="btn btn-primary">详细</a></td>
         <td>@x.Times</td>
     </tr>
     }

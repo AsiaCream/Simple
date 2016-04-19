@@ -12,6 +12,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/bootstrapValidator.min.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -32,30 +33,33 @@
     <div class="register-box" style="box-shadow:-20px -20px 20px RGB(54,127,169);margin-top:40px;">
         <div class="register-box-body">
             <p class="login-box-msg">注册成为会员加入我们</p>
-            <form>
+            <form id="frmRegister">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <label>用户名：</label>
+                    <input type="text" class="form-control" name="username" id="username">
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="昵称">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <label>昵称：</label>
+                    <input type="text" class="form-control" name="name" id="name">
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="密码">
-                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    <label>密码：</label>
+                    <input type="password" class="form-control" id="password" name="password">
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" id="confirmpassword" placeholder="重复密码">
-                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    <label>确认密码：</label>
+                    <input type="password" class="form-control" id="confirmpassword" >
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="邮箱">
+                    <label>邮箱：</label>
+                    <input type="email" class="form-control" name="email" id="email">
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="qq" id="qq" placeholder="QQ">
+                    <label>QQ号：</label>
+                    <input type="text" class="form-control" name="qq" id="qq">
                 </div>
                 <div class="form-group has-feedback">
+                    <label>找回密码问题：</label>
                     <select name="question" id="question" class="form-control" >
                         <option>我父亲的名字？</option>
                         <option>我初中班主任的名字？</option>
@@ -67,7 +71,8 @@
                     </select>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="answer" id="answer" placeholder="问题答案">
+                    <label>问题答案：</label>
+                    <input type="text" class="form-control" name="answer" id="answer">
                 </div>
             </form>
             <button id="sendBtn" class="btn btn-primary btn-block btn-flat form-control">注册</button>
@@ -80,31 +85,137 @@
     <script src="~/js/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="~/js/bootstrap.min.js"></script>
-    <!-- iCheck -->
-    <script src="~/js/icheck.min.js"></script>
+    <script src="~/js/bootstrapValidator.min.js"></script>
     <script>
-      $(function () {
-        $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
-        });
+        $(function () {
+            $('#frmRegister').bootstrapValidator({
+                message: '表单还没有验证',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    username: {
+                        message: '用户名未验证',
+                        validators: {
+                            notEmpty: {
+                                message: '用户名不能为空'
+                            },
+                            stringLength: {
+                                min: 5,
+                                max: 10,
+                                message: '用户名长度要求在5到10位'
+                            },
+                            callback: {
+                                message: '用户名' + $("#username").val() + '重复',
+                                callback: function (value, validator) {
+                                    value=
+
+                                }
+
+                            }
+                        }
+                    },
+                    name: {
+                        message: '昵称还未验证',
+                        validators: {
+                            notEmpty: {
+                                message: '昵称不能为空'
+                            },
+                            stringLength: {
+                                min: 4,
+                                max: 7,
+                                message: '用户名长度要求在4到7位'
+                            },
+                        }
+                    },
+                    password: {
+                        message: '密码还没有验证',
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 16,
+                                message: '用户名长度要求在6到16位'
+                            },
+                            regexp: {
+                                regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
+                                message: '密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
+                            },
+                            different: {
+                                field: 'username',
+                                message: '密码不能和用户名相同'
+                            }
+                        }
+                    },
+                    confrmpassword: {
+                        validators: {
+                            notEmpty: {
+                                message: '确认密码不能为空'
+                            },
+                            Compare : {
+                                password: 'password',
+                                opearteor:"!=",
+                                message: '两次输入密码不一致'
+                            }
+                        }
+                    },
+                    email: {
+                        validators: {
+                            notEmpty: {
+                                message: '邮箱不能为空'
+                            },
+                            emailAddress: {
+                                message: '请输入正确的邮箱地址'
+                            }
+                        }
+                    },
+                    qq: {
+                        validators: {
+                            notEmpty: {
+                                message: 'QQ不能为空'
+                            },
+                            regexp: {
+                                regexp: /^\d{6,10}$ /,
+                                message: 'QQ号是5到13位之间的数字'
+                            }
+                        }
+                    },
+                    answer: {
+                        validators: {
+                            notEmpty: {
+                                message: '问题答案不能为空'
+                            },
+                            regexp: {
+                                regexp: /^[\u4E00-\u9FA5]+$/,
+                                message: '请输入正确的问题答案',
+
+                            }
+
+                        }
+
+                    }
+
+
+                }
+            });
+
         $("#sendBtn").click(function () {
-            var confrmpassword = $("#confirmpassword").val();
-            var password = $("#password").val();
-            var username=$("#username").val();
-            var name=$("#name").val();
-            var email=$("#email").val();
-            var qq=$("#qq").val();
-            var question=$("#question").val();
-            var answer=$("#answer").val();
             if (password != confrmpassword) {
                 alert("两次输入密码不一致，请检查!");
             }
-           else if (answer == "") {
-                alert("问题答案不能为空");
-            }
             else {
+                var confrmpassword = $("#confirmpassword").val();
+                var password = $("#password").val();
+                var username = $("#username").val();
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var qq = $("#qq").val();
+                var question = $("#question").val();
+                var answer = $("#answer").val();
                 var url = "/Account/Register";
                 var parmas = { "username": username, "name": name, "password": password, "email": email, "qq": qq, "question": question, "answer": answer };
                 $.post(url, parmas, function (data) {

@@ -126,7 +126,7 @@
                     @if (User.IsInRole("普通用户"))
                     {
                         <li class="header" style="color:white;">用户平台</li>
-                                            <li class="treeview">
+                                            <li class="active treeview">
                                                 <a href="#">
                                                     <i class="fa fa-files-o"></i> <span>订单管理</span>
                                                     <i class="fa fa-angle-left pull-right"></i>
@@ -185,28 +185,7 @@
                     @if (User.IsInRole("系统管理员"))
                     {
                         <li class="header" style="color:white;">系统管理平台</li>
-                                            <li class="treeview">
-                                                <a href="#">
-                                                    <i class="fa fa-cogs"></i>
-                                                    <span>系统设置管理</span>
-                                                    <i class="fa fa-angle-left pull-right"></i>
-                                                </a>
-                                                <ul class="treeview-menu">
-                                                    <li><a asp-action="BaseInformation" asp-controller="System"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
-                                                    <li><a asp-action="PlatType" asp-controller="System"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
-                                                    <li><a asp-action="MemberLevel" asp-controller="System"><i class="fa fa-circle-o"></i> 会员等级</a></li>
-                                                    <li><a asp-action="Rate" asp-controller="System"><i class="fa fa-circle-o"></i> 汇率更新配置</a></li>
-                                                    <li><a asp-action="JoinShopType" asp-controller="System"><i class="fa fa-circle-o"></i> 进入店铺方式</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 订单类型及其属性管理</a></li>
-                                                    <li><a asp-action="NextOrToday" asp-controller="System"><i class="fa fa-circle-o"></i> 隔天下单/首天属性管理</a></li>
-                                                    <li><a asp-action="CommentTime" asp-controller="System"><i class="fa fa-circle-o"></i> Ebay评价时间管理</a></li>
-                                                    <li><a asp-action="HelpfulPrice" asp-controller="System"><i class="fa fa-circle-o"></i> Helpful一单费用设置管理</a></li>
-                                                    <li><a asp-action="Extension" asp-controller="System"><i class="fa fa-circle-o"></i> 推广设置</a></li>
-                                                    <li><a asp-action="FeedBackStar"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>
-                                                    <li><a asp-action="FeedBackModel" asp-controller="System"><i class="fa fa-circle-o"></i> FeedBack模板</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="treeview">
+                                            <li class="active treeview">
                                                 <a href="#">
                                                     <i class="fa fa-files-o"></i>
                                                     <span>Ebay订单管理</span>
@@ -248,7 +227,7 @@
                                                 <ul class="treeview-menu">
                                                     <li><a asp-action="Member" asp-controller="Account"><i class="fa fa-circle-o"></i> 会员信息</a></li>
                                                     <li><a asp-action="MemberShop" asp-controller="Admin"><i class="fa fa-circle-o"></i> 会员店铺查看</a></li>
-                                                    <li><a asp-action="MemberGoods" asp-controller="Admin"><i class="fa fa-circle-o"></i> 会员商品查看</a></li>
+                                                    @*<li><a asp-action="MemberGoods" asp-controller="Admin"><i class="fa fa-circle-o"></i> 会员商品查看</a></li>*@
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -278,13 +257,36 @@
                                                     <li><a href="#"><i class="fa fa-circle-o"></i> 人员刷单列表</a></li>
                                                 </ul>
                                             </li>
-
+                                            <li class="treeview">
+                                                <a href="#">
+                                                    <i class="fa fa-cogs"></i>
+                                                    <span>系统设置管理</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </a>
+                                                <ul class="treeview-menu">
+                                                    <li><a asp-action="BaseInformation" asp-controller="System"><i class="fa fa-circle-o"></i>系统基本信息配置</a></li>
+                                                    <li><a asp-action="PlatType" asp-controller="System"><i class="fa fa-circle-o"></i> 平台分类管理</a></li>
+                                                    <li><a asp-action="MemberLevel" asp-controller="System"><i class="fa fa-circle-o"></i> 会员等级</a></li>
+                                                    <li><a asp-action="Rate" asp-controller="System"><i class="fa fa-circle-o"></i> 汇率更新配置</a></li>
+                                                    <li><a asp-action="JoinShopType" asp-controller="System"><i class="fa fa-circle-o"></i> 进入店铺方式</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> 订单类型及其属性管理</a></li>
+                                                    <li><a asp-action="NextOrToday" asp-controller="System"><i class="fa fa-circle-o"></i> 隔天下单/首天属性管理</a></li>
+                                                    <li><a asp-action="CommentTime" asp-controller="System"><i class="fa fa-circle-o"></i> Ebay评价时间管理</a></li>
+                                                    <li><a asp-action="HelpfulPrice" asp-controller="System"><i class="fa fa-circle-o"></i> Helpful一单费用设置管理</a></li>
+                                                    @*<li><a asp-action="Extension" asp-controller="System"><i class="fa fa-circle-o"></i> 推广设置</a></li>*@
+                                                    @*<li><a asp-action="FeedBackStar"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>*@
+                                                    <li><a asp-action="FeedBackModel" asp-controller="System"><i class="fa fa-circle-o"></i> FeedBack模板</a></li>
+                                                </ul>
+                                            </li>
                     }
                 </ul>
             </section>
             <!-- /.sidebar -->
         </aside>
     <div>
+        <div id="web-page">
+
+        </div>
         @RenderBody()
     </div>
 
