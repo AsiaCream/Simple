@@ -127,6 +127,56 @@ namespace Simple.Controllers
             if (order != null)
             {
                 order.State = State.锁定;
+                order.StarTime = DateTime.Now;
+                DB.SaveChanges();
+                return Content("success");
+            }
+            else
+            {
+                return Content("error");
+            }
+        }
+        [HttpPost]//完成方法/用户升级
+        public IActionResult Finish(int id)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+                if (order != null)
+            {
+                var user = DB.Users
+                   .Where(x => x.Id == order.UserId)
+                   .SingleOrDefault();
+                var HelpfulFinish = DB.HelpfulPreOrders
+                    .Where(x => x.UserId == order.UserId)
+                    .Where(x => x.IsFinish == IsFinish.已完成)
+                    .Where(x => x.IsPayFor == IsPayFor.已支付)
+                    .Where(x => x.Draw == Draw.通过)
+                    .Where(x => x.State == State.锁定)
+                    .Count();
+                var OrderFinish = DB.PreOrders
+                    .Where(x => x.UserId == order.UserId)
+                    .Where(x => x.IsFinish == IsFinish.已完成)
+                    .Where(x => x.IsPayfor == IsPayFor.已支付)
+                    .Where(x => x.Draw == Draw.通过)
+                    .Where(x => x.State == State.锁定)
+                    .Count();
+                var lv = DB.MemberLevels
+                    .OrderByDescending(x => x.Level)
+                    .ToList();
+                foreach (var x in lv)
+                {
+                    if (HelpfulFinish > x.HelpfulMin && HelpfulFinish < x.HelpfulMax && OrderFinish > x.OrderMin && OrderFinish < x.OrderMax)
+                    {
+                        user.Level = x.Level;
+                    }
+                }
+                order.IsFinish = IsFinish.已完成;
+                order.FinishTime = DateTime.Now;
                 DB.SaveChanges();
                 return Content("success");
             }
@@ -278,6 +328,57 @@ namespace Simple.Controllers
             if (helpfulorder != null)
             {
                 helpfulorder.State = State.锁定;
+                helpfulorder.StartTime = DateTime.Now;
+                DB.SaveChanges();
+                return Content("success");
+            }
+            else
+            {
+                return Content("error");
+            }
+        }
+        [HttpPost]//完成方法/用户升级
+        public IActionResult HelpfulFinish(int id)
+        {
+            var order = DB.HelpfulPreOrders
+                .Where(x => x.IsFinish == IsFinish.未完成)
+                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.Draw == Draw.通过)
+                .Where(x => x.State == State.锁定)
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (order != null)
+            {
+                var user = DB.Users
+                    .Where(x => x.Id == order.UserId)
+                    .SingleOrDefault();
+                var HelpfulFinish = DB.HelpfulPreOrders
+                    .Where(x=>x.UserId==order.UserId)
+                    .Where(x => x.IsFinish == IsFinish.已完成)
+                    .Where(x => x.IsPayFor == IsPayFor.已支付)
+                    .Where(x => x.Draw == Draw.通过)
+                    .Where(x => x.State == State.锁定)
+                    .Count();
+                var OrderFinish = DB.PreOrders
+                    .Where(x => x.UserId == order.UserId)
+                    .Where(x => x.IsFinish == IsFinish.已完成)
+                    .Where(x => x.IsPayfor == IsPayFor.已支付)
+                    .Where(x => x.Draw == Draw.通过)
+                    .Where(x => x.State == State.锁定)
+                    .Count();
+                var lv = DB.MemberLevels
+                    .OrderByDescending(x => x.Level)
+                    .ToList();
+                foreach(var x in lv)
+                {
+                    if (HelpfulFinish > x.HelpfulMin && HelpfulFinish<x.HelpfulMax&&OrderFinish>x.OrderMin&&OrderFinish<x.OrderMax)
+                    {
+                        user.Level = x.Level;
+                    }
+                }
+                
+                order.IsFinish = IsFinish.已完成;
+                order.FinishTime = DateTime.Now;
                 DB.SaveChanges();
                 return Content("success");
             }
