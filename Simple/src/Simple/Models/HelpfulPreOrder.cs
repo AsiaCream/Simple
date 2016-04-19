@@ -48,6 +48,8 @@ namespace Simple.Models
         public double PayFor { get; set; }//需要支付金额
         public DateTime PostTime { get; set; }//提交时间
         public DateTime DrawTime { get; set; }//审核时间
+        public DateTime StartTime { get; set; }//开始时间
+        public DateTime FinishTime { get; set; }//结束时间
 
         public State State { get; set; } //是否锁定
         public Draw Draw { get; set; }//是否审核
