@@ -324,7 +324,27 @@ namespace Simple.Controllers
                 return Content("success");
             }
         }
-        [HttpPost]
+        [HttpGet]
+        public IActionResult OrderDetails(int id)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (order != null)
+            {
+                var plat = DB.ShopOrders
+                    .Where(x => x.UserId == order.UserId)
+                    .Where(x=>x.Title==order.ShopName)
+                    .SingleOrDefault();
+                ViewBag.Plat = plat.Type;
+                return View(order);
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpPost]//删除订单
         public IActionResult DeleteOrder(int id)
         {
             var order = DB.PreOrders
