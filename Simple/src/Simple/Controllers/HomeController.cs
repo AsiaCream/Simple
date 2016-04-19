@@ -334,5 +334,20 @@ namespace Simple.Controllers
             return View(orders);
 
         }
+        [HttpPost]
+        public IActionResult CompareUserName(string username)
+        {
+            var old = DB.Users
+                .Where(x => x.UserName == username)
+                .SingleOrDefault();
+            if (old != null)
+            {
+                return Content("存在");
+            }
+            else
+            {
+                return Content("error");
+            }
+        }
     }
 }
