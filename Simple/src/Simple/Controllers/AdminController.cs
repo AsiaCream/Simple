@@ -92,6 +92,26 @@ namespace Simple.Controllers
             ViewBag.totalRecord = orderCount;
             return View();
         }
+        [HttpGet]//Order详细
+        public IActionResult OrderDetails(int id)
+        {
+            var order = DB.PreOrders
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (order != null)
+            {
+                var plat = DB.ShopOrders
+                    .Where(x => x.UserId == order.UserId)
+                    .Where(x => x.Title == order.ShopName)
+                    .SingleOrDefault();
+                ViewBag.Plat = plat.Type;
+                return View(order);
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
         [HttpPost]//通过审核
         public IActionResult OrderPass(int id)
         {
