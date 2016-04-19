@@ -24,8 +24,8 @@
         <th>FeedBack</th>
         <th>Review</th>
         <th>是否审核</th>
-        <th>操作</th>
         <th>单数</th>
+        <th>操作</th>
     </tr>
     @foreach (var x in Model)
     {
@@ -48,8 +48,8 @@
             <td><a href="#" title="@x.FeedBackContent" id="fb_text">复制</a></td>
             <td><a href="#" title="@x.ReviewContent" id="rew_text">复制</a></td>
             <td>@x.Draw</td>
-            <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="Remove(@x.Id)">删除</a> </td>
             <td>@x.Times</td>
+            <td><a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@x.Id" class="btn btn-primary">详细</a> </td>
         </tr>
     }
 </table>
@@ -87,46 +87,10 @@
                 <td>@ViewBag.HelpfulOrder.Draw</td>
                 <td>@ViewBag.HelpfulOrder.DrawTime</td>
                 <td>@ViewBag.HelpfulOrder.Times</td>
-                <td><a href="javascript:void(0)" onclick="RemoveHelpful(@ViewBag.HelpfulOrder.Id)">删除</a></td>
+                <td><a asp-action="HelpfulDetails" asp-controller="Admin" asp-route-id="@ViewBag.HelpfulOrder.Id">详细</a></td>
             </tr>
         </tbody>
     </table>
-
 }
-<script type="text/javascript">
-    function Remove(id) {
-        var jug = confirm("确认删除吗？");
-        if (jug == true) {
-            var url="/Manage/DeleteOrder";
-            var params={"id":id};
-            $.post(url, params, function (data) {
-                if(data=="success")
-                {
-                    $("#table-tr-" + id).Remove();
-                    alert("删除成功");
-                }
-                else {
-                    alert("删除失败");
-                }
-            });
-        }
-    }
-    function RemoveHelpful(id) {
-        var jug = confirm("确认删除吗？");
-        if (jug == true) {
-            var url = "/Manage/DeleteHelpfulOrder";
-            var params = { "id": id };
-            $.post(url, params, function (data) {
-                if (data == "success") {
-                    $("#table-htr-" + id).Remove();
-                    alert("删除成功");
-                }
-                else {
-                    alert("删除失败");
-                }
-            });
-        }
-    }
-</script>
 
 

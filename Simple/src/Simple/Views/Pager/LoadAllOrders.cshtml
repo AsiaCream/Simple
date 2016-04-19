@@ -15,7 +15,6 @@
         <td>@x.OrderType</td>
         <td>@x.GoodsCost</td>
         <td>@x.Freight</td>
-        <td>@x.Rate</td>
         <td>@x.Total</td>
         <td>@x.RMB</td>
         <td>@x.Poundage</td>
@@ -26,6 +25,7 @@
         <td>@x.Draw</td>
         <td>@x.PlatType</td>
         <td>@x.Times</td>
+        <td><a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@x.Id" class="btn btn-primary">详细</a></td>
     </tr>
 }
 

@@ -25,9 +25,10 @@
         <td>@x.Draw</td>
         <td>@x.PlatType</td>
         <td>@x.Times</td>
-        <td><a asp-action="EditOrder" asp-controller="Manage" asp-route-id="@x.Id">编辑</a>&nbsp;&nbsp;<a href="#">删除</a> </td>
+        <td><a asp-action="OrderDetails" asp-controller="Manage" asp-route-id="@x.Id" class="btn btn-primary">详细</a></td>
     </tr>
 }
+
 
 
 

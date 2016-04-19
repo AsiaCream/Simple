@@ -1,0 +1,91 @@
+﻿@model PreOrder
+<div>
+    <!--管理员查看详细用户订单信息-->
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">订单详细页 </p>
+                        <table class="table table-responsive table-stripted table-hover">
+                            <tbody>
+                                <tr>
+                                    <th class="must2">*国家</th>
+                                    <td>@Model.Country</td>
+                                    <th class="must2">汇率</th>
+                                    <td>@Model.Rate</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">进入店铺方式</th>
+                                    <td>@Model.FindType</td>
+                                    <th class="must2">*地址链接</th>
+                                    <td><a href="@Model.GoodsUrl" target="_blank" title="@Model.GoodsUrl">@Model.GoodsUrl</a></td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*店铺</th>
+                                    <td>@Model.ShopName</td>
+                                    <th class="must2">*平台</th>
+                                    <td>@ViewBag.Plat</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*产品价格</th>
+                                    <td>@Model.GoodsCost</td>
+                                    <th class="must2">*运费</th>
+                                    <td>@Model.Freight</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*订单类型</th>
+                                    <th>@Model.OrderType</th>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*隔天下单/首天下单</th>
+                                    <td>@Model.NextOrToday</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*是否避开周末</th>
+                                    <td>@Model.AvoidWeekend</td>
+                                    <th class="must2">*是否免费推广</th>
+                                    <td>@Model.Extension</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*评价时间</th>
+                                    <td>@Model.CommentTime</td>
+                                    <th class="must2">*单数</th>
+                                    <td>@Model.Times</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*收件人地址</th>
+                                    <td><textarea style="height:100px;width:250px;resize:none;" disabled="disabled">@Model.Address</textarea></td>
+                                    <th class="must2">*FeedBack内容</th>
+                                    <td><textarea style="height:100px;width:250px;resize:none;" disabled="disabled">@Model.FeedBackContent</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*FeedBack星级</th>
+                                    <td>@Model.FeedBackStar </td>
+                                    <th class="must2">*Review星级</th>
+                                    <td>@Model.ReviewStar</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review标题</th>
+                                    <td>@Model.ReviewTitle</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review内容 </th>
+                                    <td><textarea style="height:100px;width:250px;resize:none;" disabled="disabled">@Model.ReviewContent</textarea></td>
+                                    <th class="must2">*备注</th>
+                                    <td><textarea style="height:100px;width:250px;resize:none;" disabled="disabled">@Model.Note</textarea></td>
+                                </tr>
+                                <tr>
+                                    <td><a asp-action="WaitDrawOrders" asp-controller="Admin" class="form-control btn btn-primary">返回待审核订单页面</a></td>
+                                    <td><a asp-action="AllOrders" asp-controller="Admin" class="form-control btn btn-primary">查看所有订单页面</a></td>
+                                    <td><a asp-action="WaitPayOrders" asp-controller="Admin" class="form-control btn btn-primary">查看所有待支付订单</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>

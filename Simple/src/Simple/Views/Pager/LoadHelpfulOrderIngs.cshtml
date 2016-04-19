@@ -17,32 +17,6 @@
         <td>@x.DrawTime</td>
         <td>@x.PostTime</td>
         <td>@x.Times</td>
-        <td><a href="javascript:remove(@x.Id)">删除</a></td>
     </tr>
 }
-<script src="~/js/jQuery-2.1.4.min.js"></script>
-<script type="text/javascript">
-    function remove(id) {
-        var jug = confirm("确认删除吗？");
-        if (jug == true) {
-            $(function () {
-                var url = "/Manage/DeleteHelpfulOrder";
-                var params = { "id": id };
-                $.post(url, params, function (data) {
-                    if (data == "success") {
-                        $("#table-tr-"+id).remove();
-                        alert("删除成功");
-                    }
-                    else {
-                        alert("删除失败");
-                    }
-                });
-
-            });
-
-        }
-
-    }
-</script>
-
 

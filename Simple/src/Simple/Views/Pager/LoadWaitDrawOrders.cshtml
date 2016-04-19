@@ -27,7 +27,8 @@
             <td>@x.Draw</td>
             <td>@x.PlatType</td>
             <td>@x.Times</td>
-            <td><a href="javascript:pass(@x.Id)" class="btn btn-success">审核通过</a>&nbsp;&nbsp;<a href="javascript:failure(@x.Id)" class="btn btn-danger">审核不通过</a> </td>
+            <td><a href="javascript:pass(@x.Id)" class="btn btn-success">审核通过</a>&nbsp;&nbsp;<a href="javascript:failure(@x.Id)" class="btn btn-danger">审核不通过</a>
+                <a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@x.Id" class="btn btn-primary">详细</a></td>
         </tr>
     }
     <script src="~/js/jQuery-2.1.4.min.js"></script>

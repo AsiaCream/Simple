@@ -329,6 +329,7 @@ namespace Simple.Controllers
         {
             var order = DB.PreOrders
                 .Where(x => x.Id == id)
+                .Where(x=>x.UserId==UserCurrent.Id)
                 .SingleOrDefault();
             if (order != null)
             {

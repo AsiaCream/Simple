@@ -227,7 +227,7 @@
                                                 <ul class="treeview-menu">
                                                     <li><a asp-action="Member" asp-controller="Account"><i class="fa fa-circle-o"></i> 会员信息</a></li>
                                                     <li><a asp-action="MemberShop" asp-controller="Admin"><i class="fa fa-circle-o"></i> 会员店铺查看</a></li>
-                                                    @*<li><a asp-action="MemberGoods" asp-controller="Admin"><i class="fa fa-circle-o"></i> 会员商品查看</a></li>*@
+                                                    <li><a asp-action="MemberGoods" asp-controller="Admin"><i class="fa fa-circle-o"></i> 会员商品查看</a></li>
                                                 </ul>
                                             </li>
                                             <li class="treeview">
@@ -273,21 +273,19 @@
                                                     <li><a asp-action="NextOrToday" asp-controller="System"><i class="fa fa-circle-o"></i> 隔天下单/首天属性管理</a></li>
                                                     <li><a asp-action="CommentTime" asp-controller="System"><i class="fa fa-circle-o"></i> Ebay评价时间管理</a></li>
                                                     <li><a asp-action="HelpfulPrice" asp-controller="System"><i class="fa fa-circle-o"></i> Helpful一单费用设置管理</a></li>
-                                                    @*<li><a asp-action="Extension" asp-controller="System"><i class="fa fa-circle-o"></i> 推广设置</a></li>*@
-                                                    @*<li><a asp-action="FeedBackStar"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>*@
+                                                    <li><a asp-action="Extension" asp-controller="System"><i class="fa fa-circle-o"></i> 推广设置</a></li>
+                                                    <li><a asp-action="FeedBackStar"><i class="fa fa-circle-o"></i> FeedBack星级</a></li>
                                                     <li><a asp-action="FeedBackModel" asp-controller="System"><i class="fa fa-circle-o"></i> FeedBack模板</a></li>
                                                 </ul>
                                             </li>
+
                     }
                 </ul>
             </section>
             <!-- /.sidebar -->
         </aside>
     <div>
-        <div id="web-page">
-
-        </div>
-        @RenderBody()
+         @RenderBody()
     </div>
 
 
