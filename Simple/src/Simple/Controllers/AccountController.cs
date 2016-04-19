@@ -84,7 +84,7 @@ namespace Simple.Controllers
                 return Content("error");
             }
             else{
-                var user = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = 1, RegisterTime = DateTime.Now };
+                var user = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = "1", RegisterTime = DateTime.Now };
                 await userManager.CreateAsync(user, password);
                 await userManager.AddToRoleAsync(user, "普通用户");
                 DB.SaveChanges();
@@ -102,7 +102,7 @@ namespace Simple.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAdmin(string username, string password, string name, string answer, string question, int qq)
         {
-            var admin = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = 99,RegisterTime=DateTime.Now };
+            var admin = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = "99",RegisterTime=DateTime.Now };
             await userManager.CreateAsync(admin, password);
             await userManager.AddToRoleAsync(admin, "系统管理员");
             DB.SaveChanges();

@@ -26,6 +26,7 @@ namespace Simple.Models
         public DbSet<CommentTime> CommentTimes { get; set; }
         public DbSet<FeedBackModel> FeedBackModels { get; set; }
         public DbSet<FeedBackStar> FeedBackStars { get; set; } 
+        public DbSet<MemberLevel> MemberLevels { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -99,6 +100,10 @@ namespace Simple.Models
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<FeedBackStar>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<MemberLevel>(e =>
             {
                 e.HasIndex(x => x.Id);
             });
