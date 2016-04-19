@@ -1,0 +1,55 @@
+﻿@model MemberLevel
+<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">会员等级类型修改</p>
+                        <form asp-action="EditMemberLevel" asp-controller="System" method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*等级称号</th>
+                                        <td><input type="text" class="form-control" name="Level" value="@Model.Level" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Ebay订单最大值</th>
+                                        <td><input type="text" class="form-control" name="OrderMax" value="@Model.OrderMax" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Ebay订单最小值</th>
+                                        <td><input type="text" class="form-control" name="OrderMin" value="@Model.OrderMin" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Helpful最大值</th>
+                                        <td><input type="text" class="form-control" name="HelpfulMax" value="@Model.HelpfulMax" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Helpful最小值</th>
+                                        <td><input type="text" class="form-control" name="HelpfulMin" value="@Model.HelpfulMin" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="MemberLevel" asp-controller="System" class="form-control btn btn-primary">返回会员等级列表</a></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <label class="must2" style="color:gold;">特别说明</label><br />
+                        <label class="must2">会员等级请勿随意修改，以免新老用户错乱！</label>     <br />
+                        <div style="height:10px;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>
+
+
+
+
+
+

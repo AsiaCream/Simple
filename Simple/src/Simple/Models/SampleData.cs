@@ -25,14 +25,21 @@ namespace Simple.Models
                 await roleManager.CreateAsync(new IdentityRole { Name = "普通用户" });
 
                 //初始化管理员
-                var user = new User { UserName = "Admin", Email = "343224963@qq.com",Name="来自火星的你",Level=11 };
+                var user = new User { UserName = "Admin", Email = "343224963@qq.com",Name="来自火星的你",Level="99" };
                 await userManager.CreateAsync(user, "Cream2015!@#");
                 await userManager.AddToRoleAsync(user, "系统管理员");
 
                 //初始化用户
-                var guest = new User { UserName = "Guest", Email = "1173056745@qq.com", Name = "来自土星的你",Level=1 };
+                var guest = new User { UserName = "Guest", Email = "1173056745@qq.com", Name = "来自土星的你",Level="1" };
                 await userManager.CreateAsync(guest, "Cream2015!@#");
                 await userManager.AddToRoleAsync(guest, "普通用户");
+
+                //初始化用户等级
+                db.MemberLevels.Add(new MemberLevel { Level = "1", OrderMax = 2, OrderMin = 1, HelpfulMax = 2, HelpfulMin = 1 });
+                db.MemberLevels.Add(new MemberLevel { Level = "2", OrderMax = 3, OrderMin = 2, HelpfulMax = 3, HelpfulMin = 2 });
+                db.MemberLevels.Add(new MemberLevel { Level = "3", OrderMax = 4, OrderMin = 3, HelpfulMax = 4, HelpfulMin = 3 });
+                db.MemberLevels.Add(new MemberLevel { Level = "4", OrderMax = 5, OrderMin = 4, HelpfulMax = 5, HelpfulMin = 4 });
+                db.MemberLevels.Add(new MemberLevel { Level = "5", OrderMax = 6, OrderMin = 5, HelpfulMax = 6, HelpfulMin = 5 });
 
                 //初始化用户的店铺订单量设置
                 db.ShopOrders.Add (new ShopOrder {  MaxOneDay = 2, MaxOneEvaluation = 3, Title = "ABC", UserId = guest.Id,Type="Ebay" });

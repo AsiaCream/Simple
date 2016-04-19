@@ -468,6 +468,81 @@ namespace Simple.Controllers
                 DB.SaveChanges();
                 return RedirectToAction("BaseInformation", "System");
             }
+        }
+        #endregion
+        #region 会员等级管理
+        [HttpGet]//显示会员等级
+        public IActionResult MemberLevel()
+        {
+            var level = DB.MemberLevels
+                .OrderByDescending(x => x.Id)
+                .ToList();
+            return View(level);
+        }
+        [HttpGet]
+        public IActionResult CreateMemberLevel()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateMemberLevel(MemberLevel lv)
+        {
+                        DB.MemberLevels.Add(lv);
+            DB.SaveChanges();
+            return RedirectToAction("MemberLevel", "System");
+        }
+        [HttpGet]//编辑会员等级
+        public IActionResult EditMemberLevel(int id)
+        {
+            var level = DB.MemberLevels
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (level != null)
+            {
+                return View(level);
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpPost]
+        public IActionResult EditMemberLevel(int id, MemberLevel newlevel)
+        {
+            var oldlevel = DB.MemberLevels
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (oldlevel == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                oldlevel.Level = newlevel.Level;
+                oldlevel.OrderMax = newlevel.OrderMax;
+                oldlevel.OrderMin = newlevel.OrderMin;
+                oldlevel.HelpfulMax = newlevel.HelpfulMax;
+                oldlevel.HelpfulMin = newlevel.HelpfulMin;
+                DB.SaveChanges();
+                return RedirectToAction("MemberLevel", "System");
+            }
+        }
+        [HttpPost]//删除会员等级
+        public IActionResult DeleteMemberLevel(int id)
+        {
+            var level = DB.MemberLevels
+                .Where(x => x.Id == id)
+                .SingleOrDefault();
+            if (level == null)
+            {
+                return RedirectToAction("Error", "System");
+            }
+            else
+            {
+                DB.MemberLevels.Remove(level);
+                DB.SaveChanges();
+                return Content("success");
+            }
         } 
         #endregion
     }

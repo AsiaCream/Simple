@@ -1,0 +1,65 @@
+﻿<div>
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">添加会员等级</p>
+                        <form asp-action="CreateMemberLevel" asp-controller="System" method="post">
+                            <table class="table table-responsive table-stripted">
+                                <tbody>
+                                    <tr>
+                                        <th class="must2">*等级称号</th>
+                                        <td><input type="text" class="form-control" name="Level" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*订单最大值</th>
+                                        <td><input type="text" class="form-control" name="OrderMax" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*订单最小值</th>
+                                        <td><input type="text" class="form-control" name="OrderMin" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Helpful最大值</th>
+                                        <td><input type="text" class="form-control" name="HelpfulMax" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="must2">*Helpful最小值</th>
+                                        <td><input type="text" class="form-control" name="HelpfulMin" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th><a asp-action="MemberLevel" asp-controller="System" class="form-control btn btn-primary">返回会员等级列表</a></th>
+                                        <th><input type="submit" class="form-control btn btn-primary" value="添加"></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </form>
+                        <label class="must2">例子</label><br />
+                        <label class="must2">
+                            Level：1<br />
+                        </label><br />
+                        <label class="must2">
+                            Order最大值：2<br />
+                        </label><br />
+                        <label class="must2">
+                            Order最小值：1<br />
+                        </label><br />
+                        <label class="must2">
+                            Helpful最大值：2<br />
+                        </label><br />
+                        <label class="must2">
+                            Helpful最小值：1<br />
+                        </label><br />
+                        <div style="height:10px;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+
+
+
