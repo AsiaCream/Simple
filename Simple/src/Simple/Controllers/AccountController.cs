@@ -34,7 +34,7 @@ namespace Simple.Controllers
             }
             else
             {
-                return RedirectToAction("Login","Account");
+                return Content("error");
             }
         }
         #endregion

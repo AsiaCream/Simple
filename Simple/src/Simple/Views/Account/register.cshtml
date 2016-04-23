@@ -33,7 +33,7 @@
     <div class="register-box" style="box-shadow:-20px -20px 20px RGB(54,127,169);margin-top:40px;">
         <div class="register-box-body">
             <p class="login-box-msg">注册成为会员加入我们</p>
-            <form id="frmRegister">
+            <form>
                 <div class="form-group has-feedback">
                     <label>用户名：</label>
                     <input type="text" class="form-control" name="username" id="username">
@@ -88,121 +88,6 @@
     <script src="~/js/bootstrapValidator.min.js"></script>
     <script>
         $(function () {
-            $('#frmRegister').bootstrapValidator({
-                message: '表单还没有验证',
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    username: {
-                        message: '用户名未验证',
-                        validators: {
-                            notEmpty: {
-                                message: '用户名不能为空'
-                            },
-                            stringLength: {
-                                min: 5,
-                                max: 10,
-                                message: '用户名长度要求在5到10位'
-                            },
-                            callback: {
-                                message: '用户名' + $("#username").val() + '重复',
-                                callback: function (value, validator) {
-                                    value=
-
-                                }
-
-                            }
-                        }
-                    },
-                    name: {
-                        message: '昵称还未验证',
-                        validators: {
-                            notEmpty: {
-                                message: '昵称不能为空'
-                            },
-                            stringLength: {
-                                min: 4,
-                                max: 7,
-                                message: '用户名长度要求在4到7位'
-                            },
-                        }
-                    },
-                    password: {
-                        message: '密码还没有验证',
-                        validators: {
-                            notEmpty: {
-                                message: '密码不能为空'
-                            },
-                            stringLength: {
-                                min: 6,
-                                max: 16,
-                                message: '用户名长度要求在6到16位'
-                            },
-                            regexp: {
-                                regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
-                                message: '密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
-                            },
-                            different: {
-                                field: 'username',
-                                message: '密码不能和用户名相同'
-                            }
-                        }
-                    },
-                    confrmpassword: {
-                        validators: {
-                            notEmpty: {
-                                message: '确认密码不能为空'
-                            },
-                            Compare : {
-                                password: 'password',
-                                opearteor:"!=",
-                                message: '两次输入密码不一致'
-                            }
-                        }
-                    },
-                    email: {
-                        validators: {
-                            notEmpty: {
-                                message: '邮箱不能为空'
-                            },
-                            emailAddress: {
-                                message: '请输入正确的邮箱地址'
-                            }
-                        }
-                    },
-                    qq: {
-                        validators: {
-                            notEmpty: {
-                                message: 'QQ不能为空'
-                            },
-                            regexp: {
-                                regexp: /^\d{6,10}$ /,
-                                message: 'QQ号是5到13位之间的数字'
-                            }
-                        }
-                    },
-                    answer: {
-                        validators: {
-                            notEmpty: {
-                                message: '问题答案不能为空'
-                            },
-                            regexp: {
-                                regexp: /^[\u4E00-\u9FA5]+$/,
-                                message: '请输入正确的问题答案',
-
-                            }
-
-                        }
-
-                    }
-
-
-                }
-            });
-
         $("#sendBtn").click(function () {
             if (password != confrmpassword) {
                 alert("两次输入密码不一致，请检查!");

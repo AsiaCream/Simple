@@ -114,10 +114,13 @@
               // Use Ajax to submit form data
               $.post("/Account/Login", $form.serialize(), function (data) {
                   if (data == "success") {
-                      alert("1111");
+                      window.location.href = "/Home/Index";
                   }
                   else if (data == "error") {
-                      alert("55555");
+                      alert("用户名或密码错误");
+                  }
+                  else {
+                      alert("未知错误");
                   }
               });
           });
