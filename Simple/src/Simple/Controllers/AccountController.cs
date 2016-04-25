@@ -100,9 +100,9 @@ namespace Simple.Controllers
         }
         [Authorize(Roles = ("系统管理员"))]
         [HttpPost]
-        public async Task<IActionResult> CreateAdmin(string username, string password, string name, string answer, string question, int qq)
+        public async Task<IActionResult> CreateAdmin(string username, string password,string email,string name, string answer, string question, int qq)
         {
-            var admin = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = "99",RegisterTime=DateTime.Now };
+            var admin = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = "99",RegisterTime=DateTime.Now,Email=email };
             await userManager.CreateAsync(admin, password);
             await userManager.AddToRoleAsync(admin, "系统管理员");
             DB.SaveChanges();
