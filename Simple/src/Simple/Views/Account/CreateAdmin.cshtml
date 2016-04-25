@@ -9,28 +9,44 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <form>
+                        <form id="defaultForm">
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" name="name" id="name" placeholder="昵称">
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="昵称">
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="密码">
-                                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                                </div>
+                                
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="password" class="form-control" id="confirmpassword" placeholder="重复密码">
-                                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" placeholder="重复密码">
+                                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                                </div>
+                                
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="邮箱">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="邮箱">
+                                </div>
+                                
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" name="qq" id="qq" placeholder="QQ">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="qq" id="qq" placeholder="QQ">
+                                </div>
+                                
                             </div>
                             <div class="form-group has-feedback">
                                 <select name="question" id="question" class="form-control">
@@ -44,10 +60,16 @@
                                 </select>
                             </div>
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" name="answer" id="answer" placeholder="答案">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="answer" id="answer" placeholder="答案">
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <button id="sendBtn" class="btn btn-primary btn-block btn-flat">添加</button>
                             </div>
                         </form>
-                        <button id="sendBtn" class="btn btn-primary btn-block btn-flat">添加</button>
+                        
                     </div>
                 </div>
             </section>
@@ -60,42 +82,171 @@
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/bootstrapValidator.min.js"></script>
 <!-- iCheck -->
 <script src="~/js/icheck.min.js"></script>
 <script>
       $(function () {
-        $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
-        });
-        $("#sendBtn").click(function () {
-            var confrmpassword = $("#confirmpassword").val();
-            var password = $("#password").val();
-            var username=$("#username").val();
-            var name=$("#name").val();
-            var email=$("#email").val();
-            var qq=$("#qq").val();
-            var question=$("#question").val();
-            var answer=$("#answer").val();
-            if (password != confrmpassword) {
-                alert("两次输入密码不一致，请检查!");
-            }
-           else if (answer == "") {
-                alert("问题答案不能为空");
-            }
-            else {
-                var url = "/Account/CreateAdmin";
-                var parmas = { "username": username, "name": name, "password": password, "email": email, "qq": qq, "question": question, "answer": answer };
-                $.post(url, parmas, function (data) {
-                    if (data === "success") {
-                        alert("添加管理员成功");
+        //$('input').iCheck({
+        //  checkboxClass: 'icheckbox_square-blue',
+        //  radioClass: 'iradio_square-blue',
+        //  increaseArea: '20%' // optional
+        //});
+        $("#defaultForm").bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+
+            },
+            fields: {
+                username: {
+                    message: '用户名还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        }
                     }
-                    else {
-                        alert("添加失败");
+
+                },
+                name: {
+                    message: '昵称没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '昵称不能为空'
+                        }
                     }
-                });
+
+                },
+                email: {
+                    validators: {
+                        emailAddress: {
+                            message: '符合规范如:xx@163.cn'
+
+                        },
+                        notEmpty: {
+                            message: 'Email不能为空'
+
+                        }
+                    }
+
+                },
+
+                qq: {
+                    validators: {
+                        notEmpty: {
+                            message: 'qq不能为空'
+
+                        },
+                        stringLength: {
+                            message: 'qq位数在4到12位之间',
+                            min: 4,
+                            max: 12,
+
+                        },
+                        digits: {
+                            message: '只能是数字'
+
+                        }
+                    }
+                },
+                answer: {
+                    validators: {
+                        notEmpty: {
+                            message: '问题答案不能为空'
+                        }
+                    }
+                },
+                password: {
+                    message: '密码还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 16,
+                            message: '密码长度在6到16之间'
+                        },
+                        regexp: {
+                            regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
+                            message: '密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
+                        },
+                        different: {
+                            field: 'username',
+                            message: '密码不能和用户名相同'
+                        }
+                    }
+                },
+                confirmpassword: {
+                    message: '二次密码还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '二次密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 16,
+                            message: '二次密码长度在6到16之间'
+                        },
+                        regexp: {
+                            regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
+                            message: '二次密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
+                        },
+                        identical: {
+                            field: 'password',
+                            message: '两次密码不同请重新输入'
+                        }
+                    }
+                }
             }
-        });
+        })
+          .on('success.form.bv', function (e) {
+              e.preventDefault();
+              var $form = $(e.target);
+              var bv = $form.data('bootstrapValidator');
+
+              $.post("/Account/CreateAdmin", $form.serialize(), function (data) {
+                  if (data == "success") {
+                      alert("添加管理员成功");
+                      window.location.href = "/Account/CreateAdmin";
+                  }
+                  else {
+                      alert("添加管理员失败！");
+                      
+                  }
+              });
+          });
+
+        //$("#sendBtn").click(function () {
+        //    var confrmpassword = $("#confirmpassword").val();
+        //    var password = $("#password").val();
+        //    var username=$("#username").val();
+        //    var name=$("#name").val();
+        //    var email=$("#email").val();
+        //    var qq=$("#qq").val();
+        //    var question=$("#question").val();
+        //    var answer=$("#answer").val();
+        //    if (password != confrmpassword) {
+        //        alert("两次输入密码不一致，请检查!");
+        //    }
+        //   else if (answer == "") {
+        //        alert("问题答案不能为空");
+        //    }
+        //    else {
+        //        var url = "/Account/CreateAdmin";
+        //        var parmas = { "username": username, "name": name, "password": password, "email": email, "qq": qq, "question": question, "answer": answer };
+        //        $.post(url, parmas, function (data) {
+        //            if (data === "success") {
+        //                alert("添加管理员成功");
+        //            }
+        //            else {
+        //                alert("添加失败");
+        //            }
+        //        });
+        //    }
+        //});
+
       });
 </script>

@@ -5,8 +5,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">发布Helpful和收藏 </p><label class="must2">请认真填写以下信息 ，本操作价格为 @ViewBag.Price 元 1 单</label>
-                        <form>
-                            <input type="hidden" value="@ViewBag.UserCurrent.Id" id="userid" />
+                        <form id="defaultForm">
+                            <input type="hidden" value="@ViewBag.UserCurrent.Id" name="id" id="userid" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
@@ -17,17 +17,26 @@
                                         }
                                     </tr>
                                     <tr>
-                                        <th class="must2">*连接</th>
-                                        <td><input class="form-control" type="text" placeholder="输入以http://开头的产品连接" name="Url" id="Url" /></td>
+                                        <th class="must2">*链接</th>
+                                        <td>
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="输入以http://开头的产品链接" name="Url" id="Url" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="must2">操作数量</th>
-                                        <td><input type="text" class="form-control" value="1" name="Times" id="Times"/></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" value="1" name="Times" id="Times" />
+                                            </div>
+                                        </td>
                                         <td class="must2">请输入本产品要刷的单数</td>
                                     </tr>
                                     <tr class="Review1">
                                         <th class="must2">*Review1标题</th>
-                                        <td><input class="form-control" name="Review1" /></td>
+                                        <td>
+                                        <input class="form-control" name="Review1" /></td>
                                         <td><input type="radio" name="ReviewStar1" value="1" />一星</td>
                                         <td><input type="radio" name="ReviewStar1" value="2" />二星</td>
                                         <td><input type="radio" name="ReviewStar1" value="3" />三星</td>
@@ -60,12 +69,13 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="col-md-3">
+                                <button class="form-control btn btn-primary" type="submit" id="sendBtn">提交并添加下一单</button>
+                                <div style="height:20px;"></div>
+                            </div>
                         </form>
                     </div>
-                    <div class="col-md-3">
-                        <button class="form-control btn btn-primary" id="sendBtn">提交并添加下一单</button>
-                        <div style="height:20px;"></div>
-                    </div>
+                    
                     <div class="col-md-12">
                         <img src="~/img/system/HelpfurExample.jpg" class="caption" />
                     </div>
@@ -76,59 +86,110 @@
 
 </div>
 <script src="~/js/jQuery-2.1.4.min.js"></script>
+<script src="~/js/bootstrapValidator.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#sendBtn").click(function () {
-            var url = "/Manage/CreateHelpfulOrder";
-            var params = {
-                "id":$("#userid").val(),
-                "Country": $("input:radio[name='Country']:checked").val(),
-                "Url": $("#Url").val(),
-                "Times": $("#Times").val(),
-                "HelpfulType": $("input:radio[name='HelpfulType']:checked").val(),
-                "IsCollection":$("input:radio[name='IsCollection']:checked").val(),
-                "Review1":$("#Review1").val(),
-                "ReviewStar1": $("input:radio[name='ReviewStar1']:checked").val(),
-                "Review2":$("#Review2").val(),
-                "ReviewStar2": $("input:radio[name='ReviewStar2']:checked").val(),
-                "Review3":$("#Review3").val(),
-                "ReviewStar3": $("input:radio[name='ReviewStar3']:checked").val(),
-                "Review4":$("#Review4").val(),
-                "ReviewStar4": $("input:radio[name='ReviewStar4']:checked").val(),
-                "Review5":$("#Review5").val(),
-                "ReviewStar5": $("input:radio[name='ReviewStar5']:checked").val(),
-                "Review6":$("#Review6").val(),
-                "ReviewStar6": $("input:radio[name='ReviewStar6']:checked").val(),
-                "Review7":$("#Review7").val(),
-                "ReviewStar7": $("input:radio[name='ReviewStar7']:checked").val(),
-                "Review8":$("#Review8").val(),
-                "ReviewStar8": $("input:radio[name='ReviewStar8']:checked").val(),
-                "Review9":$("#Review9").val(),
-                "ReviewStar9": $("input:radio[name='ReviewStar9']:checked").val(),
-                "Review10":$("#Review10").val(),
-                "ReviewStar10": $("input:radio[name='ReviewStar10']:checked").val(),
-            };
-            if ($("input:radio[name='Country']:checked").val() == null) {
-                alert("国家不能为空，请选择一个！");
-            }
-            else if ($("#Url").val() == "") {
-                alert("链接地址不能为空，选输入正确的链接地址！");
-            }
-            else if ($("#Times").val()=="") {
-                alert("单数不能为空，请输入单数！");
-            }
-            else {
-                $.post(url, params, function (data) {
-                    if (data == "success") {
-                        alert("提交成功");
-                        window.location.href = "/Manage/CreateHelpfulOrder";
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Url: {
+                    message: '产品链接还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '产品链接不能为空'
+                        },
+                        uri: {
+                            message: '请输入起始为http://的链接'
+                        }
                     }
-                    else {
-                        alert("提交失败");
+                },
+                Times: {
+                    message: '该字段还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '操作数量不能为空'
+                        },
+                        digits: {
+                            message: '操作数量只能是数字'
+
+                        }
+
                     }
-                });
+
+                },
             }
+        })
+        .on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+
+            $.post("/Manage/CreateHelpfulOrder", $form.serialize(), function (data) {
+                if (data == "success") {
+                    alert("提交成功，请添加下一单");
+                    window.location.href = "/Manage/CreateHelpfulOrder";
+                }
+                else {
+                    alert("未知错误");
+                }
+            });
         });
+        //$("#sendBtn").click(function () {
+        //    var url = "/Manage/CreateHelpfulOrder";
+        //    var params = {
+        //        "id":$("#userid").val(),
+        //        "Country": $("input:radio[name='Country']:checked").val(),
+        //        "Url": $("#Url").val(),
+        //        "Times": $("#Times").val(),
+        //        "HelpfulType": $("input:radio[name='HelpfulType']:checked").val(),
+        //        "IsCollection":$("input:radio[name='IsCollection']:checked").val(),
+        //        "Review1":$("#Review1").val(),
+        //        "ReviewStar1": $("input:radio[name='ReviewStar1']:checked").val(),
+        //        "Review2":$("#Review2").val(),
+        //        "ReviewStar2": $("input:radio[name='ReviewStar2']:checked").val(),
+        //        "Review3":$("#Review3").val(),
+        //        "ReviewStar3": $("input:radio[name='ReviewStar3']:checked").val(),
+        //        "Review4":$("#Review4").val(),
+        //        "ReviewStar4": $("input:radio[name='ReviewStar4']:checked").val(),
+        //        "Review5":$("#Review5").val(),
+        //        "ReviewStar5": $("input:radio[name='ReviewStar5']:checked").val(),
+        //        "Review6":$("#Review6").val(),
+        //        "ReviewStar6": $("input:radio[name='ReviewStar6']:checked").val(),
+        //        "Review7":$("#Review7").val(),
+        //        "ReviewStar7": $("input:radio[name='ReviewStar7']:checked").val(),
+        //        "Review8":$("#Review8").val(),
+        //        "ReviewStar8": $("input:radio[name='ReviewStar8']:checked").val(),
+        //        "Review9":$("#Review9").val(),
+        //        "ReviewStar9": $("input:radio[name='ReviewStar9']:checked").val(),
+        //        "Review10":$("#Review10").val(),
+        //        "ReviewStar10": $("input:radio[name='ReviewStar10']:checked").val(),
+        //    };
+        //    if ($("input:radio[name='Country']:checked").val() == null) {
+        //        alert("国家不能为空，请选择一个！");
+        //    }
+        //    else if ($("#Url").val() == "") {
+        //        alert("链接地址不能为空，选输入正确的链接地址！");
+        //    }
+        //    else if ($("#Times").val()=="") {
+        //        alert("单数不能为空，请输入单数！");
+        //    }
+        //    else {
+        //        $.post(url, params, function (data) {
+        //            if (data == "success") {
+        //                alert("提交成功");
+        //                window.location.href = "/Manage/CreateHelpfulOrder";
+        //            }
+        //            else {
+        //                alert("提交失败");
+        //            }
+        //        });
+        //    }
+        //});
 
         $("#add-new-title a").click(function () {
             var len = $("tr[class='Review1']").length + 1;

@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sx-12">
                         <p class="infotitle">修改订单页面</p>
-                        <form>
+                        <form id="defaultForm">
                             <input type="hidden" value="@Model.Id" name="id" id="orderid" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
@@ -38,7 +38,11 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*产品连接</th>
-                                        <td><input class="form-control" type="text" value="@Model.GoodsUrl" name="GoodsUrl" id="GoodsUrl" /></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" value="@Model.GoodsUrl" name="GoodsUrl" id="GoodsUrl" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*请选择您的店铺</th>
@@ -54,11 +58,19 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*产品价格</th>
-                                        <td><input type="text" class="form-control" value="@Model.GoodsCost" name="GoodsCost" id="GoodsCost" /></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" value="@Model.GoodsCost" name="GoodsCost" id="GoodsCost" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*运费</th>
-                                        <td><input class="form-control" type="text" value="@Model.Freight" name="Freight" id="Freight" /></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" value="@Model.Freight" name="Freight" id="Freight" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*订单类型</th>
@@ -93,7 +105,11 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*评价时间</th>
-                                        <td><input type="text" class="form-control" value="@Model.CommentTime" name="CommentTime" id="CommentTime" /></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" value="@Model.CommentTime" name="CommentTime" id="CommentTime" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*收件人地址</th>
@@ -149,7 +165,11 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">刷单数量</th>
-                                        <td><input type="text" class="form-control" name="Times" id="Times" value="@Model.Times" /></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="Times" id="Times" value="@Model.Times" />
+                                            </div>
+                                        </td>
                                         <td class="must2">请输入修改后的单数</td>
                                     </tr>
                                     <tr>
@@ -171,11 +191,12 @@
                                     </tr>*@
                                 </tbody>
                             </table>
+                            <div class="col-md-3">
+                                <button type="submit" id="send" class="form-control btn btn-primary">提交修改</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="col-md-3">
-                        <button id="send" class="form-control btn btn-primary">提交修改</button>
-                    </div>
+                    
                 </div>
             </section>
         </div>
@@ -185,6 +206,106 @@
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                CommentTime: {
+                    message: '评价时间还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '评价时间不能为空'
+                        },
+                        integer: {
+                            message: '评价时间应为整数'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            inclusive: true,
+                            message: "评价时间应大于0"
+
+                        },
+                    }
+                },
+                Times: {
+                    message: '该字段还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '数量不能为空'
+                        },
+                        digits: {
+                            message: '数量只能是数字'
+
+                        }
+
+                    }
+
+                },
+                GoodsUrl: {
+                    message: '产品链接还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '产品链接不能为空'
+                        },
+                        uri: {
+                            message: '请输入起始为http://的链接'
+                        }
+                    }
+                },
+                GoodsCost: {
+                    message: '产品价格还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '产品价格不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: true,
+                            message: "产品价格应大于等于0"
+
+                        },
+                        digits: {
+                            message: '只能是数字'
+
+                        }
+                    }
+
+                },
+                Freight: {
+                    message: '该字段还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '运费不能为空'
+                        },
+                        digits: {
+                            message: '运费只能是数字'
+
+                        }
+
+                    }
+
+                }
+            }
+        })
+        .on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+
+            $.post("/Manage/EditOrder", $form.serialize(), function (data) {
+                if (data == "success") {
+                    alert("提交成功");
+                    window.location.href = "/Manage/WaitDrawOrders/";
+                }
+                else {
+                    alert("未知错误");
+                }
+            });
+        });
         $("#set_feedback_review").click(function () {
             $(".feedback").fadeIn();
             $(".review").fadeIn();
@@ -204,74 +325,71 @@
         $("#select-fbm").change(function () {
             document.getElementById("FeedBackContent").value = $("#select-fbm").val();
         });
-        $("#send").click(function () {
-            //获取复选框里的所有值
-            var aa = document.getElementsByName("NextOrToday");
-            var nextortoday = "";
-            for (var i = 0; i < aa.length;i++)
-            {
-                if(aa[i].checked){
-                    nextortoday = aa[i].value + nextortoday;
-                }
-
-            }
-            var url = "/Manage/EditOrder";
-            var params = {
-                "id":$("#orderid").val(),
-                "Rate": $("input[name='Rate']:checked").val(),
-                "FindType": $("input[name='FindType']:checked").val(),
-                "GoodsUrl": $("#GoodsUrl").val(),
-                "ShopName": $("#ShopName").val(),
-                "GoodsCost": $("#GoodsCost").val(),
-                "Freight": $("#Freight").val(),
-                "OrderType": $("input[name='OrderType']:checked").val(),
-                "NextOrToday":nextortoday,
-                "AvoidWeekend": $("input[name='AvoidWeekend']:checked").val(),
-                "Extension": $("input[name='Extension']:checked").val(),
-                "CommentTime": $("#CommentTime").val(),
-                "Address": $("#Address").val(),
-                "FeedBackStar": $("input[name=FeedBackStar]:checked").val(),
-                "FeedBackContent": $("#FeedBackContent").val(),
-                "ReviewStar": $("input[name='ReviewStar']:checked").val(),
-                "ReviewContent": $("#ReviewContent").val(),
-                "ReviewTitle": $("#ReviewTitle").val(),
-                "Times": $("#Times").val(),
-                "Note": $("#Note").val(),
-            }
-            if ($("input[name='Rate']:checked").val()==null) {
-                alert("汇率不能为空，请选择！");
-            }
-            else if ($("input[name='FindType']:checked").val()==null)
-                {
-                alert("进入店铺方式不能为空！");
-            }
-            else if ($("#GoodsUrl").val()=="")
-                {
-                alert("商品地址不能为空！");
-            }
-            else if ($("#GoodsCost").val() == "") {
-                alert("商品价格不能为空！");
-            }
-            else if ($("#Freight").val() == "") {
-                alert("运费不能为空！");
-            }
-            else if ($("#Times").val()=="") {
-                alert("请输入产品的单数！");
-            }
-            else {
-        $.post(url, params, function (data) {
-            if (data == "success") {
-                alert("提交成功");
-                window.location.href = "/Manage/WaitDrawOrders/";
-            }
-            else {
-                alert("提交失败");
-            }
-
-        });
-
-    }
-        });
+    //    $("#send").click(function () {
+    //        //获取复选框里的所有值
+    //        var aa = document.getElementsByName("NextOrToday");
+    //        var nextortoday = "";
+    //        for (var i = 0; i < aa.length;i++)
+    //        {
+    //            if(aa[i].checked){
+    //                nextortoday = aa[i].value + nextortoday;
+    //            }
+    //        }
+    //        var url = "/Manage/EditOrder";
+    //        var params = {
+    //            "id":$("#orderid").val(),
+    //            "Rate": $("input[name='Rate']:checked").val(),
+    //            "FindType": $("input[name='FindType']:checked").val(),
+    //            "GoodsUrl": $("#GoodsUrl").val(),
+    //            "ShopName": $("#ShopName").val(),
+    //            "GoodsCost": $("#GoodsCost").val(),
+    //            "Freight": $("#Freight").val(),
+    //            "OrderType": $("input[name='OrderType']:checked").val(),
+    //            "NextOrToday":nextortoday,
+    //            "AvoidWeekend": $("input[name='AvoidWeekend']:checked").val(),
+    //            "Extension": $("input[name='Extension']:checked").val(),
+    //            "CommentTime": $("#CommentTime").val(),
+    //            "Address": $("#Address").val(),
+    //            "FeedBackStar": $("input[name=FeedBackStar]:checked").val(),
+    //            "FeedBackContent": $("#FeedBackContent").val(),
+    //            "ReviewStar": $("input[name='ReviewStar']:checked").val(),
+    //            "ReviewContent": $("#ReviewContent").val(),
+    //            "ReviewTitle": $("#ReviewTitle").val(),
+    //            "Times": $("#Times").val(),
+    //            "Note": $("#Note").val(),
+    //        }
+    //        if ($("input[name='Rate']:checked").val()==null) {
+    //            alert("汇率不能为空，请选择！");
+    //        }
+    //        else if ($("input[name='FindType']:checked").val()==null)
+    //            {
+    //            alert("进入店铺方式不能为空！");
+    //        }
+    //        else if ($("#GoodsUrl").val()=="")
+    //            {
+    //            alert("商品地址不能为空！");
+    //        }
+    //        else if ($("#GoodsCost").val() == "") {
+    //            alert("商品价格不能为空！");
+    //        }
+    //        else if ($("#Freight").val() == "") {
+    //            alert("运费不能为空！");
+    //        }
+    //        else if ($("#Times").val()=="") {
+    //            alert("请输入产品的单数！");
+    //        }
+    //        else {
+    //    $.post(url, params, function (data) {
+    //        if (data == "success") {
+    //            alert("提交成功");
+    //            window.location.href = "/Manage/WaitDrawOrders/";
+    //        }
+    //        else {
+    //            alert("提交失败");
+    //        }
+    //    });
+    //}
+    //    });
     });
 </script>
 

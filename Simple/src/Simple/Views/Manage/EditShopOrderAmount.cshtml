@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">店铺订单修改</p>
-                        <form asp-action="EditShopOrderAmount" asp-controller="Manage" method="post">
+                        <form id="defaultForm" asp-action="EditShopOrderAmount" asp-controller="Manage" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
@@ -22,19 +22,35 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">*店铺名</th>
-                                        <td><input type="text" class="form-control" name="title" value="@Model.Title" /></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="title" value="@Model.Title" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*日最大刷单量</th>
-                                        <td><input type="text" class="form-control" name="maxoneday" value="@Model.MaxOneDay" /> </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="maxoneday" value="@Model.MaxOneDay" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*日最大评价量</th>
-                                        <td><input type="text" class="form-control" name="maxoneevaluation" value="@Model.MaxOneEvaluation" /></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="maxoneevaluation" value="@Model.MaxOneEvaluation" />
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="ShopOrderAmount" asp-controller="Manage" class="form-control btn btn-primary">返回店铺订单量列表设置</a></th>
-                                        <th><input type="submit" class="form-control btn btn-primary" value="确认修改"></th>
+                                        <th>
+                                            <div class="form-group">
+                                                <input type="submit" class="form-control btn btn-primary" value="确认修改">
+                                            </div>
+                                        </th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -52,7 +68,81 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                maxoneevaluation: {
+                    message: '日最大评价量还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '日最大评价量不能为空'
+                        },
+                        integer: {
+                            message: '日最大评价量应为整数'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            inclusive: true,
+                            message: "日最大评价量应大于0"
 
+                        },
+                    }
+                },
+                maxoneday: {
+                    message: '日最大刷单量还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '日最大刷单量不能为空'
+                        },
+                        integer: {
+                            message: '日最大刷单量应为整数'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            inclusive: true,
+                            message: "日最大刷单量应大于0"
+
+                        },
+                    }
+                },
+
+                title: {
+                    message: '该字段还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '店铺名称不能为空'
+                        }
+                    }
+
+                },
+            }
+        })
+        .on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+
+            $.post("/Manage/EditShopOrderAmount", $form.serialize(), function (data) {
+                if (data == "success") {
+                    alert("提交成功");
+                    window.location.href = "/Manage/ShopOrderAmount";
+                }
+                else {
+                    alert("未知错误");
+                }
+            });
+        });;
+       
+    });
+</script>
 
 
 

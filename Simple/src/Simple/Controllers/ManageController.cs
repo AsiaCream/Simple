@@ -81,7 +81,7 @@ namespace Simple.Controllers
                 old.MaxOneDay = shop.MaxOneDay;
                 old.MaxOneEvaluation = shop.MaxOneEvaluation;
                 DB.SaveChanges();
-                return RedirectToAction("ShopOrderAmount", "Manage");
+                return Content("success");
             }
         }
         #endregion

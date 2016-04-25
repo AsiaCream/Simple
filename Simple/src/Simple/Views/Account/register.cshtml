@@ -33,30 +33,42 @@
     <div class="register-box" style="box-shadow:-20px -20px 20px RGB(54,127,169);margin-top:40px;">
         <div class="register-box-body">
             <p class="login-box-msg">注册成为会员加入我们</p>
-            <form>
+            <form id="defaultForm">
                 <div class="form-group has-feedback">
                     <label>用户名：</label>
-                    <input type="text" class="form-control" name="username" id="username">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" id="username">
+                    </div>
                 </div>
                 <div class="form-group has-feedback">
                     <label>昵称：</label>
-                    <input type="text" class="form-control" name="name" id="name">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" id="name">
+                    </div> 
                 </div>
                 <div class="form-group has-feedback">
                     <label>密码：</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
                 </div>
                 <div class="form-group has-feedback">
                     <label>确认密码：</label>
-                    <input type="password" class="form-control" id="confirmpassword" >
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="confirmpassword" id="confirmpassword">
+                    </div>
                 </div>
                 <div class="form-group has-feedback">
                     <label>邮箱：</label>
-                    <input type="email" class="form-control" name="email" id="email">
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" id="email">
+                    </div>
                 </div>
                 <div class="form-group has-feedback">
                     <label>QQ号：</label>
-                    <input type="text" class="form-control" name="qq" id="qq">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="qq" id="qq">
+                    </div>
                 </div>
                 <div class="form-group has-feedback">
                     <label>找回密码问题：</label>
@@ -72,10 +84,16 @@
                 </div>
                 <div class="form-group has-feedback">
                     <label>问题答案：</label>
-                    <input type="text" class="form-control" name="answer" id="answer">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="answer" id="answer">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="sendBtn" class="btn btn-primary btn-block btn-flat form-control">注册</button>
                 </div>
             </form>
-            <button id="sendBtn" class="btn btn-primary btn-block btn-flat form-control">注册</button>
+        
+            
         <div style="height:10px;"></div>
         <p>当前会员人数为 @ViewBag.MemberCount，我们期待您的加入</p>
             <a asp-action="Login" asp-controller="Account" class="text-center">我已经注册过会员</a>
@@ -88,37 +106,175 @@
     <script src="~/js/bootstrapValidator.min.js"></script>
     <script>
         $(function () {
-        $("#sendBtn").click(function () {
-            if (password != confrmpassword) {
-                alert("两次输入密码不一致，请检查!");
-            }
-            else {
-                var confrmpassword = $("#confirmpassword").val();
-                var password = $("#password").val();
-                var username = $("#username").val();
-                var name = $("#name").val();
-                var email = $("#email").val();
-                var qq = $("#qq").val();
-                var question = $("#question").val();
-                var answer = $("#answer").val();
-                var url = "/Account/Register";
-                var parmas = { "username": username, "name": name, "password": password, "email": email, "qq": qq, "question": question, "answer": answer };
-                $.post(url, parmas, function (data) {
-                    if (data === "success") {
-                        alert("注册成功，点击确定跳转至登录页面...");
+            $("#defaultForm").bootstrapValidator({
+                message: '这个值没有被验证',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+
+                },
+                fields: {
+                    username: {
+                        message: '用户名还没有验证',
+                        validators: {
+                            notEmpty: {
+                                message: '用户名不能为空'
+                            }
+                        }
+
+                    },
+                    name: {
+                        message: '昵称没有验证',
+                        validators: {
+                            notEmpty: {
+                                message: '昵称不能为空'
+                            }
+                        }
+
+                    },
+                    email: {
+                        validators: {
+                            emailAddress: {
+                                message: 'Email不能为空'
+
+                            }
+                        }
+
+                    },
+
+                    qq: {
+                        validators: {
+                            notEmpty:{
+                                message:'qq不能为空'
+                            
+                            },
+                            stringLength: {
+                                message:'qq位数在4到12位之间',
+                                min: 4,
+                                max: 12,
+
+                            },
+                            digits: {
+                                message:'只能是数字'
+
+                            }
+                        }
+                    },
+                    answer: {
+                        validators: {
+                            notEmpty: {
+                                message: '问题答案不能为空'
+                            }
+                        }
+                    },
+                    CellPhoneNumber: {
+                        message: '电话号码还没有验证',
+                        validators: {
+                            notEmpty: {
+                                message: '电话号码不能为空'
+                            },
+                            regexp: {
+                                regexp: /^((13[0-9])|(15[^4,\\D])|(18[0,2,5-9]))\d{8}$/,
+                                message: '11位数字，格式如：13842174329'
+                            }
+                        }
+                    },
+                    
+                    password: {
+                        message: '密码还没有验证',
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 16,
+                                message: '密码长度在6到16之间'
+                            },
+                            regexp: {
+                                regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
+                                message: '密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
+                            },
+                            different: {
+                                field: 'username',
+                                message: '密码不能和用户名相同'
+                            }
+                        }
+                    },
+                    confirmpassword: {
+                        message: '二次密码还没有验证',
+                        validators: {
+                            notEmpty: {
+                                message: '二次密码不能为空'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 16,
+                                message: '二次密码长度在6到16之间'
+                            },
+                            regexp: {
+                                regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
+                                message: '二次密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
+                            },
+                            identical: {
+                                field: 'password',
+                                message: '两次密码不同请重新输入'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('success.form.bv', function (e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                var bv = $form.data('bootstrapValidator');
+
+                $.post("/Account/Register", $form.serialize(), function (data) {
+                    if (data == "success") {
+                        alert("注册成功");
                         window.location.href = "/Account/Login";
-                    }
-                    else if (data == "error") {
-                        alert("用户名" + username + "已经存在");
-                    }
-                    else {
-                        alert("注册失败，请检查信息!");
+                    } else if (data == "error") {
+                        alert("用户名已存在，重新注册");
                         window.location.href = "/Account/Register";
                     }
-
+                    else {
+                        alert("注册失败，请重新注册！");
+                        window.location.href = "/Account/Register";
+                    }
                 });
-            }
-        });
+            });
+        //$("#sendBtn").click(function () {
+        //    if (password != confrmpassword) {
+        //        alert("两次输入密码不一致，请检查!");
+        //    }
+        //    else {
+        //        var confrmpassword = $("#confirmpassword").val();
+        //        var password = $("#password").val();
+        //        var username = $("#username").val();
+        //        var name = $("#name").val();
+        //        var email = $("#email").val();
+        //        var qq = $("#qq").val();
+        //        var question = $("#question").val();
+        //        var answer = $("#answer").val();
+        //        var url = "/Account/Register";
+        //        var parmas = { "username": username, "name": name, "password": password, "email": email, "qq": qq, "question": question, "answer": answer };
+        //        $.post(url, parmas, function (data) {
+        //            if (data === "success") {
+        //                alert("注册成功，点击确定跳转至登录页面...");
+        //                window.location.href = "/Account/Login";
+        //            }
+        //            else if (data == "error") {
+        //                alert("用户名" + username + "已经存在");
+        //            }
+        //            else {
+        //                alert("注册失败，请检查信息!");
+        //                window.location.href = "/Account/Register";
+        //            }
+
+        //        });
+        //    }
+        //});
       });
     </script>
 </body>
