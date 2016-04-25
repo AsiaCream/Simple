@@ -97,6 +97,14 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
+                Country: {
+                    message: '国家还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '国家不能为空'
+                        }
+                    }
+                },
                 Url: {
                     message: '产品链接还没有验证',
                     validators: {

@@ -26,7 +26,7 @@ namespace Simple
 
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<SimpleContext>(x => x.UseSqlServer("Server=localhost;uid=sa;password=123456;database=simple;"));
+                .AddDbContext<SimpleContext>(x => x.UseSqlServer("Server=localhost;uid=sa;password=Cream2015!@#;database=simple;"));
             //services.AddEntityFramework()
             //    .AddSqlite()
             //    .AddDbContext<SimpleContext>(x => x.UseSqlite("Data source=" + appEnv.ApplicationBasePath + "/Database/simple.db"));

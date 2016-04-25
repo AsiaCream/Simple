@@ -17,14 +17,14 @@
                             <input type="hidden" name="id" value="@ViewBag.UserCurrent.Id" id="userid" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
-                                    <tr>
+                                    <tr class="form-group">
                                         <th class="must2 col-md-2 col-sx-2">*国家（汇率）</th>
                                         @foreach (Rate x in ViewBag.Country)
                                         {
                                             <td><input type="radio" name="Rate" id="Rate" value="@x.Exchange" />@x.Country &nbsp;(@x.Exchange)</td>
                                         }
                                     </tr>
-                                    <tr>
+                                    <tr class="form-g-roup">
                                         <th class="must2">*进入店铺方式</th>
                                         @foreach (FindType x in ViewBag.FindType)
                                         {
@@ -207,7 +207,22 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                
+                Rate:{
+                    message: '汇率还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '汇率不能为空'
+                        }
+                    }
+                },
+                FindType: {
+                    message: '进入店铺方式还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '进入店铺方式不能为空'
+                        }
+                    }
+                },
                 GoodsUrl: {
                     message: '产品链接还没有验证',
                     validators: {

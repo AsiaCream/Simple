@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">添加店铺订单量设置</p>
-                        <form asp-action="CreateShopOrderAmount" asp-controller="Manage" asp-route-id="@ViewBag.UserCurrent.Id" method="post">
+                        <form id="defaultForm" asp-route-id="@ViewBag.UserCurrent.Id" method="post">
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
@@ -17,15 +17,15 @@
                                             }
                                             </select>
                                     </tr>
-                                    <tr>
+                                    <tr class="form-group">
                                         <th class="must2">*店铺名</th>
-                                        <td><input type="text" class="form-control" name="title" /></td>
+                                        <td><input type="text" class="form-control" name="title" id="title" /></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="form-group">
                                         <th class="must2">*日最大刷单量</th>
                                         <td><input type="text" class="form-control" name="maxoneday" /> </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="form-group">
                                         <th class="must2">*日最大评价量</th>
                                         <td><input type="text" class="form-control" name="maxoneevaluation" /></td>
                                     </tr>
@@ -48,4 +48,78 @@
                     </div>
                     </section>
                 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                maxoneevaluation: {
+                    message: '日最大评价量还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '日最大评价量不能为空'
+                        },
+                        integer: {
+                            message: '日最大评价量应为整数'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            inclusive: true,
+                            message: "日最大评价量应大于0"
 
+                        },
+                    }
+                },
+                maxoneday: {
+                    message: '日最大刷单量还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '日最大刷单量不能为空'
+                        },
+                        integer: {
+                            message: '日最大刷单量应为整数'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            inclusive: true,
+                            message: "日最大刷单量应大于0"
+
+                        },
+                    }
+                },
+
+                title: {
+                    message: '该字段还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '店铺名称不能为空'
+                        }
+                    }
+
+                },
+            }
+        })
+        .on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+
+            $.post("/Manage/CreateShopOrderAmount", $form.serialize(), function (data) {
+                if (data == "success") {
+                    alert("提交成功");
+                    window.location.href = "/Manage/ShopOrderAmount";
+                }
+                else {
+                    alert("未知错误");
+                }
+            });
+        });;
+
+    });
+</script>
