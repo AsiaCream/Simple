@@ -26,12 +26,12 @@ namespace Simple.Models
 
                 //初始化管理员
                 var user = new User { UserName = "Admin", Email = "343224963@qq.com",Name="来自火星的你",Level="99" };
-                await userManager.CreateAsync(user, "Cream2015!@#");
+                await userManager.CreateAsync(user, "123456");
                 await userManager.AddToRoleAsync(user, "系统管理员");
 
                 //初始化用户
                 var guest = new User { UserName = "Guest", Email = "1173056745@qq.com", Name = "来自土星的你",Level="1" };
-                await userManager.CreateAsync(guest, "Cream2015!@#");
+                await userManager.CreateAsync(guest, "123456");
                 await userManager.AddToRoleAsync(guest, "普通用户");
 
                 //初始化用户等级

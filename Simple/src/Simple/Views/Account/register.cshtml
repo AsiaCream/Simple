@@ -135,6 +135,9 @@
                     },
                     email: {
                         validators: {
+                            notEmpty:{
+                                message:'邮箱不能为空'
+                            },
                             emailAddress: {
                                 message: 'Email不能为空'
 
@@ -192,13 +195,13 @@
                                 max: 16,
                                 message: '密码长度在6到16之间'
                             },
-                            regexp: {
-                                regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
-                                message: '密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
-                            },
+                            //regexp: {
+                            //    regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
+                            //    message: '密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
+                            //},
                             different: {
                                 field: 'username',
-                                message: '密码不能和用户名相同'
+                                message: '为了安全起见，密码不能和用户名相同'
                             }
                         }
                     },
@@ -208,15 +211,15 @@
                             notEmpty: {
                                 message: '二次密码不能为空'
                             },
-                            stringLength: {
-                                min: 6,
-                                max: 16,
-                                message: '二次密码长度在6到16之间'
-                            },
-                            regexp: {
-                                regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
-                                message: '二次密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
-                            },
+                            //stringLength: {
+                            //    min: 6,
+                            //    max: 16,
+                            //    message: '二次密码长度在6到16之间'
+                            //},
+                            //regexp: {
+                            //    regexp: /^(?![0-9a-z]+$)(?![0-9A-Z]+$)(?![0-9\W]+$)(?![a-z\W]+$)(?![a-zA-Z]+$)(?![A-Z\W]+$)[a-zA-Z0-9\W_]+$/,
+                            //    message: '二次密码必须包括至少一个数字，大写字母，小写字母，特殊字符'
+                            //},
                             identical: {
                                 field: 'password',
                                 message: '两次密码不同请重新输入'

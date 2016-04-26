@@ -24,13 +24,20 @@ namespace Simple
         {
             var appEnv = services.BuildServiceProvider().GetRequiredService<IApplicationEnvironment>();
 
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<SimpleContext>(x => x.UseSqlServer("Server=localhost;uid=sa;password=Cream2015!@#;database=simple;"));
             //services.AddEntityFramework()
-            //    .AddSqlite()
-            //    .AddDbContext<SimpleContext>(x => x.UseSqlite("Data source=" + appEnv.ApplicationBasePath + "/Database/simple.db"));
-            services.AddIdentity<User, IdentityRole>()
+            //    .AddSqlServer()
+            //    .AddDbContext<SimpleContext>(x => x.UseSqlServer("Server=localhost;uid=sa;password=Cream2015!@#;database=simple;"));
+            services.AddEntityFramework()
+                .AddSqlite()
+                .AddDbContext<SimpleContext>(x => x.UseSqlite("Data source=" + appEnv.ApplicationBasePath + "/Database/simple.db"));
+            services.AddIdentity<User, IdentityRole>(x=> {
+                x.Password.RequireDigit = false;
+                x.Password.RequiredLength = 0;
+                x.Password.RequireLowercase = false;
+                x.Password.RequireNonLetterOrDigit = false;
+                x.Password.RequireUppercase = false;
+                x.User.AllowedUserNameCharacters = null;
+            })
                 .AddEntityFrameworkStores<SimpleContext>()
                 .AddDefaultTokenProviders();
 
