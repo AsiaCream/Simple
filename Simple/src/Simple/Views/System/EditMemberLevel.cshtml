@@ -6,29 +6,29 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">会员等级类型修改</p>
-                        <form asp-action="EditMemberLevel" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="EditMemberLevel" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*等级称号</th>
-                                        <td><input type="text" class="form-control" name="Level" value="@Model.Level" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Level" value="@Model.Level" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*Ebay订单最大值</th>
-                                        <td><input type="text" class="form-control" name="OrderMax" value="@Model.OrderMax" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="OrderMax" value="@Model.OrderMax" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*Ebay订单最小值</th>
-                                        <td><input type="text" class="form-control" name="OrderMin" value="@Model.OrderMin" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="OrderMin" value="@Model.OrderMin" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*Helpful最大值</th>
-                                        <td><input type="text" class="form-control" name="HelpfulMax" value="@Model.HelpfulMax" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="HelpfulMax" value="@Model.HelpfulMax" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*Helpful最小值</th>
-                                        <td><input type="text" class="form-control" name="HelpfulMin" value="@Model.HelpfulMin" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="HelpfulMin" value="@Model.HelpfulMin" /></td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="MemberLevel" asp-controller="System" class="form-control btn btn-primary">返回会员等级列表</a></th>
@@ -47,6 +47,102 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Level: {
+                    message: '等级称号还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '等级称号不能为空'
+                        },
+                        greaterThan:{
+                            value:0,
+                            message: "等级称号必须大于等于0"
+
+                        },
+                        integer: {
+                            message: "等级称号只能是整数"
+                        }
+                    }
+                },
+                OrderMax: {
+                    message: '订单最大值还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '订单最大值不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            message: "订单最大值必须大于等于0"
+
+                        },
+                        integer: {
+                            message: "订单最大值只能是整数"
+                        }
+                    }
+                },
+                OrderMin: {
+                    message: '订单最小值还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '订单最小值不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            message: "订单最小值必须大于等于0"
+
+                        },
+                        integer: {
+                            message: "订单最小值只能是整数"
+                        }
+                    }
+                },
+                HelpfulMax: {
+                    message: 'Helpful最大值还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: 'Helpful最大值不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            message: "Helpful最大值必须大于等于0"
+
+                        },
+                        integer: {
+                            message: "Helpful最大值只能是整数"
+                        }
+                    }
+                },
+                HelpfulMin: {
+                    message: 'Helpful最小值还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: 'Helpful最小值不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            message: "Helpful最小值必须大于等于0"
+
+                        },
+                        integer: {
+                            message: "Helpful最小值只能是整数"
+                        }
+                    }
+                },
+
+            }
+        });
+    });
+</script>
 
 
 

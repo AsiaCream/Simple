@@ -6,13 +6,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">平台类型修改</p>
-                        <form asp-action="EditPlatType" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="EditPlatType" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*平台类型</th>
-                                        <td><input type="text" class="form-control" name="Title" value="@Model.Title" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Title" value="@Model.Title" /></td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="PlatType" asp-controller="System" class="form-control btn btn-primary">返回平台类型列表</a></th>
@@ -31,7 +31,30 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    $(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Title: {
+                    message: '平台类型还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '平台类型不能为空'
+                        }
+                    }
+                }
+            }
+        })
 
+    });
+</script>
 
 
 

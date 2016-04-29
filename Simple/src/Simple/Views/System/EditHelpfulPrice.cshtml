@@ -15,17 +15,17 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">修改Helpful价格以及WishList价格</p>
-                        <form asp-action="EditHelpfulPrice" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="EditHelpfulPrice" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*Helpful一单价格</th>
-                                        <td><input type="text" class="form-control" name="price" value="@Model.Price" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="price" value="@Model.Price" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*WishLish价格</th>
-                                        <td><input type="text" class="form-control" name="wishlistcost" value="@Model.WishListCost" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="wishlistcost" value="@Model.WishListCost" /></td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="HelpfulPrice" asp-controller="System" class="btn btn-primary form-control">返回Helpful设置页面</a></th>
@@ -45,3 +45,56 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    $(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                price: {
+                    message: '价格还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '价格不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            message: '价格应大于0',
+                            inclusive: false,
+                        },
+                        digits: {
+                            message: '价格应为数字',
+
+                        }
+                    },
+                    
+                },
+                wishlistcost: {
+                    message: '价格还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '价格不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            message: '价格应大于0',
+                            inclusive: false,
+                        },
+                        digits: {
+                            message: '价格应为数字',
+
+                        }
+                    },
+                    
+                },
+               
+            }
+        })
+
+    });
+</script>

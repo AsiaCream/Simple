@@ -6,17 +6,17 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">修改评价时间以及评价时间备注</p>
-                        <form asp-action="EditCommentTime" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="EditCommentTime" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*当前评价时间</th>
-                                        <td><input type="text" class="form-control" name="date" value="@Model.Date" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="date" value="@Model.Date" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*评价时间后的备注</th>
-                                        <td><input type="text" class="form-control" name="note" value="@Model.Note" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="note" value="@Model.Note" /></td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="CommentTime" asp-controller="System" class="btn btn-primary form-control">返回评价时间设置页面</a></th>
@@ -36,3 +36,45 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    $(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                note: {
+                    message: '进入店铺方式还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '进入店铺方式不能为空'
+                        }
+                    }
+                },
+
+                date: {
+                    message: '评价时间还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '评价时间不能为空'
+                        },
+                        integer: {
+                            message: '评价时间只能是整数'
+
+                        },
+                        greaterThan: {
+                            value:0,
+                            message: '评价时间应大于0',
+                            inclusive:false,
+                        }
+                    }
+                }
+            }
+        })
+
+    });
+</script>

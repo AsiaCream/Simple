@@ -6,25 +6,25 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">系统基本信息设置</p>
-                        <form asp-action="EditBaseInformation" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="EditBaseInformation" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*大标题</th>
-                                        <td><input type="text" class="form-control" name="BigTitle" value="@Model.BigTitle" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="BigTitle" value="@Model.BigTitle" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*小标题</th>
-                                        <td><input type="text" class="form-control" name="SmallTitle" value="@Model.SmallTitle" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="SmallTitle" value="@Model.SmallTitle" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*公司链接地址</th>
-                                        <td><input type="text" class="form-control" name="Url" value="@Model.Url" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Url" value="@Model.Url" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*公司地址</th>
-                                        <td><input type="text" class="form-control" name="Company" value="@Model.Company" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Company" value="@Model.Company" /></td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="BaseInformation" asp-controller="System" class="form-control btn btn-primary">返回系统设置</a></th>
@@ -38,9 +38,59 @@
             </section>
         </div>
     </section>
-
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                
+                BigTitle: {
+                    message: '大标题还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '大标题不能为空'
+                        }
+                    }
+                },
+                SmallTitle: {
+                    message: '小标题还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '小标题不能为空'
+                        }
+                    }
+                },
+                Company: {
+                    message: '公司地址还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '公司地址不能为空'
+                        }
+                    }
+                },
+                Url: {
+                    message: '链接还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '链接不能为空'
+                        },
+                        uri: {
+                            message: '请输入起始为http://的链接'
+                        }
+                    }
+                },
 
+            }
+        });
+    });
+</script>
 
 
 

@@ -6,17 +6,17 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">隔天下单/首天下单类型修改</p>
-                        <form asp-action="EditNextOrToday" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="EditNextOrToday" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*隔天下单/首天下单类型</th>
-                                        <td><input type="text" class="form-control" name="type" value="@Model.Type" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="type" value="@Model.Type" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*该类型对应的价格</th>
-                                        <td><input type="text" class="form-control" name="Price" value="@Model.Price" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Price" value="@Model.Price" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*说明</th>
@@ -40,6 +40,48 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    $(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                type: {
+                    message: '进入店铺方式还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '进入店铺方式不能为空'
+                        }
+                    }
+                },
+
+                Price: {
+                    message: '该方式价格还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '该方式价格不能为空'
+                        },
+                        digits: {
+                            message: '该方式价格只能是数字'
+
+                        }
+                    }
+                }
+            }
+        })
+
+    });
+</script>
+
+
+
+
+
 
 
 

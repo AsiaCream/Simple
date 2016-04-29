@@ -5,16 +5,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">添加隔天下单/首天下单类型</p>
-                        <form asp-action="CreateNextOrToday" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="CreateNextOrToday" asp-controller="System" method="post">
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*进入隔天下单/首天下单类型</th>
-                                        <td><input type="text" class="form-control" name="type" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="type" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*该方式价格</th>
-                                        <td><input type="text" class="form-control" name="price" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="price" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*说明</th>
@@ -43,6 +43,45 @@
         </div>
     </section>
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    $(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                type: {
+                    message: '进入店铺方式还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '进入店铺方式不能为空'
+                        }
+                    }
+                },
+                
+                price: {
+                    message: '该方式价格还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '该方式价格不能为空'
+                        },
+                        digits: {
+                            message: '该方式价格只能是数字'
+
+                        }
+                    }
+                }
+            }
+        })
+
+    });
+</script>
+
+
 
 
 

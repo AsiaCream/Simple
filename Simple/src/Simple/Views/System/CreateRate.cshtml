@@ -5,16 +5,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">添加汇率</p>
-                        <form asp-action="CreateRate" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="CreateRate" asp-controller="System" method="post">
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*国家</th>
-                                        <td><input type="text" class="form-control" name="Country" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Country" /></td>
                                     </tr>
                                     <tr>
                                         <th class="must2">*汇率</th>
-                                        <td><input type="text" class="form-control" name="Exchange" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Exchange" /></td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="Rate" asp-controller="System" class="form-control btn btn-primary">返回汇率列表</a></th>
@@ -36,6 +36,46 @@
         </div>
     </section>
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    $(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Country: {
+                    message: '国家还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '国家不能为空'
+                        }
+                    }
+                },
+                Exchange: {
+                    message: '汇率还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '汇率不能为空'
+                        },
+                        digits: {
+                            message: '汇率只能是数字'
+
+                        }
+                    }
+                }
+            }
+        })
+
+    });
+</script>
+
+
+
+
 
 
 

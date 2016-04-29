@@ -6,13 +6,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="infotitle">FeedBack模版修改</p>
-                        <form asp-action="EditFeedBackModel" asp-controller="System" method="post">
+                        <form id="defaultForm" asp-action="EditFeedBackModel" asp-controller="System" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <table class="table table-responsive table-stripted">
                                 <tbody>
                                     <tr>
                                         <th class="must2">*模版内容</th>
-                                        <td><input type="text" class="form-control" name="Content" value="@Model.Content" /></td>
+                                        <td class="form-group"><input type="text" class="form-control" name="Content" value="@Model.Content" /></td>
                                     </tr>
                                     <tr>
                                         <th><a asp-action="FeedBackModel" asp-controller="System" class="form-control btn btn-primary">返回FeedBack模版列表</a></th>
@@ -31,7 +31,32 @@
     </section>
 
 </div>
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script>
+    $(function () {
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Content: {
+                    message: 'FeedBack模版还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: 'FeedBack模版不能为空'
+                        }
+                    },
 
+                }
+
+            }
+        })
+
+    });
+</script>
 
 
 
