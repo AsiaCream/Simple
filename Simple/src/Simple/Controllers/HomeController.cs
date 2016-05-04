@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using Simple.Models;
+using Simple.ViewModels;
 
 namespace Simple.Controllers
 {
@@ -136,6 +137,38 @@ namespace Simple.Controllers
 
                 var ga = (double)g / a;
                 ViewBag.ga = Math.Round(ga, 2) * 100;//进行中
+                var ebay = new List<EbayMonth>();
+                var helpful = new List<HelpfulMonth>();
+                var ebayhelpful = new List<EbayHelpfulMonth>();
+                var ebaymonthlist = DB.PreOrders
+                    .Where(x=>x.FinishTime.Year==DateTime.Now.Year)
+                    .OrderBy(x=>x.FinishTime.Month)
+                    .GroupBy(x => x.FinishTime.Month)
+                    .ToList();
+                foreach(var x in ebaymonthlist)
+                {
+                    ebay.Add(new EbayMonth
+                    {
+                        Count=x.Count(),
+                        Month = x.Key,
+                    });
+                }
+                ViewBag.EbayMonth = ebay;
+                var helpfulmonthlist = DB.HelpfulPreOrders
+                    .Where(x=>x.FinishTime.Year==DateTime.Now.Year)
+                    .OrderBy(x => x.FinishTime.Month)
+                    .GroupBy(x => x.FinishTime.Month)
+                    .ToList();
+                foreach(var x in helpfulmonthlist)
+                {
+                    helpful.Add(new HelpfulMonth
+                    {
+                        Count = x.Count(),
+                        Month=x.Key,
+                    });
+                }
+                ViewBag.HelpfulMonth = helpful;
+
             }
             else
             {
@@ -252,6 +285,40 @@ namespace Simple.Controllers
                 ViewBag.fa = Math.Round(fa, 2) * 100;//待审核
                 var ga = (double)g / a;
                 ViewBag.ga = Math.Round(ga, 2) * 100;//待审核
+
+                var ebay = new List<EbayMonth>();
+                var helpful = new List<HelpfulMonth>();
+                var ebayhelpful = new List<EbayHelpfulMonth>();
+                var ebaymonthlist = DB.PreOrders
+                    .Where(x => x.FinishTime.Year == DateTime.Now.Year)
+                    .Where(x=>x.UserId==UserCurrent.Id)
+                    .OrderBy(x => x.FinishTime.Month)
+                    .GroupBy(x => x.FinishTime.Month)
+                    .ToList();
+                foreach (var x in ebaymonthlist)
+                {
+                    ebay.Add(new EbayMonth
+                    {
+                        Count = x.Count(),
+                        Month = x.Key,
+                    });
+                }
+                ViewBag.EbayMonth = ebay;
+                var helpfulmonthlist = DB.HelpfulPreOrders
+                    .Where(x=>x.UserId==UserCurrent.Id)
+                    .Where(x => x.FinishTime.Year == DateTime.Now.Year)
+                    .OrderBy(x => x.FinishTime.Month)
+                    .GroupBy(x => x.FinishTime.Month)
+                    .ToList();
+                foreach (var x in helpfulmonthlist)
+                {
+                    helpful.Add(new HelpfulMonth
+                    {
+                        Count = x.Count(),
+                        Month = x.Key,
+                    });
+                }
+                ViewBag.HelpfulMonth = helpful;
 
             }
             return View();
