@@ -30,8 +30,6 @@ namespace Simple.Controllers
         [HttpPost]
         public IActionResult CreateShopOrderAmount(string Id, ShopOrder shop)
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
                 var u = DB.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).SingleOrDefault();
                 if (u == null)
                 {
@@ -42,9 +40,9 @@ namespace Simple.Controllers
                     DB.ShopOrders.Add(shop);
                     shop.UserId = u.Id;
                     DB.SaveChanges();
+                return Content("success");
                 }
-            }
-            return RedirectToAction("ShopOrderAmount", "Manage");
+            
         }
         [HttpGet]
         public IActionResult EditShopOrderAmount(int id)

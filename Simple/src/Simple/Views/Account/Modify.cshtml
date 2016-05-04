@@ -8,10 +8,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <form>
+                    <div class="col-md-5">
+                        <form id="defaultForm">
                             <table class="table">
-                                <tr>
+                                <tr class="form-group">
                                     <th>
                                         <label>旧密码：</label>
                                     </th>
@@ -19,7 +19,7 @@
                                         <input type="password" class="form-control" name="password" id="password" />
                                     </th>
                                 </tr>
-                                <tr>
+                                <tr class="form-group">
                                     <th>
                                         <label>新密码：</label>
                                     </th>
@@ -27,7 +27,7 @@
                                         <input type="password" class="form-control" name="newpwd" id="newpwd" />
                                     </th>
                                 </tr>
-                                <tr>
+                                <tr class="form-group">
                                     <th>
                                         <label>确认密码：</label>
                                     </th>
@@ -36,8 +36,10 @@
                                     </th>
                                 </tr>
                             </table>
+                            <div class="form-group">
+                                <button id="send" type="submit" class="btn btn-primary form-control">修改</button>
+                            </div>
                         </form>
-                        <input id="send" class="btn btn-primary form-control" value="提交" />
                     </div>
                 </div>
             </section>
@@ -48,28 +50,102 @@
 <script src="~/js/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        $("#send").click(function () {
-            var password = $("#password").val();
-            var newpwd = $("#newpwd").val();
-            var confirmpwd = $("#confirmpwd").val();
-            if (newpwd != confirmpwd) {
-                alert("两次输入密码不一致，请检查！");
+        $('#defaultForm').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                password: {
+                    message: '密码还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 16,
+                            message: '密码长度在6到16之间'
+                        },
+                    }
+                },
+                newpwd: {
+                    message: '密码还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 16,
+                            message: '密码长度在6到16之间'
+                        },
+                    }
+                },
+                confirmpwd: {
+                    message: '密码还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 16,
+                            message: '密码长度在6到16之间'
+                        },
+                        identical: {
+                            field: 'newpwd',
+                            message: '两次密码不同请重新输入'
+                        }
+                    }
+                },
             }
-            else {
-                var url = "/Account/Modify";
-                var parmas = { "password": password, "newpwd": newpwd };
-                $.post(url, parmas, function (data) {
-                    if (data == "success") {
-                        alert("修改成功,确认后跳转到登录页重新登录...");
-                        window.location.href = "/Account/Login";
-                    }
-                    else {
-                        alert("修改失败...");
-                    }
-                });
 
-            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+
+            $.post("/Account/Modify", $form.serialize(), function (data) {
+                if (data == "success") {
+                    alert("修改成功，请用新密码重新登录");
+                    window.location.href = "/Account/Login";
+                }
+                else if (data == "error")
+                {
+                    alert("密码修改失败");
+                    window.location.href = "/Account/Modify";
+                }
+                else {
+                    alert("未知错误");
+                }
+            });
         });
+
+        //$("#send").click(function () {
+        //    var password = $("#password").val();
+        //    var newpwd = $("#newpwd").val();
+        //    var confirmpwd = $("#confirmpwd").val();
+        //    if (newpwd != confirmpwd) {
+        //        alert("两次输入密码不一致，请检查！");
+        //    }
+        //    else {
+        //        var url = "/Account/Modify";
+        //        var parmas = { "password": password, "newpwd": newpwd };
+        //        $.post(url, parmas, function (data) {
+        //            if (data == "success") {
+        //                alert("修改成功,确认后跳转到登录页重新登录...");
+        //                window.location.href = "/Account/Login";
+        //            }
+        //            else {
+        //                alert("修改失败...");
+        //            }
+        //        });
+
+        //    }
+        //});
 
     });
 </script>

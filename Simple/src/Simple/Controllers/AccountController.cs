@@ -63,10 +63,16 @@ namespace Simple.Controllers
             }
             else
             {
-                //await userManager.ChangePasswordAsync(userManager.FindByIdAsync(UserCurrent.Id), password, newpwd);
-                await userManager.ChangePasswordAsync(UserCurrent, password, newpwd);
-                await signInManager.SignOutAsync();
-                return Content("success");
+               var result= await userManager.ChangePasswordAsync(UserCurrent, password, newpwd);
+                if (result.Succeeded)
+                {
+                    await signInManager.SignOutAsync();
+                    return Content("success");
+                }
+                else
+                {
+                    return Content("error");
+                }
             }
         }
         [HttpGet]
