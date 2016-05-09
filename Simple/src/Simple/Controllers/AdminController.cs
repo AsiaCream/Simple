@@ -152,7 +152,6 @@ namespace Simple.Controllers
                 {
                     PreOrderId = order.Id,
                     AdminId = UserCurrent.Id,
-                    IsFinish=IsFinish.未完成,
                 };
                 DB.LockOrders.Add(lockorder);
                 DB.SaveChanges();
@@ -360,7 +359,6 @@ namespace Simple.Controllers
                 {
                     HelpfulPreOrderId = helpfulorder.Id,
                     AdminId = UserCurrent.Id,
-                    IsFinish=IsFinish.未完成,
                 };
                 DB.LockHelpfulOrders.Add(Lockorder);
                 DB.SaveChanges();

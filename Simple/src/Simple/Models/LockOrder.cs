@@ -9,7 +9,6 @@ namespace Simple.Models
     public class LockOrder
     {
         public int Id { get; set; }
-        public IsFinish IsFinish { get; set; }
         //操作对应的helpful订单
         [ForeignKey("PreOrder")]
         public int PreOrderId { get; set; }

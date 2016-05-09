@@ -375,11 +375,15 @@ namespace Simple.Controllers
         [HttpPost]
         public IActionResult AdminSearch(string key)
         {
-            var orders = DB.PreOrders
-               .Where(x => x.PreOrderNumber == key || x.ShopName.Contains(key) || x.TrueOrderNumber == key)
+            var orders = DB.LockOrders
+                .Include(x=>x.PreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+               .Where(x => x.PreOrder.PreOrderNumber == key || x.PreOrder.ShopName.Contains(key) || x.PreOrder.TrueOrderNumber == key)
                .Count();
-            var helpful = DB.HelpfulPreOrders
-                .Where(x => x.OrderNumber == key)
+            var helpful = DB.LockHelpfulOrders
+                .Include(x=>x.HelpfulPreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .Where(x => x.HelpfulPreOrder.OrderNumber == key)
                 .SingleOrDefault();
             if (orders == 0 && helpful == null)
             {
@@ -390,15 +394,20 @@ namespace Simple.Controllers
                 return Content("success");
             }
         }
+        [Authorize(Roles =("系统管理员"))]
         [HttpGet]
         public IActionResult AdminSearchResult(string key)
         {
-            var orders = DB.PreOrders
-                .Where(x => x.PreOrderNumber == key || x.ShopName.Contains(key) || x.TrueOrderNumber == key)
-                .OrderBy(x => x.PostTime)
+            var orders = DB.LockOrders
+                .Include(x=>x.PreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .Where(x => x.PreOrder.PreOrderNumber == key || x.PreOrder.ShopName.Contains(key) || x.PreOrder.TrueOrderNumber == key)
+                .OrderBy(x => x.PreOrder.PostTime)
                 .ToList();
-            var helpful = DB.HelpfulPreOrders
-                .Where(x => x.OrderNumber == key)
+            var helpful = DB.LockHelpfulOrders
+                .Include(x=>x.HelpfulPreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .Where(x => x.HelpfulPreOrder.OrderNumber == key)
                 .SingleOrDefault();
             ViewBag.HelpfulOrder = helpful;
             return View(orders);

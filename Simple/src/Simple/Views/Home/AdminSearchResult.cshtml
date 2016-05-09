@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PreOrder>
+﻿@model IEnumerable<LockOrder>
 @{
     Layout = null;
     //Admin搜索结果
@@ -30,26 +30,26 @@
     @foreach (var x in Model)
     {
         <tr id="table-tr-@x.Id">
-            <td>@x.Id</td>
-            <td>@x.PreOrderNumber</td>
-            <td>@x.Country</td>
-            <td>@x.ShopName</td>
-            <td><a href="@x.GoodsUrl" title="@x.GoodsUrl" target="_blank">查看</a></td>
-            <td><a href="#" title="@x.Address">查看</a></td>
-            <td>@x.OrderType</td>
-            <td>@x.NextOrToday</td>
-            <td>@x.GoodsCost</td>
-            <td>@x.Freight</td>
-            <td>@x.Total</td>
-            <td>@x.RMB</td>
-            <td>@x.Poundage</td>
-            <td>@x.PayTotal</td>
-            <td>@x.TrueOrderNumber</td>
-            <td><a href="#" title="@x.FeedBackContent" id="fb_text">复制</a></td>
-            <td><a href="#" title="@x.ReviewContent" id="rew_text">复制</a></td>
-            <td>@x.Draw</td>
-            <td>@x.Times</td>
-            <td><a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@x.Id" class="btn btn-primary">详细</a> </td>
+            <td>@x.PreOrder.Id</td>
+            <td>@x.PreOrder.PreOrderNumber</td>
+            <td>@x.PreOrder.Country</td>
+            <td>@x.PreOrder.ShopName</td>
+            <td><a href="@x.PreOrder.GoodsUrl" title="@x.PreOrder.GoodsUrl" target="_blank">查看</a></td>
+            <td><a href="#" title="@x.PreOrder.Address">查看</a></td>
+            <td>@x.PreOrder.OrderType</td>
+            <td>@x.PreOrder.NextOrToday</td>
+            <td>@x.PreOrder.GoodsCost</td>
+            <td>@x.PreOrder.Freight</td>
+            <td>@x.PreOrder.Total</td>
+            <td>@x.PreOrder.RMB</td>
+            <td>@x.PreOrder.Poundage</td>
+            <td>@x.PreOrder.PayTotal</td>
+            <td>@x.PreOrder.TrueOrderNumber</td>
+            <td><a href="#" title="@x.PreOrder.FeedBackContent" id="fb_text">复制</a></td>
+            <td><a href="#" title="@x.PreOrder.ReviewContent" id="rew_text">复制</a></td>
+            <td>@x.PreOrder.Draw</td>
+            <td>@x.PreOrder.Times</td>
+            <td><a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@x.PreOrder.Id" class="btn btn-primary">详细</a> </td>
         </tr>
     }
 </table>
