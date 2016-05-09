@@ -43,8 +43,8 @@ namespace Simple.Models
         public int? ReviewStar8 { get; set; }
         public int? ReviewStar9 { get; set; }
         public int? ReviewStar10 { get; set; }
-        public bool HelpfulType { get; set; } //Helpful类型
-        public bool IsCollection { get; set; }//是否收藏产品
+        public string HelpfulType { get; set; } //Helpful类型
+        public string IsCollection { get; set; }//是否收藏产品
         public double PayFor { get; set; }//需要支付金额
         public DateTime PostTime { get; set; }//提交时间
         public DateTime DrawTime { get; set; }//审核时间
@@ -56,10 +56,10 @@ namespace Simple.Models
         public IsPayFor IsPayFor { get; set; }//是否支付
         public IsFinish IsFinish { get; set; }//是否完成
 
-
+        //用户
         [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual User User { get; set; }
-        
+
     }
 }

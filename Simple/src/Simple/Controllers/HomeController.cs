@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using Simple.Models;
 using Simple.ViewModels;
+using Microsoft.Data.Entity;
 
 namespace Simple.Controllers
 {
@@ -115,11 +116,13 @@ namespace Simple.Controllers
                     .Count();//审核未通过订单
                 ViewBag.HelpfulNotPass = f;
 
-                var g = DB.HelpfulPreOrders
-                    .Where(x => x.IsFinish == IsFinish.未完成)
-                    .Where(x => x.IsPayFor == IsPayFor.已支付)
-                    .Where(x => x.Draw == Draw.通过)
-                    .Where(x => x.State == State.锁定)
+                var g = DB.LockHelpfulOrders
+                    .Where(x=>x.AdminId==UserCurrent.Id)
+                    .Include(x=>x.HelpfulPreOrder)
+                    .Where(x => x.HelpfulPreOrder.IsFinish == IsFinish.未完成)
+                    .Where(x => x.HelpfulPreOrder.IsPayFor == IsPayFor.已支付)
+                    .Where(x => x.HelpfulPreOrder.Draw == Draw.通过)
+                    .Where(x => x.HelpfulPreOrder.State == State.锁定)
                     .Count();//进行中订单
                 ViewBag.HelpfulOrderIng = g;
 

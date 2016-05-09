@@ -8,6 +8,6 @@ namespace Simple.Models
     public class IncreasingNumber
     {
         public int Id { get; set; }
-        public int Number { get; set; }
+        public uint Number { get; set; }
     }
 }

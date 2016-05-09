@@ -148,6 +148,13 @@ namespace Simple.Controllers
             {
                 order.State = State.锁定;
                 order.StarTime = DateTime.Now;
+                var lockorder = new LockOrder
+                {
+                    PreOrderId = order.Id,
+                    AdminId = UserCurrent.Id,
+                    IsFinish=IsFinish.未完成,
+                };
+                DB.LockOrders.Add(lockorder);
                 DB.SaveChanges();
                 return Content("success");
             }
@@ -328,7 +335,7 @@ namespace Simple.Controllers
         } 
         #endregion
         [HttpGet]//用户Helpful详细
-        public IActionResult HelpfulDetails(int id)
+        public IActionResult HelpfulOrderDetails(int id)
         {
             var ret = DB.HelpfulPreOrders
                 .Where(x => x.Id == id)
@@ -349,6 +356,13 @@ namespace Simple.Controllers
             {
                 helpfulorder.State = State.锁定;
                 helpfulorder.StartTime = DateTime.Now;
+                var Lockorder = new LockHelpfulOrder
+                {
+                    HelpfulPreOrderId = helpfulorder.Id,
+                    AdminId = UserCurrent.Id,
+                    IsFinish=IsFinish.未完成,
+                };
+                DB.LockHelpfulOrders.Add(Lockorder);
                 DB.SaveChanges();
                 return Content("success");
             }

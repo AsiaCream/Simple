@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HelpfulPreOrder>
+﻿@model IEnumerable<LockHelpfulOrder>
 @{
     Layout = null;
     //管理员查看Helpful进行中页面
@@ -6,17 +6,19 @@
 @foreach (var x in Model)
 {
     <tr class="table-tr-@x.Id">
-        <td>@x.Id</td>
-        <td>@x.OrderNumber</td>
-        <td>@x.Country</td>
-        <td><a asp-action="HelpfulOrderDetails" asp-controller="Manage" asp-route-id="@x.Id">查看详情</a></td>
-        <td><a href="@x.Url" title="@x.Url" target="_blank">查看</a></td>
-        <td>@x.HelpfulType</td>
-        <td>@x.IsCollection</td>
-        <td>@x.Draw</td>
-        <td>@x.DrawTime</td>
-        <td>@x.PostTime</td>
-        <td>@x.Times</td>
+        <td>@x.HelpfulPreOrder.Id</td>
+        <td>@x.HelpfulPreOrder.OrderNumber</td>
+        <td>@x.HelpfulPreOrder.Country</td>
+        <td><a asp-action="HelpfulOrderDetails" asp-controller="Admin" asp-route-id="@x.Id">查看详情</a></td>
+        <td><a href="@x.HelpfulPreOrder.Url" title="@x.HelpfulPreOrder.Url" target="_blank">查看</a></td>
+        <td>@x.HelpfulPreOrder.HelpfulType</td>
+        <td>@x.HelpfulPreOrder.IsCollection</td>
+        <td>@x.HelpfulPreOrder.PostTime</td>
+        <td>@x.HelpfulPreOrder.Draw</td>
+        <td>@x.HelpfulPreOrder.DrawTime</td>
+        <td>@x.HelpfulPreOrder.Times</td>
+        <td>@x.HelpfulPreOrder.StartTime</td>
+        <td>@x.Admin.UserName</td>
     </tr>
 }
 

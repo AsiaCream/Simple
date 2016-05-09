@@ -200,8 +200,10 @@ namespace Simple.Controllers
         [HttpGet]//管理员查看所有订单页面
         public IActionResult LoadAllOrders(int page)
         {
-            var order = DB.PreOrders
-                .OrderByDescending(x=>x.PostTime)
+            var order = DB.LockOrders
+                .Include(x=>x.PreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .OrderByDescending(x=>x.PreOrder.PostTime)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }
@@ -244,11 +246,11 @@ namespace Simple.Controllers
         [HttpGet]//管理员查看用户支付后，可撤销订单显示
         public IActionResult LoadErrorOrders(int page)
         {
-            var order = DB.HelpfulPreOrders
+            var order = DB.PreOrders
                 .Where(x => x.Draw == Draw.通过)
                 .Where(x => x.State == State.未锁定)
                 .Where(x => x.IsFinish == IsFinish.未完成)
-                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
                 .OrderBy(x => x.Id)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
@@ -256,11 +258,13 @@ namespace Simple.Controllers
         [HttpGet]//管理员查看进行中列表
         public IActionResult LoadOrderIngs(int page)
         {
-            var order = DB.HelpfulPreOrders
-                .Where(x => x.Draw == Draw.通过)
-                .Where(x => x.State == State.锁定)
-                .Where(x => x.IsFinish == IsFinish.未完成)
-                .Where(x => x.IsPayFor == IsPayFor.已支付)
+            var order = DB.LockOrders
+                .Include(x=>x.PreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .Where(x => x.PreOrder.Draw == Draw.通过)
+                .Where(x => x.PreOrder.State == State.锁定)
+                .Where(x => x.PreOrder.IsFinish == IsFinish.未完成)
+                .Where(x => x.PreOrder.IsPayfor == IsPayFor.已支付)
                 .OrderBy(x => x.Id)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
@@ -268,11 +272,11 @@ namespace Simple.Controllers
         [HttpGet]//管理员查看已完成列表
         public IActionResult LoadFinishOrders(int page)
         {
-            var order = DB.HelpfulPreOrders
+            var order = DB.PreOrders
                 .Where(x => x.Draw == Draw.通过)
                 .Where(x => x.State == State.锁定)
                 .Where(x => x.IsFinish == IsFinish.已完成)
-                .Where(x => x.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.IsPayfor == IsPayFor.已支付)
                 .OrderBy(x => x.Id)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
@@ -341,12 +345,21 @@ namespace Simple.Controllers
         [HttpGet]//管理员查看Helpful进行中订单
         public IActionResult LoadHelpfulOrderIngs(int page)
         {
-            var order = DB.HelpfulPreOrders
-                .Where(x => x.Draw == Draw.通过)
-                .Where(x => x.State == State.锁定)
-                .Where(x => x.IsFinish == IsFinish.未完成)
-                .Where(x => x.IsPayFor == IsPayFor.已支付)
-                .OrderByDescending(x => x.DrawTime)
+            //var order = DB.HelpfulPreOrders
+            //    .Where(x => x.Draw == Draw.通过)
+            //    .Where(x => x.State == State.锁定)
+            //    .Where(x => x.IsFinish == IsFinish.未完成)
+            //    .Where(x => x.IsPayFor == IsPayFor.已支付)
+            //    .OrderByDescending(x => x.DrawTime)
+            //    .Skip(page * 10).Take(10).ToList();
+            var order = DB.LockHelpfulOrders
+                .Include(x => x.HelpfulPreOrder)
+                .Where(x => x.AdminId == UserCurrent.Id)
+                .Where(x => x.HelpfulPreOrder.Draw == Draw.通过)
+                .Where(x => x.HelpfulPreOrder.State == State.锁定)
+                .Where(x => x.HelpfulPreOrder.IsFinish == IsFinish.未完成)
+                .Where(x => x.HelpfulPreOrder.IsPayFor == IsPayFor.已支付)
+                .OrderByDescending(x => x.HelpfulPreOrder.StartTime)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }

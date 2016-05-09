@@ -5,7 +5,7 @@
 }
 @foreach (var x in Model)
 {
-    <tr>
+    <tr id="table-tr-@x.Id">
         <td>@x.Id</td>
         <td>@x.PreOrderNumber</td>
         <td>@x.Country</td>
@@ -25,9 +25,37 @@
         <td>@x.Draw</td>
         <td>@x.PlatType</td>
         <td>@x.Times</td>
-        <td><a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@x.Id" class="btn btn-primary">详细</a></td>
+        <td><a asp-action="OrderDetails" asp-controller="Admin" asp-route-id="@x.Id" class="btn btn-primary">详细</a>
+        <a href="javascript:lock(@x.Id)" class="btn btn-success">锁定</a>
+        </td>
     </tr>
 }
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    function lock(id) {
+        var jug = confirm("确认锁定订单吗？");
+        if (jug == true) {
+            $.post("/Admin/Locked", { id: id }, function (data) {
+                if (data == "success") {
+                    alert("操作成功");
+                    $("#table-tr-" + id).remove();
+
+                }
+                else if (data == "error") {
+                    alert("操作失败");
+
+                }
+                else {
+                    alert("未知错误");
+
+                }
+
+            })
+
+        }
+
+    }
+</script>
 
 
 

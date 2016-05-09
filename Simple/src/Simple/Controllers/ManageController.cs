@@ -149,11 +149,11 @@ namespace Simple.Controllers
                 .OrderByDescending(x => x.Price)
                 .FirstOrDefault();
                 
-            var oldnum = DB.IncreasingNumbers
+            var num = DB.IncreasingNumbers
                 .OrderByDescending(x => x.Number)
                 .First();
+            num.Number++;
 
-            var num = new IncreasingNumber { Number = oldnum.Number + 1 };
             //找出对应的id用户
             var user = DB.Users
                 .Where(x => x.Id == id)
@@ -169,8 +169,6 @@ namespace Simple.Controllers
                 .SingleOrDefault();
 
             DB.PreOrders.Add(preorder);
-
-            DB.IncreasingNumbers.Add(num);
 
             var s = preorder.Id;
 
@@ -455,17 +453,16 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateHelpfulOrder(string id, string Country, string Url, int Times, bool HelpfulType, bool IsCollection, string Review1, int ReviewStar1, string Review2, int ReviewStar2)
+        public IActionResult CreateHelpfulOrder(string id, string Country, string Url, int Times, string HelpfulType, string IsCollection, string Review1, int ReviewStar1, string Review2, int ReviewStar2)
         {
             var helpfulpreorder = new HelpfulPreOrder { Country = Country, Url = Url, Times = Times, HelpfulType = HelpfulType, IsCollection = IsCollection, Review1 = Review1, ReviewStar1 = ReviewStar1, Review2 = Review2, ReviewStar2 = ReviewStar2 };
-            var oldnum = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
-            var num = new IncreasingNumber { Number = oldnum.Number + 1 };
+            var num = DB.IncreasingNumbers.OrderByDescending(x => x.Number).First();
+            num.Number = num.Number + 1;
             var helpfulprice = DB.HelpfulPrices.Where(x => x.Id == 1).SingleOrDefault();//找出当前Helpful价格
             var user = DB.Users.Where(x => x.Id == id).SingleOrDefault();//找出当前提交订单的用户
             DB.HelpfulPreOrders.Add(helpfulpreorder);
-            DB.IncreasingNumbers.Add(num);
             helpfulpreorder.UserId = user.Id;
-            if (IsCollection == true)
+            if (IsCollection == "YES")
             {
                 helpfulpreorder.PayFor = helpfulprice.Price * helpfulpreorder.Times + helpfulprice.WishListCost;//需要支付的价格
             }

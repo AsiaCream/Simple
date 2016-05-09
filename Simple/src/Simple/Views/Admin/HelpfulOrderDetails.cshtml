@@ -1,0 +1,112 @@
+﻿@model HelpfulPreOrder
+<div>
+    <!--管理员查看详细helpful订单信息-->
+    <section>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="infotitle">Helpful订单详细页 </p>
+                        <table class="table table-responsive table-stripted table-hover">
+                            <tbody>
+                                <tr>
+                                    <th class="must2">*国家</th>
+                                    <td>@Model.Country</td>
+                                    <th class="must2">*地址链接</th>
+                                    <td><a href="@Model.Url" target="_blank" title="@Model.Url">@Model.Url</a></td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*操作数量</th>
+                                    <td>@Model.Times</td>
+                                    <th class="must2">*订单费用</th>
+                                    <td>@Model.PayFor</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Helpful类型</th>
+                                    <td>@Model.HelpfulType</td>
+                                    <th class="must2">*是否收藏产品</th>
+                                    <td>@Model.IsCollection</td>
+                                </tr>
+                                <tr>
+                                    <th class="infotitle">以下是Review标题</th>
+                                    <th></th>
+                                    <th class="infotitle">以下是Review星级</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review1标题</th>
+                                    <td>@Model.Review1</td>
+                                    <th class="must2">*Review1星级</th>
+                                    <td>@Model.ReviewStar1</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review2标题</th>
+                                    <td>@Model.Review2</td>
+                                    <th class="must2">*Review2星级</th>
+                                    <td>@Model.ReviewStar2</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review3标题</th>
+                                    <td>@Model.Review3</td>
+                                    <th class="must2">*Review3星级</th>
+                                    <td>@Model.ReviewStar3</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review4标题</th>
+                                    <td>@Model.Review4</td>
+                                    <th class="must2">*Review4星级</th>
+                                    <td>@Model.ReviewStar4</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review5标题</th>
+                                    <td>@Model.Review5</td>
+                                    <th class="must2">*Review5星级</th>
+                                    <td>@Model.ReviewStar5</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review6标题</th>
+                                    <td>@Model.Review6</td>
+                                    <th class="must2">*Review6星级</th>
+                                    <td>@Model.ReviewStar6</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review7标题</th>
+                                    <td>@Model.Review7</td>
+                                    <th class="must2">*Review7星级</th>
+                                    <td>@Model.ReviewStar7</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review8标题</th>
+                                    <td>@Model.Review8</td>
+                                    <th class="must2">*Review8星级</th>
+                                    <td>@Model.ReviewStar8</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review9标题</th>
+                                    <td>@Model.Review9</td>
+                                    <th class="must2">*Review9星级</th>
+                                    <td>@Model.ReviewStar9</td>
+                                </tr>
+                                <tr>
+                                    <th class="must2">*Review10标题</th>
+                                    <td>@Model.Review10</td>
+                                    <th class="must2">*Review10星级</th>
+                                    <td>@Model.ReviewStar10</td>
+                                </tr>
+
+                                <tr>
+                                    <td><a asp-action="HelpfulDrawOrders" asp-controller="Admin" class="form-control btn btn-primary">返回待审核Helpful订单页面</a></td>
+                                    <td><a asp-action="HelpfulOrders" asp-controller="Admin" class="form-control btn btn-primary">查看所有Helpful订单页面</a></td>
+                                    <td><a asp-action="HelpfulWaitPayFor" asp-controller="Admin" class="form-control btn btn-primary">查看所有待支付Helpful订单</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+</div>
+
+

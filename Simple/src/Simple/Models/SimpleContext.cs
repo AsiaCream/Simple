@@ -27,6 +27,8 @@ namespace Simple.Models
         public DbSet<FeedBackModel> FeedBackModels { get; set; }
         public DbSet<FeedBackStar> FeedBackStars { get; set; } 
         public DbSet<MemberLevel> MemberLevels { get; set; }
+        public DbSet<LockHelpfulOrder> LockHelpfulOrders { get; set; }
+        public DbSet<LockOrder> LockOrders { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -104,6 +106,14 @@ namespace Simple.Models
                 e.HasIndex(x => x.Id);
             });
             builder.Entity<MemberLevel>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<LockHelpfulOrder>(e =>
+            {
+                e.HasIndex(x => x.Id);
+            });
+            builder.Entity<LockOrder>(e =>
             {
                 e.HasIndex(x => x.Id);
             });

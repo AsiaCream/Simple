@@ -17,9 +17,37 @@
             <td>@x.HelpfulType</td>
             <td>@x.IsCollection</td>
             <td>@x.Draw</td>
+            <td>@x.IsPayFor</td>
             <td>@x.Times</td>
+            <td><a href="javascript:lock(@x.Id)">锁定</a></td>
         </tr>
     }
 }
+<script src="~/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    function lock(id) {
+        var jug = confirm("确认锁定Helpful订单吗？");
+        if (jug == true) {
+            $.post("/Admin/HelpfulLockek", { id: id }, function (data) {
+                if (data == "success") {
+                    alert("操作成功");
+                    $("#table-tr-" + id).remove();
+
+                }
+                else if (data == "error") {
+                    alert("操作失败");
+
+                }
+                else {
+                    alert("未知错误");
+
+                }
+
+            })
+
+        }
+
+    }
+</script>
 
 
