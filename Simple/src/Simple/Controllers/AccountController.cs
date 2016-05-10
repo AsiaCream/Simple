@@ -22,6 +22,11 @@ namespace Simple.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult Login1()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {

@@ -12,44 +12,68 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/bootstrapValidator.min.css" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="~/css/ionicons.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="~/css/AdminLTE.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="~/css/blue.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="~/js/html5shiv.min.js"></script>
         <script src="~/js/respond.min.js"></script>
     <![endif]-->
+    <style>
+        html{height:100%;}
+        .bodyM{height:100%;background-color:rgba(0, 38, 255, 0.13); box-shadow:0 0 200px rgba(18, 84, 123, 0.78) inset; }
+        .con{width:60%; margin:0 auto;}
+        .user{margin:0 auto; margin-bottom:30px; height:150px; width:150px; border-radius:50%; box-shadow:0 0 10px rgba(128, 128, 128, 0.78); background:#fff;}
+        .iM{background-color:#fff; color:#40a1f3;}
+        .inputM{border-left:none; height:48px;margin-top: 1px;margin-bottom: -1px; font-weight:600; color:#100f0f;font-size:1.2em;}
+        .iBtn{
+            color: rgb(255, 255, 255);
+            background:transparent radial-gradient(rgba(20, 25, 32, 0.9), rgba(171, 196, 239, 0.9)) repeat scroll 0% 0%;
+        } 
+        .iBtn:hover{
+            color:#fff;
+        }
+        .iBtn:active{
+            color:#fff;
+            background:transparent radial-gradient(rgba(171, 196, 239, 0.9), rgba(20, 25, 32, 0.9)) repeat scroll 0% 0%;
+        }
+    </style>
 </head>
-<body class="hold-transition login-page">
-    <div class="login-box" style="box-shadow:-20px -20px 20px RGB(54,127,169);">
-        <div class="login-box-body">
-            <p class="login-box-msg" style="color:RGB(54,127,169);"><b>登录页面</b></p>
-            <form asp-action="Login" asp-controller="Account" method="post" id="defaultForm">
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+<body class="bodyM">
+    <div class="con">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3" style="margin-top:100px;">
+                    <div class="user">
+                        <i class="glyphicon glyphicon-user" style="color:rgba(0, 38, 255, 0.13); font-size:6em; text-align:center; line-height:150px; height:150px;width:150px;"></i>
+                    </div>
+                    <form id="defaultForm" asp-action="Login" asp-controller="Account" method="post">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <i class="input-group-addon glyphicon glyphicon-user iM"></i>
+                                <input type="text" class="form-control inputM" placeholder="username" name="username" style="margin-bottom: -1px;" />
+                            </div>                            
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <i class="input-group-addon glyphicon glyphicon-bell iM"></i>
+                                <input type="password" class="form-control inputM" placeholder="password" name="password" style="margin-bottom: -1px;" />
+                            </div>                            
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="submit" id="btnLogin" class="btn btn-block btn-flat iBtn">登录</button>
+                            </div><!-- /.col -->
+                            <div class="col-xs-12" style="margin-top:10px;">
+                                <a href="#">忘记密码</a>
+                                <a asp-action="Register" asp-controller="Account" style="float:right;">注册</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group has-feedback">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="密码">
-                </div>
-                <div class="row form-group">
-                    <div class="col-xs-12">
-                        <button type="submit" id="btnLogin" class="btn btn-primary btn-block btn-flat">登录</button>
-                    </div><!-- /.col -->
-                </div>
-            </form>
-            <div style="height:10px;"></div>
-            <a href="#">忘记密码</a><br>
-            <a asp-action="Register" asp-controller="Account" class="text-center">立刻注册成为会员</a>
-        </div><!-- /.login-box-body -->
-    </div><!-- /.login-box -->
-    <!-- jQuery 2.1.4 -->
+            </div>
+        </div>
+    </div>
     <script src="~/js/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="~/js/bootstrap.min.js"></script>
@@ -99,18 +123,14 @@
                     }
                 }
             }
-
         })
           .on('success.form.bv', function (e) {
               // Prevent form submission
               e.preventDefault();
-
               // Get the form instance
               var $form = $(e.target);
-
               // Get the BootstrapValidator instance
               var bv = $form.data('bootstrapValidator');
-
               // Use Ajax to submit form data
               $.post("/Account/Login", $form.serialize(), function (data) {
                   if (data == "success") {
