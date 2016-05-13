@@ -87,7 +87,7 @@ namespace Simple.Controllers
             return View();
         }
         [HttpPost]
-        public async Task <IActionResult> Register(string username,string password,string name,string answer,string question,int qq)
+        public async Task <IActionResult> Register(string username,string password,string email,string name,string answer,string question,int qq)
         {
             var olduser = DB.Users.Where(x => x.UserName == username).SingleOrDefault();
             if(olduser!=null)
@@ -95,7 +95,7 @@ namespace Simple.Controllers
                 return Content("error");
             }
             else{
-                var user = new User { UserName = username, Name = name, Answer = answer, Question = question, QQ = qq, Level = "1", RegisterTime = DateTime.Now };
+                var user = new User { UserName = username, Name = name,Email=email,Answer = answer, Question = question, QQ = qq, Level = "1", RegisterTime = DateTime.Now };
                 await userManager.CreateAsync(user, password);
                 await userManager.AddToRoleAsync(user, "普通用户");
                 DB.SaveChanges();
@@ -138,6 +138,67 @@ namespace Simple.Controllers
                 .ToList();
             ViewBag.AdminCount = (await userManager.GetUsersInRoleAsync("系统管理员")).Count();
             return View(users);
+        }
+        [HttpGet]
+        public IActionResult Forget()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Forget(string username)
+        {
+            var user = DB.Users
+                .Where(x => x.UserName == username)
+                .SingleOrDefault();
+            if(user!=null)
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("error");
+            }
+        }
+        [HttpGet]
+        public IActionResult FindAnswer(string username)
+        {
+            var user = DB.Users
+                .Where(x => x.UserName == username)
+                .SingleOrDefault();
+            return View(user);
+        }
+        [HttpGet]
+        public IActionResult FindPassword(string findusername,string findemail,string findquestion,string findanswer)
+        {
+            var result = DB.Users
+                .Where(x => x.UserName == findusername)
+                .Where(x => x.Email == findemail)
+                .Where(x => x.Question == findquestion)
+                .Where(x => x.Answer == findanswer)
+                .SingleOrDefault();
+            if (result != null)
+            {
+                return View(result);
+            }
+            else
+            {
+                return Content("error");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(string resetusername,string newpwd)
+        {
+            var user = await userManager.FindByNameAsync(resetusername);
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await userManager.ResetPasswordAsync(user, token, newpwd);
+            if (result.Succeeded)
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("error");
+            }
         }
     }
 }

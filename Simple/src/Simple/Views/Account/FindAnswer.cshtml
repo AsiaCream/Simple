@@ -1,0 +1,37 @@
+﻿@model User
+@{
+    Layout = null;
+}
+<div class="form-group findform">
+    <input type="text" class="form-control" value="@Model.UserName" id="findusername" name="findusername" disabled="disabled" />
+</div>
+<div class="form-group findform">
+    <input type="text" class="form-control" placeholder="请输入注册时候的邮箱" id="findemail" name="findemail" />
+</div>
+<div class="form-group findform">
+    <input type="text" class="form-control" value="@Model.Question" disabled="disabled" id="findquestion" name="findquestion" />
+</div>
+<div class="form-group findform">
+    <input type="text" class="form-control" placeholder="请输入问题答案" id="findanswer" name="findanswer" />
+</div>
+<div class="form-group findform">
+    <input type="button" class="btn btn-success form-control" id="findsend" value="提交"/>
+</div>
+<div class="form-group">
+    <div id="findpassword"></div>
+</div>
+<script type="text/javascript">
+    $("#findsend").click(function () {
+        $.get("/Account/FindPassword", { findusername: $("#findusername").val(), findemail: $("#findemail").val(), findquestion: $("#findquestion").val(), findanswer: $("#findanswer").val() }, function (html) {
+            $(".findform").fadeOut();
+            if (html == "error") {
+                alert("信息错误，请重新输入");
+            }
+            else {
+                $("#findpassword").html(html);
+
+            }
+        });
+
+    });
+</script>
