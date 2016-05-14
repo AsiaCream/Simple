@@ -23,11 +23,11 @@
 <script type="text/javascript">
     $("#findsend").click(function () {
         $.get("/Account/FindPassword", { findusername: $("#findusername").val(), findemail: $("#findemail").val(), findquestion: $("#findquestion").val(), findanswer: $("#findanswer").val() }, function (html) {
-            $(".findform").fadeOut();
             if (html == "error") {
                 alert("信息错误，请重新输入");
             }
             else {
+                $(".findform").fadeOut();
                 $("#findpassword").html(html);
 
             }
