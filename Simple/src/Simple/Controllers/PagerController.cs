@@ -289,8 +289,10 @@ namespace Simple.Controllers
         [HttpGet]//管理员查看所有helpful订单页面
         public IActionResult LoadHelpfulOrders(int page)
         {
-            var order = DB.HelpfulPreOrders
-                .OrderByDescending(x => x.PostTime)
+            var order = DB.LockHelpfulOrders
+                .Include(x=>x.HelpfulPreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .OrderByDescending(x => x.HelpfulPreOrder.PostTime)
                 .Skip(page * 10).Take(10).ToList();
             return View(order);
         }

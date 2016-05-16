@@ -106,7 +106,7 @@
                                         <th class="must2">*评价时间</th>
                                         @foreach (CommentTime x in ViewBag.CommentTime)
                                         {
-                                            <td><input type="text" class="form-control" value="@x.Date" name="CommentTime" id="CommentTime" /></td>
+                                            <td><div class="form-group"><input type="text" class="form-control" value="@x.Date" name="CommentTime" id="CommentTime" /></div></td>
                                             <td class="must2">@x.Note</td>
                                         }
                                     </tr>
@@ -164,7 +164,7 @@
                                     </tr>
                                     <tr>
                                         <th class="must2">刷单数量</th>
-                                        <td><input type="text" class="form-control" name="Times" id="Times" value="1"/></td>
+                                        <td><div class="form-group"><input type="text" class="form-control" name="Times" id="Times" value="1" /></div></td>
                                         <td class="must2">请输入本产品要刷的单数，默认为一单</td>
                                     </tr>
                                     <tr>
@@ -278,6 +278,47 @@
                     }
 
                 },
+                CommentTime: {
+                    message: '评价时间还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '评价时间不能为空'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            message: "评论时间应大于0"
+
+                        },
+                        digits: {
+                            message: '只能是数字'
+
+                        }
+                    },
+                    
+
+                },
+                Times: {
+                    message: '单数还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '单数不能为空'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            message: "单数应大于0"
+
+                        },
+                        digits: {
+                            message: '只能是整数'
+
+                        }
+
+                    },
+                    
+
+                },
+                
+
             }
         })
         .on('success.form.bv', function (e) {

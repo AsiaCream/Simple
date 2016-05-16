@@ -104,9 +104,9 @@
                 {
                     <form method="get" class="sidebar-form" id="frmASearch">
                         <div class="input-group">
-                            <input type="text" name="key" id="key" class="form-control" placeholder="请输入搜索内容...">
+                            <input type="text" name="adminkey" id="adminkey" class="form-control" placeholder="请输入搜索内容...">
                             <span class="input-group-btn">
-                                <button type="submit" name="search" id="adminSearch" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                                <button type="button" name="adminsearch" id="adminSearch" class="btn btn-flat"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </form>
@@ -353,7 +353,7 @@
             });
         });
         $("#adminSearch").click(function () {
-            var key = $("#key").val();
+            var key = $("#adminkey").val();
             var url = "/Home/AdminSearch";
             var params = { "key": key };
             $.post(url, params, function (data) {

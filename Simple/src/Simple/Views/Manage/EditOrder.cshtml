@@ -288,7 +288,44 @@
 
                     }
 
-                }
+                },
+                CommentTime: {
+                    message: '评价时间还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '评价时间不能为空'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: true,
+                            message: "评论时间应大于等于0"
+
+                        },
+                        digits: {
+                            message: '只能是整数'
+
+                        }
+                    },
+                },
+                Times: {
+                    message: '单数还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '单数不能为空'
+                        },
+                        greaterThan: {
+                            value: 1,
+                            message: "单数应大于0"
+
+                        },
+                        digits: {
+                            message: '只能是整数'
+
+                        }
+                    },
+                    
+
+                },
             }
         })
         .on('success.form.bv', function (e) {

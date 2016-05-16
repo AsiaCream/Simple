@@ -75,19 +75,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr id="table-htr-@ViewBag.HelpfulOrder.Id">
-                <td>@ViewBag.HelpfulOrder.Id</td>
-                <td>@ViewBag.HelpfulOrder.OrderNumber</td>
-                <td>@ViewBag.HelpfulOrder.PostTime</td>
-                <td>@ViewBag.HelpfulOrder.Country</td>
+            <tr id="table-htr-@ViewBag.HelpfulOrder.HelpfulPreOrder.Id">
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.Id</td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.OrderNumber</td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.PostTime</td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.Country</td>
                 <td><a href="#">查看</a></td>
                 <td><a href="#">查看</a></td>
-                <td>@ViewBag.HelpfulOrder.HelpfulType</td>
-                <td>@ViewBag.HelpfulOrder.IsCollection</td>
-                <td>@ViewBag.HelpfulOrder.Draw</td>
-                <td>@ViewBag.HelpfulOrder.DrawTime</td>
-                <td>@ViewBag.HelpfulOrder.Times</td>
-                <td><a asp-action="HelpfulDetails" asp-controller="Admin" asp-route-id="@ViewBag.HelpfulOrder.Id">详细</a></td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.HelpfulType</td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.IsCollection</td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.Draw</td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.DrawTime</td>
+                <td>@ViewBag.HelpfulOrder.HelpfulPreOrder.Times</td>
+                <td><a asp-action="HelpfulDetails" asp-controller="Admin" asp-route-id="@ViewBag.HelpfulOrder.HelpfulPreOrder.Id">详细</a></td>
             </tr>
         </tbody>
     </table>

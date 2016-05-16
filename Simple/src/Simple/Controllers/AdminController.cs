@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using Simple.Models;
+using Microsoft.Data.Entity;
 
 namespace Simple.Controllers
 {
@@ -215,8 +216,10 @@ namespace Simple.Controllers
         [HttpGet]//helpful所有订单
         public IActionResult HelpfulOrders()
         {
-            var orderCount = DB.HelpfulPreOrders
-                .OrderByDescending(x=>x.PostTime)
+            var orderCount = DB.LockHelpfulOrders
+                .Include(x=>x.HelpfulPreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .OrderByDescending(x=>x.HelpfulPreOrder.PostTime)
                 .Count();
             ViewBag.totalRecord = orderCount;
             return View();
@@ -276,12 +279,14 @@ namespace Simple.Controllers
         [HttpGet]//Helpful进行中订单
         public IActionResult HelpfulOrderIng()
         {
-            var orderCount = DB.HelpfulPreOrders
-                .OrderByDescending(x => x.PostTime)
-                .Where(x => x.Draw == Draw.通过)
-                .Where(x => x.IsFinish == IsFinish.未完成)
-                .Where(x => x.IsPayFor == IsPayFor.已支付)
-                .Where(x => x.State == State.锁定)
+            var orderCount = DB.LockHelpfulOrders
+                .Include(x=>x.HelpfulPreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .OrderByDescending(x => x.HelpfulPreOrder.PostTime)
+                .Where(x => x.HelpfulPreOrder.Draw == Draw.通过)
+                .Where(x => x.HelpfulPreOrder.IsFinish == IsFinish.未完成)
+                .Where(x => x.HelpfulPreOrder.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.HelpfulPreOrder.State == State.锁定)
                 .Count();
             ViewBag.totalRecord = orderCount;
             return View();
@@ -289,12 +294,14 @@ namespace Simple.Controllers
         [HttpGet]//Helpful已完成订单
         public IActionResult HelpfulFinish()
         {
-            var orderCount = DB.HelpfulPreOrders
-                .OrderByDescending(x => x.PostTime)
-                .Where(x => x.Draw == Draw.通过)
-                .Where(x => x.IsFinish == IsFinish.已完成)
-                .Where(x => x.IsPayFor == IsPayFor.已支付)
-                .Where(x => x.State == State.锁定)
+            var orderCount = DB.LockHelpfulOrders
+                .Include(x=>x.HelpfulPreOrder)
+                .Where(x=>x.AdminId==UserCurrent.Id)
+                .OrderByDescending(x => x.HelpfulPreOrder.PostTime)
+                .Where(x => x.HelpfulPreOrder.Draw == Draw.通过)
+                .Where(x => x.HelpfulPreOrder.IsFinish == IsFinish.已完成)
+                .Where(x => x.HelpfulPreOrder.IsPayFor == IsPayFor.已支付)
+                .Where(x => x.HelpfulPreOrder.State == State.锁定)
                 .Count();
             ViewBag.totalRecord = orderCount;
             return View();
