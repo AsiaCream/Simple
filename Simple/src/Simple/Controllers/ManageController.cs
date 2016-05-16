@@ -363,6 +363,7 @@ namespace Simple.Controllers
         public IActionResult AllOrders()
         {
             var orderCount = DB.PreOrders
+                .Where(x=>x.UserId==UserCurrent.Id)
                 .OrderByDescending(x => x.PostTime)
                 .Count();
             ViewBag.totalRecord = orderCount;
@@ -372,6 +373,7 @@ namespace Simple.Controllers
         public IActionResult WaitDrawOrders()
         {
             var orderCount = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x => x.State == State.未锁定)
                 .Where(x => x.Draw == Draw.待审核)
                 .Where(x => x.IsPayfor == IsPayFor.未支付)
@@ -384,6 +386,7 @@ namespace Simple.Controllers
         public IActionResult WaitPayOrders()
         {
             var orderCount = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x => x.State == State.未锁定)
                 .Where(x => x.Draw == Draw.通过)
                 .Where(x => x.IsPayfor == IsPayFor.未支付)
@@ -396,6 +399,7 @@ namespace Simple.Controllers
         public IActionResult NotPassOrders()
         {
             var orderCount = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x => x.State == State.未锁定)
                 .Where(x => x.Draw == Draw.未通过)
                 .Where(x => x.IsPayfor == IsPayFor.未支付)
@@ -408,6 +412,7 @@ namespace Simple.Controllers
         public IActionResult ErrorOrders()
         {
             var orderCount = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x => x.State == State.未锁定)
                 .Where(x => x.Draw == Draw.通过)
                 .Where(x => x.IsPayfor == IsPayFor.已支付)
@@ -420,6 +425,7 @@ namespace Simple.Controllers
         public IActionResult OrderIng()
         {
             var orderCount = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x => x.State == State.锁定)
                 .Where(x => x.Draw == Draw.通过)
                 .Where(x => x.IsPayfor == IsPayFor.已支付)
@@ -432,6 +438,7 @@ namespace Simple.Controllers
         public IActionResult FinishOrders()
         {
             var orderCount = DB.PreOrders
+                .Where(x => x.UserId == UserCurrent.Id)
                 .Where(x => x.State == State.锁定)
                 .Where(x => x.Draw == Draw.通过)
                 .Where(x => x.IsPayfor == IsPayFor.已支付)

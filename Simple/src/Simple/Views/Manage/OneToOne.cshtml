@@ -43,12 +43,14 @@
                                     <tr>
                                         <th class="must2">*请选择您的店铺</th>
                                         <td>
-                                            <select class="form-control" name="ShopName" id="ShopName">
-                                                @foreach (ShopOrder x in ViewBag.Shop)
-                                                {
-                                                    <option>@x.Title</option>
-                                                }
-                                            </select>
+                                            <div class="form-group">
+                                                <select class="form-control" name="ShopName" id="ShopName">
+                                                    @foreach (ShopOrder x in ViewBag.Shop)
+                                                    {
+                                                        <option>@x.Title</option>
+                                                    }
+                                                </select>
+                                            </div>
                                         </td>
                                         <td class="must3">若没有店铺，请先到订单管理→店铺订单量设置添加</td>
                                     </tr>
@@ -232,6 +234,15 @@
                         uri: {
                             message: '请输入起始为http://的链接'
                         }
+                    }
+                },
+                ShopName:{
+                    message: '产品价格还没有验证',
+                    validators: {
+                        notEmpty: {
+                            message: '店铺不能为空'
+                        },
+
                     }
                 },
                 GoodsCost: {
